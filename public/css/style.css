@@ -1,0 +1,2248 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.all_center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.back_btn_icon {
+    margin-left: -60px;
+}
+
+.back_btn_icon:hover {
+    margin-left: -70px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+}
+
+.back_btn_icon:active {
+    box-shadow: none;
+}
+
+.save_file_link #save_file_txt {  
+    position: fixed;
+    right: 0;
+    top: 70px;
+    text-align: right;
+    padding: 10px 15px;
+    background: #34495e;
+    color: #fff;
+    z-index: 999;
+    border-radius: 40px 0px 0px 40px;
+    max-width: 40px;
+    -webkit-transition: max-width 0.8s;
+    transition: max-width 0.8s;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.save_file_link:hover #save_file_txt {   
+    max-width: 10rem;
+}
+
+button {
+    border: none;
+}
+
+a {
+    color: #002B51;
+    text-decoration: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.small_txt {
+    font-size: 13px;
+    color: #000;
+    opacity: 0.7;
+}
+
+h1 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 32px;
+    text-transform: capitalize;
+}
+
+h2 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 28px;
+    text-transform: capitalize;
+}
+
+h3 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: capitalize;
+}
+
+h4 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: capitalize;
+}
+
+h5 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+h6 {
+    color: #002B51;
+    font-weight: 700;
+    font-size: 18px;
+    
+}
+
+.info_text {
+    opacity: 0.7;
+    color: #000;
+}
+
+.img_icon {
+    width: 20px;
+    height: auto;
+}
+
+.vl {
+    border-left: 2px solid #eeeeee;
+    height: 500px;
+}
+
+hr {
+    border: 1px solid #000;
+    opacity: 0.1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.info_file {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #BDBDBD;
+    background: #E3F2FD;
+    border-radius: 5px;
+}
+
+.fa-bars {
+    -moz-color: #000;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate_all {
+    animation: fadein 2s;
+    -moz-animation: fadein 2s;
+    /* Firefox */
+    -webkit-animation: fadein 2s;
+    /* Safari and Chrome */
+    -o-animation: fadein 2s;
+    /* Opera */
+}
+
+/* ===== Scroll Bar ===== */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #E0E0E0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #BDBDBD;
+    border-radius: 10px;
+    transition: all 300ms ease;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #9E9E9E;
+}
+
+
+/* =====
+=====  Custom Badge Area
+=============================
+*/
+
+.badge-danger-notif {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -8px;
+    padding: 5px;
+    background: #F44336;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 40px;
+}
+
+.badge-danger-sidebar {
+    position: absolute;
+    margin-left: 6px;
+    padding: 5px;
+    background: #F44336;
+    color: #fff;
+    border-radius: 40px;
+}
+
+.badge-danger {
+    position: absolute;
+    margin-top: -2px;
+    margin-left: 18px;
+    padding: 7px 14px;
+    background: #F44336;
+    border-radius: 40px;
+}
+
+.badge-secondary {
+    position: absolute;
+    margin-top: -2px;
+    margin-left: 18px;
+    padding: 7px 14px;
+    border-radius: 40px;
+}
+
+.sert_going {
+    padding: 10px 20px;
+    width: 11rem;
+    text-align: center;
+    background: #BBDEFB;
+    color: #1976D2;
+    border-radius: 37px;
+}
+
+.sert_done {
+    padding: 10px 20px;
+    width: 11rem;
+    text-align: center;
+    background: #C8E6C9;
+    color: #388E3C;
+    border-radius: 37px;
+}
+
+.tahap_sert_on {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(39, 174, 96, 0.9);
+    border-radius: 5px;
+}
+
+.tahap_sert_pending {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(243, 156, 18, 0.7);
+    border-radius: 5px;
+}
+
+.tahap_sert_off {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(127, 140, 141, 0.7);
+    border-radius: 5px;
+}
+
+.generate_form {
+    padding: 5px 12px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgba(225, 25, 29, 1.0);
+    border: 1.5px solid rgba(225, 25, 29, 1.0);
+    ;
+    border-radius: 6px;
+    background: rgba(225, 25, 29, 0.2);
+    ;
+}
+
+.pemasaran {}
+
+
+/* ====
+===== Toast
+================================== */
+
+.toast {
+    display: block;
+    right: 0;
+    width: 100%;
+    height: auto;
+    z-index: 99999;
+}
+
+.toast .toast-header {
+    background-color: #BBDEFB;
+    color: #002b51;
+}
+
+.toast .toast-body {
+    background: #E3F2FD;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+}
+
+.toast .toast-body .btn-footer {
+    display: block;
+    right: 0;
+    float: right;
+    margin-top: -40px;
+    padding: 7px 20px;
+    background: #1E88E5;
+    color: #fff;
+    font-size: 15px;
+}
+
+/* Icon Rotate */
+.rotate {
+    -moz-transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+.rotate.down {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+
+/* ====
+===== Table Area
+================================ */
+
+.table_main {
+    border-top: 2px solid #eee;
+    border-bottom: 20px solid #eee;
+}
+
+.table_data {
+    transition: all 0.3s ease;
+}
+
+.table_data td {
+    padding-top: 20px;
+}
+
+.table_data h4,
+span {
+    text-transform: capitalize;
+}
+
+.table_data:hover {
+    background: #eee;
+}
+
+
+/* =====
+====== Button Area
+=============================== */
+
+.login_banner_btn {
+    text-align: center;
+    padding: 10px 50px;
+    font-size: 18px;
+    font-family: 'Lato'sans-serif;
+    background: #fff;
+    color: #002B51;
+    border-radius: 37px;
+    box-shadow: 2px 5px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.login_banner_btn:hover {
+    color: #002B51;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.login_verifikasi_btn {
+    text-align: center;
+    padding: 10px 50px;
+    font-size: 18px;
+    font-family: 'Lato'sans-serif;
+    background: #002B51;
+    color: #fff;
+    border-radius: 37px;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.login_verifikasi_btn:hover {
+    background: #F5F5F5;
+    color: #002B51;
+}
+
+
+/* =======
+======= Checkbox
+================================= */
+
+/* The container */
+.container_checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+/* Hide the browser's default checkbox */
+.container_checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark_checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 6px;
+}
+
+/* On mouse-over, add a grey background color */
+.container_checkbox:hover input ~ .checkmark_checkbox {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container_checkbox input:checked ~ .checkmark_checkbox {
+    background-color: #61BCEA;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark_checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container_checkbox input:checked ~ .checkmark_checkbox:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container_checkbox .checkmark_checkbox:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/*=================================*/
+
+/* ====
+===== Button Section
+=================================== */
+
+.register_btn {
+    display: inline-block;
+    text-align: center;
+    margin-left: 30px;
+    padding: 10px 50px;
+    font-size: 18px;
+    font-family: 'Lato'sans-serif;
+    background: #002B51;
+    color: #fff;
+    border-radius: 37px;
+    box-shadow: 2px 5px 10px 0 rgba(0, 43, 81, 0.2);
+}
+
+.register_btn:hover {
+    color: #fff;
+    box-shadow: 1px 1px 5px 0 rgba(0, 43, 81, 0.1);
+}
+
+.reset_btn_regis {
+    display: inline-block;
+    text-align: center;
+    padding: 8px 25px;
+    font-size: 16px;
+    background: transparent;
+    border: 1.3px solid #002B51;
+    color: #002B51;
+    border-radius: 7px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.reset_btn_regis:hover {
+    background: #F5F5F5;
+    box-shadow: none;
+}
+
+.submit_btn_regis {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 40px;
+    font-size: 16px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.submit_btn_regis:hover {
+    background: #00203B;
+    box-shadow: none;
+}
+
+.full_btn {
+    text-align: center;
+    padding: 10px 25px;
+    width: 100%;
+    font-size: 16px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.full_btn:hover {
+    background: #00203B;
+}
+
+.add_btn {
+    text-align: center;
+    padding: 12px 25px;
+    font-size: 16px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 37px;
+    box-shadow: 2px 3px 10px 0 rgba(0, 43, 81, 0.2);
+    transition: all 0.5s ease;
+}
+
+.add_btn:hover {
+    color: #fff;
+    background: #00203B;
+    box-shadow: none;
+}
+
+.reset_btn {
+    text-align: center;
+    padding: 10px 25px;
+    font-size: 16px;
+    background: #E0E0E0;
+    color: #002B51;
+    border-radius: 12px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.reset_btn:hover {
+    background: #F5F5F5;
+    box-shadow: none;
+}
+
+.reject_btn {
+    text-align: center;
+    padding: 8px 25px;
+    font-size: 16px;
+    background: transparent;
+    color: #002B51;
+    border: 1px solid #002B51;
+    border-radius: 12px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.reject_btn:hover {
+    background: #F44336;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+}
+
+.submit_btn {
+    display: inline-block;
+    min-width: 10em;
+    text-align: center;
+    padding: 10px 25px;
+    font-size: 16px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.submit_btn:hover {
+    background: #00203B;
+    box-shadow: none;
+}
+
+.acc_btn {
+     display: inline-block;
+    min-width: 10em;
+    text-align: center;
+    padding: 10px 25px;
+    font-size: 16px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.acc_btn:hover {
+    background: #4CAF50;
+    color: #fff;
+}
+
+
+.modal_btn {
+    padding: 10px 20px;
+    text-align: center;
+    background: #61BCEA;
+    color: #fff;
+    border-radius: 7px;
+    border-bottom: 3px solid #4498c2;
+
+}
+
+.modal_btn:hover {
+    background: #57b0de;
+}
+
+.modal_btn:active {
+    border-top: 3px solid #4498c2;
+    border-bottom: none;
+}
+
+.simpan_btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: #6A7FDB;
+    color: #ffffff;
+    border-radius: 5px;
+    border-bottom: 4px solid #5468bf;
+}
+
+.simpan_btn:hover {
+    background: #6177D6;
+}
+
+.simpan_btn:active {
+    border-top: 4px solid #5468bf;
+    border-bottom: none;
+}
+
+
+.stepper_btn_next {
+    text-align: center;
+    margin-bottom: 100px;
+    padding: 12px 30px;
+    font-size: 18px;
+    background: #2196F3;
+    color: #fff;
+    border-radius: 37px;
+    transition: all 0.5s ease;
+}
+
+.stepper_btn_next:hover {
+    text-decoration: none;
+    background: #0d7ad1;
+    color: #fff;
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.stepper_btn_next:active {
+    box-shadow: none;
+}
+
+.stepper_btn_prev {
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    background: transparent;
+    color: #2196F3;
+    border: 2px solid #2196F3;
+    border-radius: 37px;
+    transition: all 0.5s ease;
+}
+
+.stepper_btn_prev:hover {
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.stepper_btn_prev:active {
+    box-shadow: none;
+}
+
+.primary_btn {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    background: #002B51;
+    color: #fff;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+
+/* =============================== */
+
+.primary_btn:hover {
+    background: transparent;
+    border: 2px solid #002B51;
+    color: #002B51;
+}
+
+.sukses_sert {
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    line-height: 20px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sukses_sert h3 {
+    font-size: 22px;
+    text-transform: capitalize;
+}
+
+.sukses_sert .title {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.sukses_sert .main {
+    margin-top: 7px;
+    font-size: 19px;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.toggle_btn {
+    padding: 12px 25px;
+    margin-bottom: 20px;
+    text-decoration-color: none;
+    background: #fff;
+    color: black;
+    border-radius: 37px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+}
+
+.toggle_btn:hover {
+    background: #EEEEEE;
+    box-shadow: none;
+}
+
+.toggle_btn:focus {
+    outline: none;
+}
+
+
+/* ====
+===== Preloader
+================================= */
+
+body.preloader-site {
+    overflow: hidden;
+}
+
+.preloader-wrapper {
+    height: 100%;
+    width: 100%;
+    background: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+}
+
+.preloader-wrapper .preloader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 120px;
+}
+
+
+/* Preloader Upload File */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+    background-color: #fff;
+}
+
+.preloader-upload {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 2s ease;
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+}
+
+.preloader .loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font: 14px arial;
+}
+
+.preloader-upload .loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.resUpload {
+    color: green;
+    font-weight: bold;
+}
+
+
+
+/* =====
+====== Header Area 
+================================= */
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.header_area {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    -webkit-transition: background 0.4s, all 0.3s linear;
+    -moz-transition: background 0.4s, all 0.3s linear;
+    transition: background 0.4s, all 0.3s linear;
+
+    animation: 1s ease-out 0.5s 1 slideInFromTop;
+}
+
+.logo_img {
+    width: 150px;
+    height: auto;
+}
+
+.header_area .navbar .nav .nav-item {
+    margin-right: 45px;
+}
+
+.header_area .navbar .nav .nav-item .nav-link {
+    text-decoration: none;
+}
+
+/* ===== 
+==== Banner Area
+============================= */
+
+.banner_area {
+    z-index: 1;
+    background: #F8FAFB;
+    background-size: cover;
+    height: 100vh;
+}
+
+.banner_area .banner_inner {
+    width: 100%;
+    padding: 140px 0px 0px 0px;
+}
+
+@keyframes slideInFromBottom {
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+.banner_area .banner_inner .banner_content {
+    animation: 1s ease-out 0.5s 1 slideInFromBottom;
+}
+
+.banner_area .banner_inner .banner_content h1 {
+    font-family: 'Arvo', serif;
+    font-size: 45px;
+}
+
+.banner_area .banner_inner .banner_content p {
+
+    padding-top: 20px;
+    text-align: left;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+.banner_img {
+    float: right;
+    width: 591px;
+    height: auto;
+}
+
+.banner_btn {
+    margin-top: 50px;
+}
+
+
+
+/* ===== 
+===== Login Area
+================================ */
+
+/* ===== Animation ====== */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+.login_content {
+    z-index: 1;
+    height: 100vh;
+    background: #fff;
+    color: #000;
+    background-size: cover;
+
+    animation: fadein 2s;
+    -moz-animation: fadein 2s;
+    /* Firefox */
+    -webkit-animation: fadein 2s;
+    /* Safari and Chrome */
+    -o-animation: fadein 2s;
+    /* Opera */
+}
+
+.login_inner {
+    overflow: hidden;
+    width: 100%;
+}
+
+.login_inner .row .col-lg-4 {
+    height: 100vh;
+    background-image: url('../images/building-potrait-min.jpg');
+}
+
+.login_inner .row .col-lg-8 {
+    padding-left: 150px;
+    padding-right: 170px;
+    font-weight: 600;
+    color: #002b51;
+}
+
+.login_inner p {
+    text-align: left;
+    color: #000;
+}
+
+
+
+/* ====
+==== Register 
+============================== */
+
+.regis_area {
+    background: #fff;
+
+    animation: fadein 2s;
+    -moz-animation: fadein 2s;
+    /* Firefox */
+    -webkit-animation: fadein 2s;
+    /* Safari and Chrome */
+    -o-animation: fadein 2s;
+    /* Opera */
+}
+
+
+.regis_area .regis_right .wrap_contact p {
+    color: #ffffff;
+}
+
+
+.regis_left {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 40vh;
+    height: 100vh;
+}
+
+.regis_left h3 {
+    text-align: center;
+    padding-top: 5vh;
+    color: #ffffff;
+}
+
+
+.regis_right {
+    padding: 20px 40px;
+    font-weight: 600;
+}
+
+.regis_right .col-lg-1 {
+    margin-top: 10px;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Pilih File";
+    background: #61BCEA;
+    color: #fff;
+}
+
+.iti {
+    width: 100%;
+}
+
+/*====
+==== workaround
+===========================*/
+
+.intl-tel-input {
+    display: table-cell;
+}
+
+.intl-tel-input .selected-flag {
+    z-index: 4;
+}
+
+.intl-tel-input .country-list {
+    z-index: 5;
+}
+
+.input-group .intl-tel-input .form-control {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 0;
+}
+
+.register_left {
+    text-align: center;
+    width: 50%;
+    position: fixed;
+    height: 100vh;
+    background: #F8FAFB;
+    padding: 80px 50px;
+}
+
+
+.sukses_regis {
+    height: 100vh;
+}
+
+.sukses_regis .sukses_regis_inner {
+    align-self: center;
+    text-align: center;
+    width: 100%;
+}
+
+.sukses_regis_inner img {
+    width: 560px;
+    height: auto;
+}
+
+.sukses_regis_text {
+    align-self: center;
+}
+
+.media .media-body {
+    align-self: center;
+}
+
+
+/* ====
+======= Dashboard Area
+============================== */
+
+.dashboard_wrapper {
+    margin: 0 20px;
+}
+
+.dropdown-item-img {
+    word-break: break-all;
+    padding-left: 25px;
+}
+
+.dropdown-item-img img {
+    width: 40px;
+}
+
+.dropdown-item-text {
+    word-break: normal;
+    width: 18rem;
+}
+
+.dropdown-menu {
+    width: auto;
+    border: none;
+    max-height: 25rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* width */
+.dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #BDBDBD;
+    opacity: 0.2;
+    border-radius: 10px;
+    display: none;
+    transition: all 300ms ease;
+}
+
+/* Handle on hover */
+.dropdown-menu:hover::-webkit-scrollbar-thumb {
+    background: #9E9E9E;
+    display: block;
+}
+
+
+/* =====
+===== Dropdown
+=============================== */
+
+.dropbtn {
+    background-color: transparent;
+    color: #002b51;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+    outline: none;
+}
+
+.dropdown {
+    float: right;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-top: 4px;
+    background-color: #fff;
+    min-width: 160px;
+    overflow: auto;
+    border-radius: 5px;
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.1);
+    right: 0;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {}
+
+.show {
+    display: block;
+}
+
+
+/* ===== End Navbar ====== */
+
+
+.wrap_content {
+    background: #ffffff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.wrap_content p {
+    text-align: left;
+    font-size: 16px;
+    color: #000;
+}
+
+.wrap_content h1,
+h2,
+h3,
+h4,
+h5 {
+    color: #002B51;
+}
+
+.wrap_content img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 287px;
+    height: auto;
+}
+
+.info_jenis_dalam {
+    padding: 4px 8px;
+    border: 1.3px solid #45be93;
+    font-size: 13px;
+    background: rgba(69, 190, 147, 0.2);
+    color: #45be93;
+    border-radius: 37px;
+}
+
+.info_jenis_impor {
+    padding: 4px 8px;
+    border: 1.3px solid #f1c40f;
+    font-size: 13px;
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+    border-radius: 37px;
+}
+
+.jawaban_ya {
+    padding: 6px 12px;
+    border: 1px solid #4CAF50;
+    background: #E8F5E9;
+    color: #4CAF50;
+    border-radius: 37px;
+}
+
+.jawaban_tidak {
+    padding: 6px 12px;
+    border: 1px solid #F44336;
+    background: #FFEBEE;
+    color: #F44336;
+    border-radius: 37px;
+}
+
+.wrap_content_rounded {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 15em;
+    margin-top: 20px;
+    font-weight: 600;
+    padding: 15px 15px 5px 15px;
+    border-radius: 50px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.wrap_content_rounded:hover {
+    background: #F9F9FB;
+}
+
+.wrap_content_colored {
+    color: #fff;
+    height: 6rem;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.wrap_content_colored .col-lg-8 {
+    align-self: center;
+}
+
+.wrap_content_colored h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 42px;
+}
+
+.wrap_content_colored .col-lg-4,
+.col-lg-8 {
+    vertical-align: middle;
+    -ms-grid-row-align: center;
+    -ms-flex-item-align: center;
+}
+
+
+/* =====
+==== Lock Sign Mou
+============================= */
+
+.lock_sign_mou {
+    padding: 15px;
+    border: 1px solid rgba(244, 67, 54, 1.0);
+    border-radius: 10px;
+    background: rgba(244, 67, 54, 0.2);
+}
+
+.lock_sign_mou .tlpn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 20px;
+    font-weight: 700;
+    font-size: 18px;
+    background: rgba(244, 67, 54, 0.2);
+    border-radius: 37px;
+}
+
+
+/* ======
+==== Messages
+================================= */
+
+.add_messages {
+    padding: 12px 30px;
+    background: #002b51;
+    color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 3px 6px 0 rgba(0, 43, 81, 0.2);
+    transition: all 300ms ease;
+}
+
+.add_messages:hover {
+    box-shadow: none;
+    background: #00203B;
+}
+
+.wrap_content_produk {
+    display: block;
+    height: 100vh;
+    padding: 20px;
+    background: #fff;
+    border-right: 2px solid #E0E0E0;
+    border-bottom: 2px solid #E0E0E0;
+    z-index: 99;
+}
+
+.wrap_content_messages {
+    align-self: center;
+    background: #ffffff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    transition: all 400ms ease-in;
+}
+
+.messages_list_produk {
+    margin-top: 15px;
+    padding: 14px 22px;
+    background: #F5F5F5;
+    border: 2px solid #EEEEEE;
+    border-radius: 8px;
+    transition: ease 300ms all;
+}
+
+.messages_list_produk:hover {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.list-group-item:hover {
+    color: #fff;
+    background: #42A5F5;
+}
+
+.list_active {
+    color: #fff;
+    background: #2196F3;
+}
+
+.list-group-horizontal:hover {
+    background: none;
+    color: #000;
+}
+
+i {
+    color: #002B51;
+    margin-right: 20px;
+}
+
+.list-group-active {
+    color: #fff;
+    background: rgba(0, 123, 255, 0.7);
+}
+
+.faicon_active {
+    color: #fff;
+}
+
+.default {
+    cursor: default;
+}
+
+.default:hover {
+    color: #000;
+    background: transparent;
+}
+
+.sub-menu {
+    background-color: #FAFAFA;
+    display: block;
+}
+
+.sub-menu .list {
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.sub-menu .list a {
+    display: block;
+    width: 100%;
+    padding: 15px 15px;
+    font-size: 15px;
+}
+
+.sub-menu .list a:hover {
+    font-weight: 700;
+    background: #EEEEEE;
+}
+
+.sub-menu .list .active {
+    font-weight: 700;
+}
+
+
+
+
+.messages_main {
+    padding: 20px;
+    /*
+    border-left: 2px solid #E0E0E0;
+    height: auto;
+*/
+}
+
+.messages_main .header {
+    top: 90px;
+    transition: all 300ms ease;
+}
+
+.header.scrolled {
+    top: 58px;
+    margin-left: -40px;
+    margin-right: -40px;
+    padding: 20px;
+    background-color: #fff !important;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.messages_main .sender {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #fff;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.messages_main .receiver {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #F5F5F5;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+
+.wrap_content_messages .col-lg-6 {
+    line-height: 30px;
+}
+
+.messages_date {
+    font-size: 14px;
+}
+
+
+/* ======
+====== Stepper Area 
+================================= */
+
+.font-tahap {
+    font-size: 14px;
+}
+
+.footer_stepper {
+    background: #EEEEEE;
+    margin: 0px -40px -40px -40px;
+    padding: 20px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.container_file {
+    font-weight: bold;
+}
+
+.container_file .form-control {
+    padding: 10px 10px 40px 10px;
+}
+
+.header_kuis {
+    background: #E3F2FD;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+
+/* =====
+====== Profil Area 
+================================ */
+
+.profil_img {
+    width: 200px;
+    height: auto;
+}
+
+.edit_profil .nav {
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+}
+
+.edit_profil .nav-link .active h4,
+p {
+    color: #002b51;
+}
+
+
+.edit_profil .tab-pane {
+    font-size: 16px;
+}
+
+.wrap_content_setting {
+    background: #ffffff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* ====
+====== Custom File Upload
+================================= */
+
+.container_file_upload {
+    padding: 50px 200px;
+}
+
+.box {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+}
+
+.box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+    border-bottom: 1px solid #f4f4f4;
+    margin-bottom: 10px;
+}
+
+.box-tools {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.dropzone-wrapper {
+    border: 2px dashed #707070;
+    background: #F3FBFE;
+    position: relative;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.dropzone-desc {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 40%;
+    top: 50px;
+    font-size: 16px;
+}
+
+.dropzone,
+.dropzone:focus {
+    position: absolute;
+    outline: none !important;
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.dropzone-wrapper:hover,
+.dropzone-wrapper.dragover {
+    background: #D3E3E9;
+}
+
+.preview-zone {
+    text-align: center;
+}
+
+.preview-zone .box {
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+
+/* === 
+==== Perusahaan 
+================================= */
+
+.title_list {
+    z-index: 1;
+    transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+}
+
+.title_list_scrolled {
+    margin-left: -35px;
+    margin-right: -35px;
+    top: 58px;
+    background: #fff;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ==== Display Checkbox ==== */
+
+/* The container */
+.container_checkbox_display {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: auto;
+}
+
+/* Hide the browser's default checkbox */
+.container_checkbox_display input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark_display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 100%;
+}
+
+/* When the checkbox is checked, add a green background */
+.container_checkbox_display input:checked ~ .checkmark_display {
+    background-color: #66BB6A;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark_display:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container_checkbox_display input:checked ~ .checkmark_display:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container_checkbox_display .checkmark_display:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* On Progress Tahap */
+
+.on_process {
+    display: flex;
+    font-weight: 700;
+}
+
+.img_process {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 300ms ease;
+}
+
+
+/* ==== Checkbox ==== */
+
+/* The container */
+.container_radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container_radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container_radio:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container_radio input:checked ~ .checkmark {
+    background-color: #61BCEA;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container_radio input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container_radio .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* ====
+===== Radio Button Disable
+============================== */
+
+.container_radio_disable {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: default;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container_radio_disable input {
+    position: absolute;
+    opacity: 0;
+    cursor: default;
+}
+
+/* Create a custom radio button */
+.checkmark_disable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container_radio_disable:hover input ~ .checkmark_disable {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container_radio_disable input:checked ~ .checkmark_disable {
+    background-color: #61BCEA;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark_disable:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container_radio_disable input:checked ~ .checkmark_disable:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container_radio_disable .checkmark_disable:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.view_produk {
+    text-align: center;
+    padding: 10px 20px;
+    background: #42A5F5;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.view_produk:hover {
+    background: #1E88E5;
+    color: #fff;
+    box-shadow: none;
+}
+
+.center_align {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.view_file {
+    display: inline-block;
+    background: #fff;
+    padding: 10px 25px;
+    margin: 20px 0 20px 0;
+    border-radius: 37px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    transition: all 500ms ease;
+}
+
+.view_file p {
+    padding-bottom: none;
+    color: #42A5F5;
+}
+
+.view_file:hover {
+    background: #EEEEEE;
+    box-shadow: none;
+}
+
+.view_file:active {
+    box-shadow: none;
+}
+
+.download_file {
+    display: inline-block;
+    padding: 10px 25px;
+    color: #fff;
+    background: #4CAF50;
+    margin: 20px 0 20px 0;
+    border-radius: 37px;
+    -webkit-box-shadow: 0 5px 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2);
+    transition: all ease 300ms;
+}
+
+.download_file p {
+    padding: 10px 15px;
+    color: #fff;
+}
+
+.download_file:hover {
+    background: #43A047;
+}
+
+.download_file:active {
+    box-shadow: none;
+}
+
+
+/* ==== Cutom File Input ==== */
+
+.inputDnD .form-control-file {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 7em;
+    outline: none;
+    visibility: hidden;
+    cursor: pointer;
+    background-color: #c61c23;
+    box-shadow: 0 0 5px solid currentColor;
+}
+
+.inputDnD .form-control-file:before {
+    content: attr(data-title);
+    position: absolute;
+    top: 0.5em;
+    left: 0;
+    width: 100%;
+    min-height: 6em;
+    line-height: 2em;
+    padding-top: 1.5em;
+    opacity: 1;
+    visibility: visible;
+    text-align: center;
+    background: #F3FBFE;
+    border: 2px dashed #707070;
+    border-radius: 5px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    transition: all 300ms ease;
+}
+
+.inputDnD .form-control-file:hover:before {
+    background: #d3e2e8;
+}
+
+
+/* =====
+==== Back To Top
+============================== */
+
+#button_to_top {
+    display: inline-block;
+    background-color: #4198c4;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 35px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s,
+        opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#button_to_top::after {
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+}
+
+#button_to_top:hover {
+    cursor: pointer;
+    background-color: #3082ab;
+}
+
+#button_to_top:active {
+    background-color: #3082ab;
+}
+
+#button_to_top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =====
+===== Add Messages
+================================ */
+
+.add_messages_floating {
+    display: inline-block;
+    padding: 10px 20px;
+    position: fixed;
+    background-color: #087E8B;
+    color: #fff;
+    bottom: 30px;
+    right: 6em;
+    border-radius: 30px;
+    z-index: 1000;
+}
+
+.add_messages_floating:hover {
+    cursor: pointer;
+    background-color: #285b75;
+    color: #fff;
+}
+
+.add_messages_floating:active {
+    background-color: #3082ab;
+}
+
+
+
+/* =====
+===== Footer Section
+================================= */
+
+.footer_main {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px 30px;
+    background: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* ====
+===== Animation
+============================*/
+
+
+
+/* ====
+==== Responsive
+============================ */
+
+@media (max-device-width: 768px) {
+    .d-flex {
+        display: none;
+    }
+}
+
+/* ===== 
+==== Welcome Page
+================================= */
+
+@media (max-width: 1024px) {
+    .banner_area .banner_inner {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner_area .banner_inner .banner_content .banner_img {
+        display: none;
+    }
+}
+
+/* =====
+==== Login Page 
+================================= */
+
+@media (max-width: 768px) {
+    .login_content .login_inner .col-lg-4 {
+        display: none;
+    }
+    
+    .login_content .login_inner .col-lg-8 {
+        margin-top: 50px;
+        vertical-align: middle;
+        -ms-grid-row-align: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+    }
+}
+
+/* =====
+ === Register Page
+================================= */
+
+@media (max-width: 1024px) {
+    .regis_area .regis_left img {
+        width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .regis_area .regis_left {
+        display: none;
+    }
+}
