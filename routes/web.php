@@ -13,7 +13,7 @@
 Route::group(['middleware'=>'verified'], function() {
 	Route::get('/cek/{file}', 'HomeController@view_dok');
 	Route::get('/sikat_bersih/{idProduk}', 'HomeController@deleteAll');
-	Route::get('/doc/download/{directory}/{directory2?}/{file}', 'HomeController@downloadDoc');
+	Route::get('/doc/download/{directory}/{file}', 'HomeController@downloadDoc');
 	Route::get('/manual/download/{role}', 'HomeController@manual');
 	Route::post('/setting/company', 'HomeController@settingComp');
 

@@ -31,7 +31,7 @@ class MOUController extends Controller
     }
 
     public function create(Request $request, $idProduk, $user_id) {
-        $sVal = explode(',', $request->b_sert);
+        $sVal = explode('.', $request->b_sert);
         $val = '';
         foreach ($sVal as $key => $value) {
             $val.=$value;
@@ -43,7 +43,10 @@ class MOUController extends Controller
         $user = User::find($user_id);
     	$pdf = \PDF::loadView('dok.dok_mou', ['user' => $user, 'date' => $date, 'biaya_sert' => $b_sert, 'tgl_pembuatan' => $date->parse($request->d_kontrak), 'no_surat' => $request->no_mou]);
         $output = $pdf->output();
-        $fileName = uniqid().''.date('YmdHis').'.pdf';
+
+        $nama_perusahaan = implode('_', explode(' ', $request->company_name));
+        $nama_produk = implode('_', explode(' ', $request->product_name));
+        $fileName = 'MOU-'.$nama_perusahaan.'-'.$nama_produk.'-'.uniqid().''.'.pdf';
         \Storage::put('dok/mou/'.$fileName, $output);
 
         $mou = new Mou;
@@ -66,9 +69,9 @@ class MOUController extends Controller
     public function uploadMou(Request $request, $idProduk) {
         // validasi extensi file upload
         $d = \Validator::make($request->file(), [
-            'mou' => 'required|max:2000|mimes:pdf',
+            'mou' => 'required|max:5000|mimes:pdf',
         ],[
-            'max'    => 'Ukuran tidak boleh melebihi 2 megabytes',
+            'max'    => 'Ukuran tidak boleh melebihi 5 megabytes',
             'mimes'      => 'Extensi file yang diperbolehkan: pdf',
         ]);
         if ($d->fails()) {return redirect()->back()->withErrors($d);}
@@ -81,7 +84,7 @@ class MOUController extends Controller
         $nama_produk = implode('_', explode(' ', $produk->produk));
 
         $file = $request->file('mou');
-        $fileName = 'mou-'.$nama_perusahaan.'-'.$nama_produk.'-'.uniqid().'.'.$file->getClientOriginalExtension();
+        $fileName = 'MOU-'.$nama_perusahaan.'-'.$nama_produk.'-'.uniqid().'.'.$file->getClientOriginalExtension();
         if (\Storage::exists('dok/mou/'.$mou->mou)) {
             \Storage::delete('dok/mou/'.$mou->mou);
         }
@@ -124,7 +127,10 @@ class MOUController extends Controller
 
     	$file = $request->mou;
         $mou = MOU::find($id);
-    	$fileName = date('YmdHis').''.uniqid().'.'.$file->extension();
+        $nama_perusahaan = implode('_', explode(' ', $request->company_name));
+        $nama_produk = implode('_', explode(' ', $request->product_name));
+
+    	$fileName = 'MOU-'.$nama_perusahaan.'-'.$nama_produk.'_'.uniqid().'.'.$file->extension();
     	if (!is_null($mou->mou)) {
             \Storage::delete('dok/mou/'.$mou->mou);
     	}

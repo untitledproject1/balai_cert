@@ -265,11 +265,8 @@ class HomeController extends Controller
     	return redirect()->back()->withErrors($msg);
     }
 
-    public function downloadDoc($directory, $directory2 = null, $file) {
+    public function downloadDoc($directory, $file) {
         $dir = $directory;
-        if (!is_null($directory2)) {
-            $dir = $directory.'/'.$directory2;
-        }
         if (\Storage::exists('dok/'.$dir.'/'.$file)) {
             return response()->download(storage_path('app/public/dok/'.$dir.'/'.$file));
         }

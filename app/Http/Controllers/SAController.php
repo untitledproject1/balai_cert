@@ -174,9 +174,9 @@ class SAController extends Controller
 
             // }
             
-            if (!is_null($currentProduct) && $request->form_action == 'true') {
+            if ($request->form_action == 'true') {
                 $msg = 'Form Apply SA telah di-simpan';
-            } elseif (!is_null($currentProduct) && $request->form_action == 'false') {
+            } elseif ($request->form_action == 'false') {
                 $msg = 'Form Apply SA telah di-submit';
                 $dok->sni = 3;
             }
