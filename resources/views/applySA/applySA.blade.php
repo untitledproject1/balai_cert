@@ -95,7 +95,7 @@
         <br><br>
         @endif
 
-        <form id="applySA_upload" method="POST" action="{{ $userAuth->negeri == '1' ? url('/sa') : url('saLuar') }}">
+        <form id="applySA_upload" method="POST" action="{{ url($url) }}">
             @csrf
 
                 <h5>Produk <span class="badge badge-danger">Wajib Diisi</span></h5>

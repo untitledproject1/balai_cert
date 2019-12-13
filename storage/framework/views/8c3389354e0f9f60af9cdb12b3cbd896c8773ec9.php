@@ -79,7 +79,7 @@
         <br><br>
         <?php endif; ?>
 
-        <form id="applySA_upload" method="POST" action="<?php echo e($userAuth->negeri == '1' ? url('/sa') : url('saLuar')); ?>">
+        <form id="applySA_upload" method="POST" action="<?php echo e(url($url)); ?>">
             <?php echo csrf_field(); ?>
 
                 <h5>Produk <span class="badge badge-danger">Wajib Diisi</span></h5>

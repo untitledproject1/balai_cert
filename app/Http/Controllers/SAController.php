@@ -64,7 +64,7 @@ class SAController extends Controller
             return false;
         };
 
-        return view('applySA.applySA', ['dok' => null, 'dokImportir' => null, 'dokManufaktur' => null, 'infoDB' => null, 'pesan' => null, 'kuesioner' => null, 'bahanHasil' => null, 'isi' => $isi, 'cekOpsi' => $cekOpsi, 'spekP' => null, 'alat' => null, 'kode_tahap' => null, 'idProduk' => null, 'user' => $user, 'produk' => null, 'cekDok' => $cekDok]);
+        return view('applySA.applySA', ['url' => '/sa/new', 'dok' => null, 'dokImportir' => null, 'dokManufaktur' => null, 'infoDB' => null, 'pesan' => null, 'kuesioner' => null, 'bahanHasil' => null, 'isi' => $isi, 'cekOpsi' => $cekOpsi, 'spekP' => null, 'alat' => null, 'kode_tahap' => null, 'idProduk' => null, 'user' => $user, 'produk' => null, 'cekDok' => $cekDok]);
     }
 
     public function sa($idProduk) {
@@ -114,9 +114,9 @@ class SAController extends Controller
         };
         $formatFile = FormatFile::where('format', 'Surat Permohonan F.03.01')->first();
 
-        return view('applySA.applySA', compact('dok', 'dokImportir', 'dokManufaktur', 'infoDB', 'isi', 'cekOpsi', 'pesan', 'kuesioner', 'bahanHasil' , 'spekP', 'alat', 'idProduk', 'infoIsi', 'user', 'cekDok'), ['kode_tahap' => $produk->kode_tahap, 'produk' => $produk, 'formatFile' => $formatFile]);
+        return view('applySA.applySA', compact('dok', 'dokImportir', 'dokManufaktur', 'infoDB', 'isi', 'cekOpsi', 'pesan', 'kuesioner', 'bahanHasil' , 'spekP', 'alat', 'idProduk', 'infoIsi', 'user', 'cekDok'), ['url' => '/sa/'.$idProduk, 'kode_tahap' => $produk->kode_tahap, 'produk' => $produk, 'formatFile' => $formatFile]);
     }
-    public function applySA(Request $request) {
+    public function applySA(Request $request, $data) {
         // validasi extensi file upload
         // $d = \Validator::make($request->file(), [
         //     'dok.*' => 'required|max:2000|mimes:png,jpeg,jpg,pdf,docx,doc',
@@ -126,22 +126,26 @@ class SAController extends Controller
         // ]);
         // if ($d->fails()) {return redirect()->back()->withErrors($d);}
         $user = \Auth::user();
-        $currentProduct = $user->currentProduct();
-        if (is_null($currentProduct)) {
+        // $currentProduct = $user->currentProduct();
+        if ($request->getPathInfo() == '/sa/new') {
             $produk = new Produk;
             $produk->user_id = $user->id;
             $available_product = false;
         } else {
-            $produk = $currentProduct;
+            $produk = Produk::find($data);
+            if (is_null($produk)) {
+                abort(404);
+            }
             $available_product = true;
         }
+
         $produk->produk = $request->produk;
         $produk->jenis_produk = $request->jenis_produk;
         $produk->save();
         $msg = 'Produk berhasil diisi!';
 
-        $produkName = !is_null($currentProduct) ? $currentProduct->produk : $produk->produk;
-        $idProduk = !is_null($currentProduct) ? $currentProduct->id : $produk->id;
+        $produkName = $produk->produk;
+        $idProduk = $produk->id;
         $currentDoc = $this->dok($idProduk);
         $infoDB = InfoTambahan::where('produk_id', $idProduk)->first();
         $kuisDB = Kuesioner::where('produk_id', $idProduk)->first();

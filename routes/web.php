@@ -56,7 +56,7 @@ Route::group(['middleware'=>'verified'], function() {
 
 		Route::get('/addNew/sa', 'SAController@newSA');
 		Route::get('/sa/{idProduk}', 'SAController@sa');
-		Route::post('/sa', 'SAController@applySA');
+		Route::post('/sa/{data}', 'SAController@applySA');
 		Route::post('/saLuar', 'SAController@applySAluar');
 		// mou
 		Route::get('/mou/{idProduk}', 'MOUController@mou');

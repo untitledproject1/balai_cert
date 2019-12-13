@@ -43,12 +43,7 @@
             <?php endif; ?>
         <br>
 
-        <b>Tahap Sertifikasi: </b><br>
-        <div class="mt-2">
-            <div class="tahap_sert_pending ml-3"></div>&nbsp; Sedang Berjalan
-            <div class="tahap_sert_on ml-3"></div>&nbsp; Sudah Selesai
-        </div>
-        <br>
+        
         
         <table id="example" class="table" style="width:100%;">
             <thead>
