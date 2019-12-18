@@ -16,7 +16,7 @@
             <a href="{{ url('/dashboard') }}" class="list-group-item">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <i class="fas fa-home fa-lg" style="color: #002B51; margin-right: 20px;"></i>
+                        <i class="fas fa-home fa-lg"></i>
                     </div>
                     <div class="col-lg-10 col-md-10">
                         Dashboard
@@ -24,16 +24,27 @@
                 </div>
             </a>
 
-           {{-- <a href="{{ url('/pesan') }}" class="list-group-item">
+            <a href="{{ url('/history') }}" class="list-group-item">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <i class="fas fa-envelope fa-lg" style="color: #002B51; margin-right: 20px;"></i>
+                        <i class="fas fa-history fa-lg "></i>
+                    </div>
+                    <div class="col-lg-10 col-md-10">
+                        Riwayat Sertifikasi Produk
+                    </div>
+                </div>
+            </a>
+
+           <a href="{{ url('/pesan') }}" class="list-group-item">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <i class="fas fa-envelope fa-lg"></i>
                     </div>
                     <div class="col-lg-10 col-md-10">
                         Pesan
                     </div>
                 </div>
-            </a> --}}
+            </a>
 
             @elseif($role != 'client' && $role != 'super_admin')
             {{-- {{ $uri == 'cert_list/on_going' ? 'list_active' : '' }} --}}

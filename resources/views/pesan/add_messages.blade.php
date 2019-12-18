@@ -16,20 +16,21 @@
                 <form action="">
                     <div class="form-group">
                         <label for="">Kepada</label>
-                        <select class="custom-select" id="inputGroupSelect01">
+                        {{-- <select class="custom-select" id="inputGroupSelect01">
                             <option selected>Choose...</option>
                             <option value="1">Pemasaran</option>
                             <option value="2">Kerjasama</option>
                             <option value="3">Sertifikasi</option>
-                        </select>
+                        </select> --}}
+                        <input class="form-control" type="text" value="{{ \AppHelper::instance()->getPesan($kode_tahap, $tahap_sert)[0] }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="">Produk</label>
-                        <input class="form-control" type="text" value="Keramik" readonly>
+                        <input class="form-control" type="text" value="{{ $produk->produk }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="">Tahap Sertifikasi</label>
-                        <input class="form-control" type="text" value="Apply SA" readonly>
+                        <input class="form-control" type="text" value="{{ \AppHelper::instance()->getPesan($kode_tahap, $tahap_sert)[1] }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="">Isi Pesan</label>
