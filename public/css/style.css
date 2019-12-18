@@ -471,6 +471,15 @@ span {
     color: #002B51;
 }
 
+.btn-success {
+    border-radius: 37px;
+}
+
+.btn-success-text {
+    display: inline-block;
+    padding: 3px 15px;
+} 
+
 
 /* =======
 ======= Checkbox
