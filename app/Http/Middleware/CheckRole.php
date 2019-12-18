@@ -44,7 +44,7 @@ class CheckRole
                 \View::share('tahap_sert', $tahapan);
                 \View::share('userAuth', $getUser);
                 \View::share('role', $role);
-                \View::share('uri', $getUri);
+                \View::share('uri', $url);
             }
 
             return $next($request);

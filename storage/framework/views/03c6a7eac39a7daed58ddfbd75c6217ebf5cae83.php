@@ -1,16 +1,14 @@
-@extends('layouts.dok_header')
+<?php $__env->startSection('card-header-dok', 'Penawaran Harga'); ?>
 
-@section('card-header-dok', 'Penawaran Harga')
-
-@section('content_dok')
+<?php $__env->startSection('content_dok'); ?>
 
 <div class="ml-4 mr-4">
     <table width="100%">
         <tr>
             <td width="5%">Nomor</td>
             <td width="2%">:</td>
-            <td width="40%">{{ $no_surat_bp }}</td>
-            <td width="60%" style="text-align: right;">Bandung, {{ $tgl_pembuatan->isoFormat('LL') }}</td>
+            <td width="40%"><?php echo e($no_surat_bp); ?></td>
+            <td width="60%" style="text-align: right;">Bandung, <?php echo e($tgl_pembuatan->isoFormat('LL')); ?></td>
         </tr>
         <tr>
             <td width="25%">Sifat</td>
@@ -25,8 +23,8 @@
         <tr>
             <td width="25%">Hal</td>
             <td>:</td>
-            <td>{{ $hal }}</td>
-            {{-- <td>Informasi Biaya SPPT SNI dalam Rangka Survailen</td> --}}
+            <td><?php echo e($hal); ?></td>
+            
         </tr>
     </table>
 
@@ -35,8 +33,9 @@
     <p class="text-left">
         <div style="width: 300px">
             Yth. Pimpinan <br>
-            <b>{{ $user->pimpinan_perusahaan }}</b><br>
-            {{ $user->alamat_perusahaan }}
+            <b><?php echo e($user->pimpinan_perusahaan); ?></b><br>
+            <?php echo e($user->alamat_perusahaan); ?>
+
         </div>
     </p><br>
     <table>
@@ -44,23 +43,19 @@
             <tr>
                 <td width="15%">Telp.</td>
                 <td>:</td>
-                <td>&nbsp;{{ $user->no_telp }}</td>
+                <td>&nbsp;<?php echo e($user->no_telp); ?></td>
             </tr>
             <tr>
                 <td>Email</td>
                 <td>:</td>
-                <td>&nbsp;{{ $user->email_perusahaan }}</td>
+                <td>&nbsp;<?php echo e($user->email_perusahaan); ?></td>
             </tr>
-            {{-- <tr>
-            <td>Up.</td>
-            <td>:</td>
-            <td>&nbsp;Frans</td>
-        </tr> --}}
+            
         </tbody>
     </table>
 
     <p class="mt-2" style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Berkenaan dengan akan dilaksanakannya survailen ke-2 SPPT SNI di {{ $user->nama_perusahaan }} , untuk komoditi {{ $produk->jenis_produk }} (jumlah karyawan {{ $total_pegawai }} orang), dengan ini kami sampaikan rincian biaya seperti terlampir.</p>
+        Berkenaan dengan akan dilaksanakannya survailen ke-2 SPPT SNI di <?php echo e($user->nama_perusahaan); ?> , untuk komoditi <?php echo e($produk->jenis_produk); ?> (jumlah karyawan <?php echo e($total_pegawai); ?> orang), dengan ini kami sampaikan rincian biaya seperti terlampir.</p>
 
     <p class="mt-2" style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         Apabila ada perubahan tipe kategori produk, merk, legilitas/susunan organisasi produsen, jumlah karyawan produsen mohon segera diinformasikan. Untuk pembayaran biaya tersebut di atas, dimohon agar dapat menggunakan aplikasi SIMPONI. Kode biling untuk penyetoran akan kami sampaikan bersamaan dengan surat tagihan.</p>
@@ -97,12 +92,12 @@
             <tr>
                 <td>Lampiran Surat No</td>
                 <td>:</td>
-                <td>{{ $no_surat_bp }}</td>
+                <td><?php echo e($no_surat_bp); ?></td>
             </tr>
             <tr>
                 <td>Tanggal</td>
                 <td>:</td>
-                <td>{{ $tgl_pembuatan->isoFormat('LL') }}</td>
+                <td><?php echo e($tgl_pembuatan->isoFormat('LL')); ?></td>
             </tr>
         </table>
 
@@ -113,7 +108,7 @@
                 RINCIAN BIAYA SERTIFIKASI PRODUK <br>
                 PENGGUNAAN TANDA (SPPT) SNI <br>
                 DALAM RANGKA SURVAILEN <br>
-                {{ $user->nama_perusahaan }} <br>
+                <?php echo e($user->nama_perusahaan); ?> <br>
             </b>
         </p>
 
@@ -126,7 +121,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_permohonan'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_permohonan'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -138,7 +133,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_audit1'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_audit1'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -157,7 +152,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_kepala'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_kepala'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -169,7 +164,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_ppc'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_ppc'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -191,7 +186,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_pTeknis'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_pTeknis'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -203,7 +198,7 @@
                         <table width="100%">
                             <tr>
                                 <td class="text-right">Rp.</td>
-                                <td class="text-right">{{ number_format($price['b_sert'], 0, '.', ',') }}</td>
+                                <td class="text-right"><?php echo e(number_format($price['b_sert'], 0, '.', ',')); ?></td>
                             </tr>
                         </table>
                     </td>
@@ -217,7 +212,7 @@
                         <table width="100%">
                             <tr>
                                 <td width="15%" class="text-right"><b>Rp.</b></td>
-                                <td class="text-right"><b>{{ number_format($price['b_total'], 0, '.', ',') }}</b></td>
+                                <td class="text-right"><b><?php echo e(number_format($price['b_total'], 0, '.', ',')); ?></b></td>
                             </tr>
                         </table>
                     </td>
@@ -225,7 +220,7 @@
             </table>
 
             <div class="text-right" style="padding-top: -10px">
-                <p><i>({{ $harga_terbilang }})</i></p>
+                <p><i>(<?php echo e($harga_terbilang); ?>)</i></p>
             </div>
 
             <br><br><br><br><br><br>
@@ -258,4 +253,6 @@
 
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.dok_header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/balai-cert/resources/views/dok/dok_bidPrice.blade.php ENDPATH**/ ?>

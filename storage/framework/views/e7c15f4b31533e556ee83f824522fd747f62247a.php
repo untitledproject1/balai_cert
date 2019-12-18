@@ -14,10 +14,23 @@
             <a href="<?php echo e(url('/dashboard')); ?>" class="list-group-item">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <i class="fas fa-home fa-lg" style="color: #002B51; margin-right: 20px;"></i>
+                        <i class="fas fa-home fa-lg" ></i>
                     </div>
                     <div class="col-lg-10 col-md-10">
                         Dashboard
+                    </div>
+                </div>
+            </a>
+
+            
+            <a class="list-group-item " href="<?php echo e(url('/history')); ?>">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        
+                        <i class="fas fa-history fa-lg "></i>
+                    </div>
+                    <div class="col-lg-10 col-md-10">
+                        Riwayat Sertifikasi Produk
                     </div>
                 </div>
             </a>

@@ -38,47 +38,56 @@ Route::group(['middleware'=>'verified'], function() {
 
 	// route client	
 	Route::group(['middleware'=>'roles','roles'=>'client'], function() {
+		
+		Route::get('/history', 'ProdukController@history');
+		// dashboard
+		Route::get('/dashboard', 'ProdukController@dashboard');
 		Route::get('/profil', 'HomeController@profil');
 		Route::get('/surat_sni/download/{negeri}', 'SAController@surat_sni');
-		// dashboard
-		Route::get('/dashboard', 'HomeController@dashboard');
-		// menampilkan list produk
-		Route::get('/list_produk', 'SAController@list_produk');
-		// apply SA
-		// ---- ajax upload
-		Route::post('/async_sa_upload', 'SAController@async_sa_upload');
-		Route::post('/async_kuis_upload', 'SAController@async_kuis_upload');
-		Route::post('/async_bHasil_upload', 'SAController@async_bHasil_upload');
 
-		// dok audit
-		// ---- ajax upload
-		Route::post('/async_tinjauanPP_upload', 'JAController@async_tinjauanPP_upload');
+		$url = explode('/', url()->current());
+		$prefix = isset($url[3]) && $url[3] == 'history' ? 'history' : '';
+		Route::prefix($prefix)->group(function() {
+			// menampilkan list produk
+			Route::get('/list_produk', 'SAController@list_produk');
+			// apply SA
+			// ---- ajax upload
+			Route::post('/async_sa_upload', 'SAController@async_sa_upload');
+			Route::post('/async_kuis_upload', 'SAController@async_kuis_upload');
+			Route::post('/async_bHasil_upload', 'SAController@async_bHasil_upload');
 
-		Route::get('/addNew/sa', 'SAController@newSA');
-		Route::get('/sa/{idProduk}', 'SAController@sa');
-		Route::post('/sa/{data}', 'SAController@applySA');
-		Route::post('/saLuar', 'SAController@applySAluar');
-		// mou
-		Route::get('/mou/{idProduk}', 'MOUController@mou');
-		Route::post('/mou_signed/{id}', 'MOUController@mou_signed');
-		// form kapan bayar
-		Route::get('/form_bayar/{idProduk}', 'BPController@getForm_bayar');
-		Route::post('/form_bayar/{id}', 'BPController@form_bayar');
-		// upload bukti bayar
-		Route::get('/bukti_bayar/{idProduk}', 'BPController@getBukti');
-		Route::post('/bukti_bayar/{id}', 'BPController@bukti_bayar');
-		// upload dok audit
-		Route::get('/verify_dokSert/{idProduk}', 'JAController@verify_dokSert');
-		Route::post('/dokAudit/{idProduk}', 'JAController@dokAudit');
-		// approval draft sert
-		Route::get('/apprv_draftSert/{idProduk}', 'SertController@getApprv');
-		Route::post('/apprv_draftSert_action/{idProduk}', 'SertController@postApprv');
-		// request ambil/kirim sert
-		Route::get('/req_sert/{idProduk}', 'SertController@req_sert');
-		Route::post('/req_sert_action/{id}', 'SertController@postReq_sert');
-		// verifikasi penerimaan sert
-		Route::get('/verify_terimaSert/{idProduk}', 'SertController@verify_terimaSert');
-		Route::post('/verify_terimaSert_post/{idProduk}', 'SertController@verify_terimaSert_post');
+			// dok audit
+			// ---- ajax upload
+			Route::post('/async_tinjauanPP_upload', 'JAController@async_tinjauanPP_upload');
+
+			Route::get('/addNew/sa', 'SAController@newSA');
+			Route::get('/sa/{idProduk}', 'SAController@sa');
+			Route::post('/sa/{data}', 'SAController@applySA');
+			Route::post('/saLuar', 'SAController@applySAluar');
+			// mou
+			Route::get('/mou/{idProduk}', 'MOUController@mou');
+			Route::post('/mou_signed/{id}', 'MOUController@mou_signed');
+			// form kapan bayar
+			Route::get('/form_bayar/{idProduk}', 'BPController@getForm_bayar');
+			Route::post('/form_bayar/{id}', 'BPController@form_bayar');
+			// upload bukti bayar
+			Route::get('/bukti_bayar/{idProduk}', 'BPController@getBukti');
+			Route::post('/bukti_bayar/{id}', 'BPController@bukti_bayar');
+			// upload dok audit
+			Route::get('/verify_dokSert/{idProduk}', 'JAController@verify_dokSert');
+			Route::post('/dokAudit/{idProduk}', 'JAController@dokAudit');
+			// approval draft sert
+			Route::get('/apprv_draftSert/{idProduk}', 'SertController@getApprv');
+			Route::post('/apprv_draftSert_action/{idProduk}', 'SertController@postApprv');
+			// request ambil/kirim sert
+			Route::get('/req_sert/{idProduk}', 'SertController@req_sert');
+			Route::post('/req_sert_action/{id}', 'SertController@postReq_sert');
+			// verifikasi penerimaan sert
+			Route::get('/verify_terimaSert/{idProduk}', 'SertController@verify_terimaSert');
+			Route::post('/verify_terimaSert_post/{idProduk}', 'SertController@verify_terimaSert_post');
+		});
+		
+
 	});
 
 	// route seksi pemasaran, seksi kerjasama, kabidpjt, seksi keuangan, auditor, kabidPaskal, tim_teknis, komite_timTeknis
@@ -242,8 +251,8 @@ Route::group(['middleware'=>'verified'], function() {
 	});
 
 	// super admin
-	Route::prefix('bc_admin/super')->group(function() {
-		Route::group(['middleware'=>'roles','roles'=>'super_admin'], function() {
+	Route::group(['middleware'=>'roles','roles'=>'super_admin'], function() {
+		Route::prefix('bc_admin/super')->group(function() {
 
 			Route::get('/dashboard', 'SuperAdmin\HomeAdminController@index')->name('dashboard_superAdmin');
 			Route::get('/pengaturan/format_file', 'SuperAdmin\HomeAdminController@format_file')->name('format_file');

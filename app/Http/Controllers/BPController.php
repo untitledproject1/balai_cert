@@ -14,6 +14,38 @@ use App\NoSurat;
 
 class BPController extends Controller
 {
+    public function terbilang($nilai) {
+        // $nilai = abs($nilai);
+        // $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        // $temp = "";
+        // if ($nilai < 12) {
+        //     $temp = " ". $huruf[$nilai];
+        // } else if ($nilai <20) {
+        //     $temp = $this->terbilang($nilai - 10). " belas";
+        // } else if ($nilai < 100) {
+        //     $temp = $this->terbilang($nilai/10)." puluh". $this->terbilang($nilai % 10);
+        // } else if ($nilai < 200) {
+        //     $temp = " seratus" . $this->terbilang($nilai - 100);
+        // } else if ($nilai < 1000) {
+        //     $temp = $this->terbilang($nilai/100) . "ratus" . $this->terbilang($nilai % 100);
+        // } else if ($nilai < 2000) {
+        //     $temp = " seribu" . $this->terbilang($nilai - 1000);
+        // } else if ($nilai < 1000000) {
+        //     $temp = $this->terbilang($nilai/1000) . "ribu" . $this->terbilang($nilai % 1000);
+        // } else if ($nilai < 1000000000) {
+        //     $temp = $this->terbilang($nilai/1000000) . " juta" . $this->terbilang($nilai % 1000000);
+        // } else if ($nilai < 1000000000000) {
+        //     $temp = $this->terbilang($nilai/1000000000) . "milyar" . $this->terbilang(fmod($nilai,1000000000));
+        // } else if ($nilai < 1000000000000000) {
+        //     $temp = $this->terbilang($nilai/1000000000000) . "trilyun" . $this->terbilang(fmod($nilai,1000000000000));
+        // }
+
+        // return $temp;
+
+        $number_format = new \NumberFormatter('in', \NumberFormatter::SPELLOUT);
+        return $number_format->format($nilai);
+    }
+
     protected function bidPrice($view, $id, $idProduk, $no_surat = null) {
         $user = User::find($id);
         $produk = Produk::where('id', $idProduk)->first();
@@ -22,6 +54,7 @@ class BPController extends Controller
         }
         $kode_tahap = $produk->kode_tahap;
     	$noSurat = NoSurat::where('jenis', 'penawaran_harga')->select('no')->orderBy('id', 'desc')->first();
+
     	return view($view, ['model' => BidPrice::where('produk_id', $idProduk)->first(), 'mou' => MOU::where('produk_id', $idProduk)->first(), 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'kode_tahap' => $kode_tahap, 'no_surat_bp' => $noSurat]);
     }
 
@@ -30,7 +63,7 @@ class BPController extends Controller
     }
 
     public function getRealCur($value) {
-        $sVal = explode(',', $value);
+        $sVal = explode('.', $value);
         $val = '';
         foreach ($sVal as $key => $value) {
             $val.=$value;
@@ -66,9 +99,13 @@ class BPController extends Controller
         $date = \Carbon\Carbon::now();
         $produk = Produk::find($idProduk);
 
-        $pdf = \PDF::loadView('dok.dok_bidPrice', ['produk' => $produk, 'price' => $request->price, 'date' => $date, 'user' => $user, 'price' => $price, 'total_pegawai' => $total_pegawai, 'tgl_pembuatan' => $date->parse($request->tgl_pembuatan), 'no_surat_bp' => $request->no_bp, 'hal' => $request->hal]);
+        $pdf = \PDF::loadView('dok.dok_bidPrice', ['produk' => $produk, 'price' => $request->price, 'date' => $date, 'user' => $user, 'price' => $price, 'total_pegawai' => $total_pegawai, 'tgl_pembuatan' => $date->parse($request->tgl_pembuatan), 'no_surat_bp' => $request->no_bp, 'hal' => $request->hal, 'harga_terbilang' => $this->terbilang($price['b_total'])]);
         $output = $pdf->output();
-    	$fileName = 'Penawaran_harga-'.uniqid().''.date('YmdHis').'.pdf';
+
+        $nama_perusahaan = implode('_', explode(' ', $user->nama_perusahaan));
+        $nama_produk = implode('_', explode(' ', $produk->produk));
+        $fileName = 'Penawaran_harga-'.$nama_perusahaan.'-'.$nama_produk.'-'.uniqid().'.pdf';
+        
         \Storage::put('dok/bidPrice/'.$fileName, $output);
 
 		$dok = new $model;
@@ -84,9 +121,11 @@ class BPController extends Controller
 		$mou = Mou::where('mou.produk_id', $idProduk)->first();
 		$no_surat_mou = NoSurat::where('dok', $mou->mou)->first();
 
-		$pdf = \PDF::loadView('dok.dok_mou', ['user' => $user, 'date' => $date, 'biaya_sert' => $price['b_total'], 'tgl_pembuatan' => $date->parse($mou->tgl_kontrak), 'no_surat' => $no_surat_mou->no]);
+		$pdf = \PDF::loadView('dok.dok_mou', ['user' => $user, 'date' => $date, 'biaya_sert' => $price['b_total'], 'tgl_pembuatan' => $date->parse($mou->tgl_kontrak), 'no_surat' => $no_surat_mou->no, 'harga_terbilang' => $price['b_total']]);
         $output = $pdf->output();
-        $fileName = uniqid().''.date('YmdHis').'.pdf';
+
+        $fileName = 'MOU-'.$nama_perusahaan.'-'.$nama_produk.'-'.uniqid().'.pdf';
+
         \Storage::put('dok/mou/'.$fileName, $output);
         if (\Storage::exists('dok/mou/'.$mou->mou)) {
             \Storage::delete('dok/mou/'.$mou->mou);
@@ -104,6 +143,37 @@ class BPController extends Controller
 		$no_surat->save();
 
 		return redirect()->back();
+    }
+
+    public function edit_rincianHarga(Request $request, $idProduk, $user_id) {
+        $price = $this->rincin_harga($request->all());
+        $bidPrice = BidPrice::where('produk_id', $idProduk)->first();
+        $no_surat_bp = NoSurat::where('dok', $bidPrice->bid_price)->first();
+
+        $user = User::find($user_id);
+        $total_pegawai = $user->jml_pegawai_tetap + $user->jml_pegawai_tidak_tetap;
+        $date = \Carbon\Carbon::now();
+        $produk = Produk::find($idProduk);
+
+        $pdf = \PDF::loadView('dok.dok_bidPrice', ['produk' => $produk, 'date' => $date, 'user' => $user, 'price' => $price, 'total_pegawai' => $total_pegawai, 'tgl_pembuatan' => $date->parse($bidPrice->tgl_pembuatan), 'no_surat_bp' => $no_surat_bp->no, 'hal' => $bidPrice->hal, 'harga_terbilang' => $this->terbilang($price['b_total'])]);
+        $output = $pdf->output();
+
+        $nama_perusahaan = implode('_', explode(' ', $user->nama_perusahaan));
+        $nama_produk = implode('_', explode(' ', $produk->produk));
+        $fileName = 'Penawaran_harga-'.$nama_perusahaan.'-'.$nama_produk.'_'.uniqid().'.pdf';
+
+        \Storage::put('dok/bidPrice/'.$fileName, $output);
+        if (\Storage::exists('dok/bidPrice/'.$bidPrice->bid_price)) {
+            \Storage::delete('dok/bidPrice/'.$bidPrice->bid_price);
+        }
+
+        $bidPrice->bid_price = $fileName;
+        $bidPrice->harga = json_encode($price);
+        $bidPrice->save();
+        $no_surat_bp->dok = $fileName;
+        $no_surat_bp->save();
+
+        return redirect()->back()->with('successMsg', 'Rincian Harga Dokumen Penawaran Harga berhasil diedit!');
     }
 
     public function uploadBP_BBK(Request $request, $idProduk) {
@@ -371,33 +441,6 @@ class BPController extends Controller
         $produk->save();
 
         return redirect()->back();
-    }
-
-    public function edit_rincianHarga(Request $request, $idProduk, $user_id) {
-        $price = $this->rincin_harga($request->all());
-        $bidPrice = BidPrice::where('produk_id', $idProduk)->first();
-        $no_surat_bp = NoSurat::where('dok', $bidPrice->bid_price)->first();
-
-        $user = User::find($user_id);
-        $total_pegawai = $user->jml_pegawai_tetap + $user->jml_pegawai_tidak_tetap;
-        $date = \Carbon\Carbon::now();
-        $produk = Produk::find($idProduk);
-
-        $pdf = \PDF::loadView('dok.dok_bidPrice', ['produk' => $produk, 'price' => $request->price, 'date' => $date, 'user' => $user, 'price' => $price, 'total_pegawai' => $total_pegawai, 'tgl_pembuatan' => $date->parse($bidPrice->tgl_pembuatan), 'no_surat_bp' => $no_surat_bp->no, 'hal' => $bidPrice->hal]);
-        $output = $pdf->output();
-        $fileName = 'Penawaran_harga-'.uniqid().''.date('YmdHis').'.pdf';
-        \Storage::put('dok/bidPrice/'.$fileName, $output);
-        if (\Storage::exists('dok/bidPrice/'.$bidPrice->bid_price)) {
-            \Storage::delete('dok/bidPrice/'.$bidPrice->bid_price);
-        }
-
-        $bidPrice->bid_price = $fileName;
-        $bidPrice->harga = json_encode($price);
-        $bidPrice->save();
-        $no_surat_bp->dok = $fileName;
-        $no_surat_bp->save();
-
-        return redirect()->back()->with('successMsg', 'Rincian Harga Dokumen Penawaran Harga berhasil diedit!');
     }
 
     public function upload_bpn(Request $request, $idProduk) {

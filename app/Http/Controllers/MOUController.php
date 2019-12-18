@@ -15,6 +15,38 @@ use App\Invoice;
 
 class MOUController extends Controller
 {
+    public function terbilang($nilai) {
+        // $nilai = abs($nilai);
+        // $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        // $temp = "";
+        // if ($nilai < 12) {
+        //     $temp = " ". $huruf[$nilai];
+        // } else if ($nilai <20) {
+        //     $temp = $this->terbilang($nilai - 10). " belas";
+        // } else if ($nilai < 100) {
+        //     $temp = $this->terbilang($nilai/10)." puluh". $this->terbilang($nilai % 10);
+        // } else if ($nilai < 200) {
+        //     $temp = " seratus" . $this->terbilang($nilai - 100);
+        // } else if ($nilai < 1000) {
+        //     $temp = $this->terbilang($nilai/100) . "ratus" . $this->terbilang($nilai % 100);
+        // } else if ($nilai < 2000) {
+        //     $temp = " seribu" . $this->terbilang($nilai - 1000);
+        // } else if ($nilai < 1000000) {
+        //     $temp = $this->terbilang($nilai/1000) . "ribu" . $this->terbilang($nilai % 1000);
+        // } else if ($nilai < 1000000000) {
+        //     $temp = $this->terbilang($nilai/1000000) . " juta" . $this->terbilang($nilai % 1000000);
+        // } else if ($nilai < 1000000000000) {
+        //     $temp = $this->terbilang($nilai/1000000000) . "milyar" . $this->terbilang(fmod($nilai,1000000000));
+        // } else if ($nilai < 1000000000000000) {
+        //     $temp = $this->terbilang($nilai/1000000000000) . "trilyun" . $this->terbilang(fmod($nilai,1000000000000));
+        // }
+
+        // return $temp;
+
+        $number_format = new \NumberFormatter('in', \NumberFormatter::SPELLOUT);
+        return $number_format->format($nilai);
+    }
+
     public function cmou($id, $idProduk) {
         $user = User::find($id);
         $produk = \DB::table('produk')->select('id','produk', 'kode_tahap')->where('id', $idProduk)->first();
@@ -41,7 +73,7 @@ class MOUController extends Controller
 
         $date = \Carbon\Carbon::now();
         $user = User::find($user_id);
-    	$pdf = \PDF::loadView('dok.dok_mou', ['user' => $user, 'date' => $date, 'biaya_sert' => $b_sert, 'tgl_pembuatan' => $date->parse($request->d_kontrak), 'no_surat' => $request->no_mou]);
+    	$pdf = \PDF::loadView('dok.dok_mou', ['user' => $user, 'date' => $date, 'biaya_sert' => $b_sert, 'tgl_pembuatan' => $date->parse($request->d_kontrak), 'no_surat' => $request->no_mou, 'harga_terbilang' => $this->terbilang($b_sert)]);
         $output = $pdf->output();
 
         $nama_perusahaan = implode('_', explode(' ', $request->company_name));
@@ -80,7 +112,7 @@ class MOUController extends Controller
         $produk = Produk::find($idProduk);
         $mou = Mou::where('produk_id', $idProduk)->first();
 
-        $nama_perusahaan = implode('_', explode(' ', $user->nama_perusahaan));
+        $nama_perusahaan = implode('_', explode(' ', $request->company_name));
         $nama_produk = implode('_', explode(' ', $produk->produk));
 
         $file = $request->file('mou');
@@ -118,9 +150,9 @@ class MOUController extends Controller
     public function mou_signed(Request $request, $id) {
         // validasi extensi file upload        
         $d = \Validator::make($request->file(), [
-            'mou' => 'required|max:2000|mimes:png,jpeg,jpg,pdf,docx,doc',
+            'mou' => 'required|max:5000|mimes:png,jpeg,jpg,pdf,docx,doc',
         ],[
-            'max'    => 'Ukuran tidak boleh melebihi 2 megabytes',
+            'max'    => 'Ukuran tidak boleh melebihi 5 megabytes',
             'mimes'      => 'Extensi file yang diperbolehkan: png, jpeg, jpg, pdf, docx, doc',
         ]);
         if ($d->fails()) {return redirect()->back()->withErrors($d);}

@@ -93,6 +93,7 @@ class HomeAdminController extends Controller
         $manual = Role::find($id);
         $fileName = 'manual_book_'.$manual->role_name.'.'.$request->file('file')->getClientOriginalExtension();
         $request->file('file')->storeAs('dok/format_dok', $fileName);
+        
         if (\Storage::exists('dok/format_dok/'.$manual->manual)) {
             \Storage::delete('dok/format_dok/'.$manual->manual);
         }

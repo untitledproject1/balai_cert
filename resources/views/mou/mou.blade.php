@@ -74,6 +74,7 @@
             </div>
             <form id="uploadMouBBK" method="POST" action="{{ url('/mou_bbk/'.$idProduk) }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="company_name" value="{{ $user->nama_perusahaan }}">
                 <label>Upload MOU</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input uploadMou" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="mou" required="">

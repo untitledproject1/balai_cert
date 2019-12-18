@@ -72,6 +72,7 @@
             </div>
             <form id="uploadMouBBK" method="POST" action="<?php echo e(url('/mou_bbk/'.$idProduk)); ?>" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
+                <input type="hidden" name="company_name" value="<?php echo e($user->nama_perusahaan); ?>">
                 <label>Upload MOU</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input uploadMou" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="mou" required="">

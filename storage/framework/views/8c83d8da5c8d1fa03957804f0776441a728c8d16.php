@@ -293,7 +293,7 @@
     <p class="small_txt mb-4" style="margin-top: -10px;">Nomor: <?php echo e($no_surat); ?></p>
     
     <ol>
-        <li>Biaya sertifikasi produk untuk tanda SNI (SPPT SNI) dalam rangka sertifikasi awal <?php echo e($user->nama_perusahaan); ?> adalah sebesar Rp. <?php echo e(number_format($biaya_sert, 0, ',', '.')); ?>,(dua puluh tiga juta rupiah) untuk l(satu) lokasi dan 1 (satu) sertifikat SPPT SNI.</li>
+        <li>Biaya sertifikasi produk untuk tanda SNI (SPPT SNI) dalam rangka sertifikasi awal <?php echo e($user->nama_perusahaan); ?> adalah sebesar Rp. <?php echo e(number_format($biaya_sert, 0, ',', '.')); ?>, (<?php echo e($harga_terbilang); ?>) untuk 1 (satu) lokasi dan 1 (satu) sertifikat SPPT SNI.</li>
         <li>Biaya survailen akan ditetapkan sebelum pelaksanaan survailen dimulai.</li>
         <li>Biaya tersebut di atas belum termasuk biaya pengujian contoh uji. Jumlah yang harus dibayarkan untuk biaya contoh uji sesuai dengan ketentuan laboratorium uji yang ditunjuk LSPro-BBK.</li>
         <li>Transportasi dan akomodasi tim audit serta biaya pengiriman contoh uji disediakan langsung oleh perusahaan</li>
