@@ -48,23 +48,27 @@ function ValidateSize(inputFile, inputText, formElem, target, radio = null) {
     }
     if (  (total == $(inputFile).length) || (totalText == $(inputText).length) ) {
         $(target).html('');
-        swal({
-            title: "Apakah Anda Yakin?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Data Berhasil Diinput!", {
-                    icon: "success",
-                });
+        if (formElem !== '#message_send') {
+            swal({
+                title: "Apakah Anda Yakin?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data Berhasil Diinput!", {
+                        icon: "success",
+                    });
 
-                $(formElem).submit();
-            } else {
-                
-            }
-        });
+                    $(formElem).submit();
+                } else {
+                    
+                }
+            });
+        } else {
+            $(formElem).submit();
+        }
     }
 }
 
@@ -116,9 +120,6 @@ function dclinePrice() {
         });
 }
 
-
-//Pembuatan Draft Sertifikasi
-
 //Approve Draft Sert 
 function apprvSert() {
     swal({
@@ -140,6 +141,7 @@ function apprvSert() {
             }
         });
 }
+
 
 //Req Sert Jadi 
 function reqSertJadi() {

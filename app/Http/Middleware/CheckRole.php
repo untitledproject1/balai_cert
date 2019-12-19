@@ -24,7 +24,8 @@ class CheckRole
 
         if ($request->user()->hasAnyRoles($roles) || !$roles) {
             if (empty($_POST)) {
-                $tahapan = \DB::table('master_tahap')->select('kode_tahap', 'tahapan')->get();
+                $tahapan = \DB::table('master_tahap as mt')->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
+                    ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as admin_id', 'u.name as admin')->get();
                 $getUser = \Auth::user();
                 $role = $getUser->role()->first()->role;
 

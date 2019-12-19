@@ -40,6 +40,7 @@ Route::group(['middleware'=>'verified'], function() {
 	Route::group(['middleware'=>'roles','roles'=>'client'], function() {
 		
 		Route::get('/history', 'ProdukController@history');
+		Route::post('/message_send/{idProduk}/{admin_id}', 'ProdukController@send_message_client');
 		// dashboard
 		Route::get('/dashboard', 'ProdukController@dashboard');
 		Route::get('/profil', 'HomeController@profil');
