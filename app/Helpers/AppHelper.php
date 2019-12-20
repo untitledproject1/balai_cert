@@ -17,27 +17,43 @@ class AppHelper
     	return Carbon::createFromFormat('d/m/Y', $string);
     }
 
-    public function getMessageProp($kode_tahap, $tahap_sert, $request_sert = null) {
-        $data = '';
-        $kode_tahap = 13;
+    public function getMessageProp($kode_tahap, $tahap_sert, $request_sert, $role = null) {
+        $data = [];
+        $kode_tahap = 24;
         if ($kode_tahap < 11 || $kode_tahap == 13) {
-    		$data = ['Seksi Pemasaran'];
+            if ($role == 'client') {
+        		$data = ['Seksi Pemasaran'];
+            } else {
+                $data = [['Client', 'Kabid PJT']];
+            }
     	} elseif ($kode_tahap <= 12) {
     		$data = ['Seksi Kerjasama'];
     	} elseif ($kode_tahap == 14 || $kode_tahap == 15) {
     		$data = ['Seksi Keuangan'];
-    	} elseif ($kode_tahap == 16 || ($kode_tahap >= 18 && $kode_tahap < 23) ) {
-    		$data = ['Seksi Sertifikasi'];
+    	} elseif ($kode_tahap == 16 || ($kode_tahap >= 18 && $kode_tahap < 22) ) {
+            if ($kode_tahap < 18) {
+                if ($role == 'client') {
+            		$data = ['Seksi Sertifikasi'];
+                } else {
+                    $data = [['Client', 'Kabid Paskal']];
+                }
+            } else {
+                if ($kode_tahap == 19) {
+                    $data = [['Ketua Tim Teknis', 'Komite Tim Teknis']];
+                } else {
+                    $data = ['Seksi Sertifikasi'];
+                }
+            }
     	} elseif ($kode_tahap == 17) {
     		$data = ['Auditor'];
-    	} elseif ($kode_tahap == 23 || $kode_tahap == 24) {
+    	} elseif ($kode_tahap >= 22) {
     		if ($request_sert == 'kirim') {
     			$data = ['Subag Umum'];
     		} elseif ($request_sert == 'ambil') {
     			$data = ['Seksi Pemasaran'];
     		}
     	}
-        dd($data);
+        dd($kode_tahap, $data);
 
         // if () {
         //     # code...
@@ -56,7 +72,7 @@ class AppHelper
     public function getMessageParam($kode_tahap, $tahap_sert) {
         foreach ($tahap_sert as $key => $value) {
             if ($kode_tahap+1 == $value->kode_tahap) {
-                $data = ['admin_id' => $value->admin_id];
+                $data = ['receiver_id' => $value->receiver_id];
             }
         }
 

@@ -13,15 +13,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="message_send" method="POST" action="{{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert)['admin_id']) }}">
+                <form id="message_send" method="POST" action="{{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert)['receiver_id']) }}">
                     @csrf
                     <div class="form-group">
                         <label for="">Kepada</label>
                         <div class="row">
-                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[2] }}</b></div>
+                        @if(!is_null($produk) && !is_null($produk->request_sert))
+                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[1] }}</b></div>
                             <div class="col-lg-6">
-                                <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[0] }}</label>
+                                <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[0] }}</label>
                             </div>
+                        @else
+                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[1] }}</b></div>
+                            <div class="col-lg-6">
+                                <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[0] }}</label>
+                            </div>
+                        @endif
                         </div>
                         {{-- <select class="custom-select" id="inputGroupSelect01">
                             <option selected>Choose...</option>

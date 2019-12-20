@@ -46,7 +46,7 @@ class CheckRole
 
                 if ($role !== 'super_admin') {
                     $tahapan = \DB::table('master_tahap as mt')->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
-                        ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as admin_id', 'u.name as admin')->get();
+                        ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver')->get();
                     \View::share('tahap_sert', $tahapan);
                 }
 
