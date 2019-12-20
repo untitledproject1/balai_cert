@@ -20,8 +20,12 @@
                                 <a href="{{ Route('dashboard_superAdmin') }}" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li>
-                                <a href="{{ Route('format_file') }}" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Format Dokumen
-                                    </span></a>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Pengaturan
+                                </span></a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="{{ Route('format_file') }}">Format Dokumen</a></li>
+                                    <li><a href="{{ Route('manual_book') }}">Manual Book User</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </nav>
@@ -147,7 +151,7 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Copyright 2018. All right reserved.</p>
+                <p>© Copyright 2019. All right reserved.</p>
             </div>
         </footer>
         <!-- footer area end-->

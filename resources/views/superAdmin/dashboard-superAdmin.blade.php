@@ -2,7 +2,7 @@
 
  {{-- @section('card-header', 'Dasboard')  --}}
 
-@extends('superAdmin.layouts.app')
+@extends('superAdmin.layouts.main')
 
 @section('content-super-admin')
  
@@ -16,6 +16,7 @@
              </div>
            </div>
        </div>
+       {{---
         <!-- sales report area start -->
         <div class="sales-report-area mt-5 mb-5">
             <div class="row">
@@ -190,6 +191,7 @@
             <!-- trading history area end -->
         </div> 
         <!-- row area end -->
+        --}}
     </div>
 </div>
 
