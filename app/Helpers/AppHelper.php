@@ -18,23 +18,30 @@ class AppHelper
     }
 
     public function getMessageProp($kode_tahap, $tahap_sert, $request_sert = null) {
+        $data = '';
+        $kode_tahap = 13;
         if ($kode_tahap < 11 || $kode_tahap == 13) {
     		$data = ['Seksi Pemasaran'];
-    	} elseif ($kode_tahap <= 11) {
+    	} elseif ($kode_tahap <= 12) {
     		$data = ['Seksi Kerjasama'];
     	} elseif ($kode_tahap == 14 || $kode_tahap == 15) {
     		$data = ['Seksi Keuangan'];
-    	} elseif ($kode_tahap == 16 || ($kode_tahap >= 18 && $kode_tahap < 22) ) {
+    	} elseif ($kode_tahap == 16 || ($kode_tahap >= 18 && $kode_tahap < 23) ) {
     		$data = ['Seksi Sertifikasi'];
     	} elseif ($kode_tahap == 17) {
     		$data = ['Auditor'];
     	} elseif ($kode_tahap == 23 || $kode_tahap == 24) {
     		if ($request_sert == 'kirim') {
     			$data = ['Subag Umum'];
-    		} else {
+    		} elseif ($request_sert == 'ambil') {
     			$data = ['Seksi Pemasaran'];
     		}
     	}
+        dd($data);
+
+        // if () {
+        //     # code...
+        // }
 
     	foreach ($tahap_sert as $key => $value) {
     		if ($value->kode_tahap == $kode_tahap+1) {

@@ -24,8 +24,7 @@ class CheckRole
 
         if ($request->user()->hasAnyRoles($roles) || !$roles) {
             if (empty($_POST)) {
-                $tahapan = \DB::table('master_tahap as mt')->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
-                    ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as admin_id', 'u.name as admin')->get();
+
                 $getUser = \Auth::user();
                 $role = $getUser->role()->first()->role;
 
@@ -42,9 +41,15 @@ class CheckRole
                     \View::share('sert_doc', $sert_doc);
                 }
 
-                \View::share('tahap_sert', $tahapan);
                 \View::share('userAuth', $getUser);
                 \View::share('role', $role);
+
+                if ($role !== 'super_admin') {
+                    $tahapan = \DB::table('master_tahap as mt')->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
+                        ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as admin_id', 'u.name as admin')->get();
+                    \View::share('tahap_sert', $tahapan);
+                }
+
                 \View::share('uri', $url);
             }
 
