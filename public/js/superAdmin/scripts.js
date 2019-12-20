@@ -1,3 +1,85 @@
+// Format File
+    $(document).on("click", ".ubah_format", function() {
+        $('#UbahFormatFile').prop('action', $(this).data('url'));
+        $('.formatDok').val($(this).data('format'));
+        $('.modal-title').html($(this).data('judul'));
+    });
+
+// Validate Size
+function ValidateSize(inputFile, inputText, formElem, target, radio = null) {
+    let total = 0;
+    let totalText = 0;
+    if (typeof inputText != 'undefined') {
+        totalText = $(inputText).length;
+        let choiceTrue = 0;
+        let lanjut = 1;
+        $.each($(inputText), function (index, value) {
+            if ($(this).is(':checked')) {
+                choiceTrue+=1;
+            }
+            if (value.value == '') {lanjut = 0;}
+        });
+        if (lanjut != 1 || (radio != null && choiceTrue < 1)) {
+            $(target).html('<p class="alert alert-danger">Harap cek kembali field input yang wajib diisi!</p>');
+            totalText--;
+            return false;
+        }
+    }
+
+    if (inputFile != 'null') {
+        total = $(inputFile).length;
+        let lanjut2 = 1;
+        $.each($(inputFile), function (index, value) {
+            if (window.FileReader && window.File && window.FileList && window.Blob) {
+                // File API Supported
+                if (value.files[0]) {
+                    let fileSize = value.files[0].size / 1024 / 1024; // file size dalam MB;
+                    if (fileSize > 5) {
+                        swal("Oh Tidak!", "Ukuran file tidak boleh lebih dari 5 Megabytes", "warning");
+                        total--;
+                        lanjut2 = 0;
+                    }
+                } else {
+                    $(target).html('<p class="alert alert-danger">Harap cek kembali file yang wajib diupload!</p>');
+                    total--;
+                    lanjut2 = 0;
+                }
+            } else {
+                // Not Supported File API
+                swal("Warning!", "File API not supported on this browser", "warning");
+                // $(formElem).submit();
+            }
+        });
+        if (lanjut2 != 1) {
+            return false;
+        }
+    }
+    if (  (total == $(inputFile).length) || (totalText == $(inputText).length) ) {
+        $(target).html('');
+        if (formElem !== '#message_send') {
+            swal({
+                title: "Apakah Anda Yakin?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data Berhasil Diinput!", {
+                        icon: "success",
+                    });
+
+                    $(formElem).submit();
+                } else {
+                    
+                }
+            });
+        } else {
+            $(formElem).submit();
+        }
+    }
+}
+
 
 (function($) {
     "use strict";
@@ -28,7 +110,7 @@
     $(window).ready(e), $(window).on("resize", e);
 
     /*================================
-    sidebar menu
+    sidebar menu 
     ==================================*/
     $("#menu").metisMenu();
 

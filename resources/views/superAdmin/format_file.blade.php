@@ -1,9 +1,3 @@
-{{-- @extends('home')
-
-@section('card-header', 'Dasboard')
-
-@section('second-content') --}}
-
 @extends('superAdmin.layouts.main')
 
 @section('content-super-admin')
@@ -14,11 +8,11 @@
             <div class="card-body">
                 <h5>Atur Format File</h5><br>
 
-                <button type="button" class="tambah_data ubah_format" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{ Route('format_file_ubah') }}" data-judul="Tambah Format File">+ Tambah Data</button>
+                <button type="button" class="tambah_data ubah_format" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{ Route('format_file_ubah') }}" data-judul="Tambah Format File"><i class="fas fa-plus"></i> &nbsp; Tambah Data</button>
                 <br><br>
 
                 @if(\Session::has('msg'))
-                <p class="alert alert-primary">{{ \Session::get('msg') }}</p>
+                <p class="alert alert-primary">{{ \Session::get('msg') }}</p> 
                 @endif
 
                 @if(!$errors->isEmpty())
@@ -57,11 +51,11 @@
                                     </a>
                                     <a class="ubah_format pr-2" style="font-size: 13px;" href="#" data-toggle="modal" data-target=".bd-example-modal-lg" data-format="{{ $data->format }}" data-url="{{ Route('format_file_ubah', ['id' => $data->id]) }}" data-judul="Ubah Format File" title="Edit">
                                         <div class="edit_file">
-                                            <i class="fas fa-edit fa-lg" style="color: #000;"></i>
+                                            <i class="fas fa-edit fa-lg"></i>
                                         </div>
                                     </a>
                                     
-                                    <button type="button" class="delete_file" style="font-size: 13px;" onclick="ValidateSize('', '', '.HapusFormatFile')" title="Hapus"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="delete_file" style="font-size: 13px;" onclick="ValidateSize('', '', '.HapusFormatFile', '')" title="Hapus"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -114,14 +108,5 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    $(document).on("click", ".ubah_format", function() {
-        $('#UbahFormatFile').prop('action', $(this).data('url'));
-        $('.formatDok').val($(this).data('format'));
-        $('.modal-title').html($(this).data('judul'));
-    });
-</script>
 
 @endsection

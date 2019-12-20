@@ -87,7 +87,7 @@
     <script src="{{ asset('js/enable-push.js') }}"></script>
     @endauth
 
-    {{-- Sweet Alert --}}
+    <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Data Table -->
