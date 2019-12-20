@@ -7,8 +7,6 @@
     <title>Super Admin Sistem Pengelolaan Sertifikasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{ asset('images/icon/logo-polos.ico') }}">
-    <!-- jquery latest version -->
-    <script src="{{ asset('js/superAdmin/jquery-2.2.4.min.js') }}"></script>
     
     <link rel="stylesheet" href="{{ asset('css/superAdmin/bootstrap.min.css') }}">
     <!-- Font Awesome -->
@@ -18,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('css/superAdmin/metisMenu.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superAdmin/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superAdmin/slicknav.min.css') }}">
+    <!-- Data Table -->
+    <link rel="stylesheet" href="{{ url('https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> 
     <!-- others css -->
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="{{ asset('css/superAdmin/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superAdmin/responsive.css') }}">
     <!-- modernizr css -->
-    <script src="{{ asset('js/superAdmin/modernizr-2.8.3.min.js') }}"></script>
+    <script src="{{ asset('js/superAdmin/modernizr-2.8.3.min.js') }}"></script> 
 </head>
 
 <body>
@@ -43,10 +44,14 @@
     <!-- Content Here -->
     @yield('main-super-admin')
     
+    <!-- jquery latest version -->
+    <script src="{{ asset('js/superAdmin/jquery-2.2.4.min.js') }}"></script>
+        
     <!-- bootstrap 4 js -->
     <script src="{{ asset('js/superAdmin/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/superAdmin/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/superAdmin/metisMenu.min.js') }}"></script> 
     <script src="{{ asset('js/superAdmin/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('js/superAdmin/jquery.slicknav.min.js') }}"></script>
 
@@ -65,15 +70,22 @@
     <!-- others plugins -->
     <script src="{{ asset('js/superAdmin/plugins.js') }}"></script>
     <script src="{{ asset('js/superAdmin/scripts.js') }}"></script>
+    
+    <!-- Data Table -->
+    <script src="{{ url('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js') }}"></script>
+    
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
         //Navbar scrolled
         $(window).scroll(function() {
         $('.page-title-area').toggleClass('page-title-area-scrolled', $(this).scrollTop() > 50);
     });
-        
-        
-    </script>
+    </script> 
+
+    
 </body>
 
 </html>

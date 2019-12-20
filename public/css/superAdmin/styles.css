@@ -60,28 +60,55 @@
     display: inline-block;
     border: none;
     text-align: center;
-    padding: 7px 20px;
-    background: #002b51;
+    padding: 10px 25px;
+    background: #66BB6A;
     color: #fff;
+    font-size: 16px;
     border-radius: 37px;
+    transition: all 300ms ease;
+}
+
+.tambah_data:hover {
+    background: #43A047;
 }
 
 .download_file {
     display: inline-block;
     text-align: center;
     padding: 7px 17px;
+    background: #fff;
+    color: #424242;
+    border-radius: 37px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    transition: all 300ms ease;
+}
+
+.download_file:hover {
     background: #4CAF50;
     color: #fff;
-    border-radius: 37px;
+}
+
+.download_file:active {
+    box-shadow: none;
 }
 
 .edit_file {
     display: inline-block;
     text-align: center;
     padding: 7px 17px;
-    background: #FFEB3B;
-    color: #fff;
+    background: #fff;
+    color: #424242;
     border-radius: 40px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    transition: all 300ms ease;
+}
+
+.edit_file:hover {
+    background: #FFEB3B;
+}
+
+.edit_file:active {
+    box-shadow: none;
 }
 
 .delete_file {
@@ -89,9 +116,37 @@
     display: inline-block;
     text-align: center;
     padding: 7px 17px;
+    background: #fff;
+    color: #424242;
+    border-radius: 40px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    transition: all 300ms ease;
+}
+
+.delete_file:hover {
     background: #F44336;
     color: #fff;
-    border-radius: 40px;
+}
+
+.delete_file:active {
+    box-shadow: none;
+}
+
+/* ==========
+=========== Atur Manual Book
+=================================== */
+
+.alert_warning {
+    padding: 6px 10px;
+    background: rgba(255, 235, 59,.3);
+    color: rgba(249, 168, 37,1.0);
+    font-size: 15px;
+}
+
+.alert_warning .fa-exclamation {
+    position: relative;
+    width: 30px;
+    opacity: 0.6;
 }
 
 
@@ -101,7 +156,7 @@
     width: 100%;
     height: 100%;
     min-height: 100vh;
-    padding-left: 280px;
+    padding-left: 240px;
     -webkit-transition: padding-left 0.3s ease 0s;
     transition: padding-left 0.3s ease 0s;
 }
@@ -150,9 +205,9 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 99999;
+    z-index: 999;
     height: 100vh;
-    width: 280px;
+    width: 240px;
     overflow: hidden;
     background: /*#303641*/ #ffffff;
     box-shadow: 2px 0 32px rgba(0, 0, 0, 0.05);
@@ -161,7 +216,7 @@
 }
 
 .sbar_collapsed .sidebar-menu {
-    left: -280px;
+    left: -240px;
 }
 
 .main-menu {
@@ -189,7 +244,7 @@
 }
 
 .sidebar-menu .super-admin-badge {
-    margin-left: 100px;
+    margin-left: 40px;
     padding: 6px 18px;
     font-size: 14px;
     background-image: linear-gradient(to right, #ff5252, #ff5c4d, #ff6648, #ff7043, #ff793f);
