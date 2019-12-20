@@ -1,9 +1,11 @@
-@extends('home')
+ {{-- @extends('home') --}}
 
-@section('card-header', 'Dasboard')
+ {{-- @section('card-header', 'Dasboard')  --}}
 
-@section('second-content')
+@extends('superAdmin.layouts.main')
 
+@section('content-super-admin')
+ 
 <div class="col-lg">
     <div class="wrap_content">
        <div class="card mt-3 p-3">
@@ -14,7 +16,8 @@
              </div>
            </div>
        </div>
-       {{-- <!-- sales report area start -->
+       {{---
+        <!-- sales report area start -->
         <div class="sales-report-area mt-5 mb-5">
             <div class="row">
                 <div class="col-md-4">
@@ -186,8 +189,9 @@
                 </div>
             </div>
             <!-- trading history area end -->
-        </div> --}}
+        </div> 
         <!-- row area end -->
+        --}}
     </div>
 </div>
 

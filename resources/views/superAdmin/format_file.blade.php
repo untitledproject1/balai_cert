@@ -1,8 +1,12 @@
-@extends('home')
+{{-- @extends('home')
 
 @section('card-header', 'Dasboard')
 
-@section('second-content')
+@section('second-content') --}}
+
+@extends('superAdmin.layouts.main')
+
+@section('content-super-admin')
 
 <div class="col-lg">
     <div class="wrap_content">
@@ -10,7 +14,7 @@
             <div class="card-body">
                 <h5>Atur Format File</h5><br>
 
-                <button type="button" class="btn btn-primary ubah_format" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{ Route('format_file_ubah') }}" data-judul="Tambah Format File">+ Tambah Data</button>
+                <button type="button" class="tambah_data ubah_format" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{ Route('format_file_ubah') }}" data-judul="Tambah Format File">+ Tambah Data</button>
                 <br><br>
 
                 @if(\Session::has('msg'))
@@ -31,8 +35,8 @@
                             <th width="8%">No</th>
                             <th width="22%">Format</th>
                             <th width="25%">Nama File</th>
-                            <th width="20%">Tanggal Perubahan Dokumen</th>
-                            <th width="25%">Aksi</th>
+                            <th width="18%">Tanggal Perubahan Dokumen</th>
+                            <th width="27%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +57,7 @@
                                     </a>
                                     <a class="ubah_format pr-2" style="font-size: 13px;" href="#" data-toggle="modal" data-target=".bd-example-modal-lg" data-format="{{ $data->format }}" data-url="{{ Route('format_file_ubah', ['id' => $data->id]) }}" data-judul="Ubah Format File" title="Edit">
                                         <div class="edit_file">
-                                            <i class="fas fa-edit fa-lg"></i>
+                                            <i class="fas fa-edit fa-lg" style="color: #000;"></i>
                                         </div>
                                     </a>
                                     

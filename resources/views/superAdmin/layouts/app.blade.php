@@ -10,7 +10,7 @@
     <!-- jquery latest version -->
     <script src="{{ asset('js/superAdmin/jquery-2.2.4.min.js') }}"></script>
     
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/superAdmin/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/superAdmin/font-awesome.min.css') }}">
     <script src="https://kit.fontawesome.com/aef3211dfe.js" crossorigin="anonymous"></script>
