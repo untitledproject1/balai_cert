@@ -73,9 +73,9 @@
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
 
                     <ul class="list-group tablinks">
-                        <li id="message" class="list-group-item" onclick="listActive(this)">Apply SA</li>
-                        <li id="message2" class="list-group-item" onclick="listActive(this)">Pembuatan MOU</li>
-                        <li id="message3" class="list-group-item" onclick="listActive(this)">Sign MOU</li>
+                        <li id="message" class="list-group-item" onclick="listActive(this)">Keramik</li>
+                        <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
+                        <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li>
                     </ul>
 
                     {{-- </a> --}}
