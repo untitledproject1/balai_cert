@@ -70,7 +70,7 @@
 
     {{-- <div class="wrap_content mt-5"> --}}
     <div class="wrap_content">
-        @if(!$produk->isEmpty())
+        @if(!is_null($produk) && !$produk->isEmpty())
         <h3>Daftar Produk</h3>
             @if($jml_produk_berjalan > 0)
             <div class="mt-4">
