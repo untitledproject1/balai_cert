@@ -71,7 +71,7 @@
     </div>
 
     <!-- Active When Mobile View -->
-    <div class="d-sm-block d-md-none mobail">
+    <div class="d-sm-block d-md-none">
         <div class="text-center pl-5 pr-5 pt-4">
             <div class="align-self-center">
                 <img class="img-fluid pt-4" style="width: 200px;" src="{{ asset('images/Logo.svg') }}" alt="">

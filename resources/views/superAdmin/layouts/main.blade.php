@@ -8,7 +8,6 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <span class="super-admin-badge">Super Admin</span>
                     <a href="index.html"><img src="{{ asset('images/Logo.svg') }}" alt="logo"></a>
                 </div>
             </div>
@@ -44,6 +43,10 @@
                             <span></span>
                             <span></span>
                             <span></span>
+                        </div>
+                        <!-- Super Admin Badge -->
+                        <div class="super-admin-badge">
+                            Super Admin
                         </div>
                     </div>
                     <!-- profile info & task notification -->
