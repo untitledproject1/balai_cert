@@ -15,17 +15,17 @@ class CheckRole
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() == null) {
+        $getUser = $request->user();
+        if ($getUser == null) {
             return redirect('login');
         }
 
         $actions = $request->route()->getAction();
         $roles = isset($actions['roles']) ? $actions['roles'] : null;
 
-        if ($request->user()->hasAnyRoles($roles) || !$roles) {
+        if ($getUser->hasAnyRoles($roles) || !$roles) {
             if (empty($_POST)) {
 
-                $getUser = \Auth::user();
                 $role = $getUser->role()->first()->role;
 
                 $url = explode('/', url()->current());
@@ -45,8 +45,22 @@ class CheckRole
                 \View::share('role', $role);
 
                 if ($role !== 'super_admin') {
-                    $tahapan = \DB::table('master_tahap as mt')->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
-                        ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver')->get();
+                    $tahapan = \DB::table('master_tahap as mt')
+                        ->leftJoin('users as u', function($join) {
+                            $join->on('u.role_id', '=', 'mt.role_id');
+                        })
+                        ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
+                        ->get();
+                    if ($request->getRequestUri() !== '/dashboard') {
+                        $subagId = explode(',', $tahapan->where('kode_tahap', 23)->first()->role_id)[1];
+                        $subag = $getUser->where('role_id', $subagId)->first();
+                        foreach ($tahapan as $key => $value) {
+                            if ($value->kode_tahap == '23' || $value->kode_tahap == '24') {
+                                $tahapan[$key]->receiver_id = $value->receiver_id.','.$subag->id;
+                                $tahapan[$key]->receiver = $value->receiver.','.$subag->name;
+                            }
+                        }
+                    }
                     \View::share('tahap_sert', $tahapan);
                 }
 

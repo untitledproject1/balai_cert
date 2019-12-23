@@ -19,7 +19,6 @@ class AppHelper
 
     public function getMessageProp($kode_tahap, $tahap_sert, $request_sert, $role = null) {
         $data = [];
-        $kode_tahap = 24;
         if ($kode_tahap < 11 || $kode_tahap == 13) {
             if ($role == 'client') {
         		$data = ['Seksi Pemasaran'];
@@ -47,32 +46,53 @@ class AppHelper
     	} elseif ($kode_tahap == 17) {
     		$data = ['Auditor'];
     	} elseif ($kode_tahap >= 22) {
-    		if ($request_sert == 'kirim') {
-    			$data = ['Subag Umum'];
-    		} elseif ($request_sert == 'ambil') {
-    			$data = ['Seksi Pemasaran'];
-    		}
+    		if ($role == 'client') {
+                $data = ['Client'];
+            } else {
+                if ($request_sert == 'kirim') {
+        			$data = ['Subag Umum'];
+        		} elseif ($request_sert == 'ambil') {
+        			$data = ['Seksi Pemasaran'];
+        		}
+            }
     	}
-        dd($kode_tahap, $data);
 
-        // if () {
-        //     # code...
-        // }
-
+        $kt = $kode_tahap != '24' ? $kode_tahap+1 : $kode_tahap;
     	foreach ($tahap_sert as $key => $value) {
-    		if ($value->kode_tahap == $kode_tahap+1) {
+    		if ($value->kode_tahap == $kt) {
     			array_push($data, $value->tahapan);
-                array_push($data, $value->admin);
+
+                if ($value->kode_tahap == 23 || $kode_tahap == 24) {
+                    $rcvr = explode(',', $value->receiver);
+                    if ($request_sert == 'kirim') {
+                        array_push($data, $rcvr[1]);
+                    } elseif ($request_sert == 'ambil') {
+                        array_push($data, $rcvr[0]);
+                    }
+                } else {
+                    array_push($data, $value->receiver);
+                }
     		}
     	}
     	
     	return $data;
     }
 
-    public function getMessageParam($kode_tahap, $tahap_sert) {
+    public function getMessageParam($kode_tahap, $tahap_sert, $request_sert = null) {
+        $kt = $kode_tahap != '24' ? $kode_tahap+1 : $kode_tahap;
         foreach ($tahap_sert as $key => $value) {
-            if ($kode_tahap+1 == $value->kode_tahap) {
-                $data = ['receiver_id' => $value->receiver_id];
+            if ($kt == $value->kode_tahap) {
+
+                if ($value->kode_tahap == 23 || $kode_tahap == 24) {
+                    $rId = explode(',', $value->receiver_id);
+                    if ($request_sert == 'kirim') {
+                        $data = ['receiver_id' => $rId[1]];
+                    } elseif ($request_sert == 'ambil') {
+                        $data = ['receiver_id' => $rId[0]];
+                    }
+                } else {
+                    $data = ['receiver_id' => $value->receiver_id];
+                }
             }
         }
 

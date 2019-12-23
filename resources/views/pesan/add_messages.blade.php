@@ -13,18 +13,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="message_send" method="POST" action="{{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert)['receiver_id']) }}">
+                <form id="message_send" method="POST" action="
+                    @if(!is_null($produk) && !is_null($produk->request_sert))
+                    {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, $produk->request_sert)['receiver_id']) }}
+                    @else
+                    {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, null)['receiver_id']) }}
+                    @endif
+                ">
                     @csrf
                     <div class="form-group">
                         <label for="">Kepada</label>
                         <div class="row">
                         @if(!is_null($produk) && !is_null($produk->request_sert))
-                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[1] }}</b></div>
+                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[2] }}</b></div>
                             <div class="col-lg-6">
                                 <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[0] }}</label>
                             </div>
                         @else
-                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[1] }}</b></div>
+                            <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[2] }}</b></div>
                             <div class="col-lg-6">
                                 <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[0] }}</label>
                             </div>
@@ -45,7 +51,7 @@
                     <div class="form-group">
                         <label for="">Tahap Sertifikasi</label><br>
                         {{-- <input class="form-control" type="text" value="{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[1] }}" readonly> --}}
-                        <b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[1] }}</b>
+                        <b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null)[0] }}</b>
                     </div>
                     <div class="form-group">
                         <label for="">Isi Pesan</label>

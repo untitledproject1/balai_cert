@@ -11,7 +11,7 @@ class ProdukController extends Controller
 {
     public function dashboard() {
         $user = \Auth::user();
-        $produk = $user->currentProduct();
+        $produk = !is_null($user->currentProduct()) ? $user->currentProduct() : [];
         $page = function($kode_tahap) {
             if ($kode_tahap <= 11) {
                 $name = 'sa';
@@ -35,6 +35,7 @@ class ProdukController extends Controller
 
         $currentProduct = null;
         $certifiedProduct = null;
+
         if (count($produk) > 0) {
             $currentProduct = $produk->where('kode_tahap', '!=', 24);
             $certifiedProduct = $produk->where('kode_tahap', 24);
@@ -83,7 +84,7 @@ class ProdukController extends Controller
         $produk = Produk::find($idProduk);
 
         $pesan = new Pesan;
-        $pesan->admin = $admin_id;
+        $pesan->admin = intval($admin_id);
         $pesan->produk_id = $produk->id;
         $pesan->kode_tahap = $produk->kode_tahap;
         $pesan->pesan = $request->pesan;
