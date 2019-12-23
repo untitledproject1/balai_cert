@@ -24,7 +24,7 @@
           </div>
         </div>
         @endif
-    @endforeach
+    @endforeach 
 @endif
 
 
@@ -159,6 +159,6 @@
         </div>
         @endif
     </div>
-</div>
+{{-- </div> --}}
 
 @endsection

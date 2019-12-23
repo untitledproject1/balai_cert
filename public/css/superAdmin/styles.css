@@ -613,11 +613,14 @@
 
 .header-area .super-admin-badge {
     display: inline-block;
-    left: 0;
     margin: 0 auto;
+    padding: 0 10px;
+    left: 0;
     text-align: center;
-    font-size: 16px;
-    color: #000;
+    font-size: 20px;
+    color: #fff;
+    background-image: linear-gradient(to right, #f44336, #fa5a2c, #fe7021, #ff8413, #ff9800);
+    border-radius: 5px;
     
 }
 
