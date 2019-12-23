@@ -49,7 +49,7 @@ class ProdukController extends Controller
             array_push($flashInfo, $user->flashMsg_emailVerify($user));
         }
 
-        if (!is_null($currentProduct) && !$currentProduct->isEmpty()) {
+        if (!is_null($currentProduct) && count($currentProduct) > 0) {
             foreach ($currentProduct as $key => $prdk) {
                 // flash msg verifikasi apply sa
                 if (!is_null($prdk) && $prdk->kode_tahap < 11) {
