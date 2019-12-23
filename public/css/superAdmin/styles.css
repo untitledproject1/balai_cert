@@ -51,6 +51,94 @@
 
 -----------------------------------------------------------------------------------*/
 
+/* =======
+==== Active When Mobile View
+================================= */
+
+.mobile_view {
+    background: #F3F8FB;
+    margin: 100px 20px;
+    padding: 20px;
+}
+
+.mobile_view img {
+    width: 250px;
+}
+
+.mobile_view .header_txt {
+    margin-top: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.mobile_view .small_txt {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+
+
+/* ======
+==== Dashboard
+==================================== */
+
+.card_icon {
+    width: 70px;
+}
+
+.container_card_data {
+    margin: 40px auto;
+}
+
+.card_data_left {
+    padding: 40px 45px;
+    background: #4A69BD;
+    color: #fff;
+    border-radius: 7px;
+}
+
+.card_data_left h4 {
+    font-size: 18px;
+}
+
+.card_data_left h2 {
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.card_data_middle {
+    padding: 40px 45px;
+    background: #FA983A;
+    color: #fff;
+    border-radius: 7px;
+}
+
+.card_data_middle h4 {
+    font-size: 18px;
+}
+
+.card_data_middle h2 {
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.card_data_right {
+    padding: 40px 45px;
+    background: #38ADA9;
+    color: #fff;
+    border-radius: 7px;
+}
+
+.card_data_right h4 {
+    font-size: 18px;
+}
+
+.card_data_right h2 {
+    font-size: 40px;
+    font-weight: 900;
+}
+
 
 /* ===== 
 ==== Atur Format File
@@ -241,15 +329,6 @@
     padding: 19px 32px 20px;
     background: #fff;
     border-bottom: 1px solid #EEEEEE;
-}
-
-.sidebar-menu .super-admin-badge {
-    margin-left: 40px;
-    padding: 6px 18px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #ff5252, #ff5c4d, #ff6648, #ff7043, #ff793f);
-    color: #fff;
-    border-radius: 40px;
 }
 
 .sidebar-menu .logo{
@@ -507,16 +586,17 @@
 
 .header-area {
     top: 0;
+    height: 50px;
     position: sticky;
-    padding: 15px 30px;
+    padding: 10px 30px;
     background: #fff;
     border-bottom: 1px solid #d8e3e7;
     z-index: 999;
 }
 
 .nav-btn {
+    margin-top: 5px;
     margin-right: 30px;
-    margin-top: 10px;
     cursor: pointer;
 }
 
@@ -528,8 +608,17 @@
     margin: 4px 0;
     border-radius: 15px;
     -webkit-transition: all 0.3s ease 0s;
-    transition: all 0.3s ease 0s;
-    box-shadow: 0 0 0 4px rgba(99, 96, 96, 0.03);
+    transition: all 0.3s ease 0s;   
+}
+
+.header-area .super-admin-badge {
+    display: inline-block;
+    left: 0;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+    
 }
 
 .sbar_collapsed .nav-btn span:nth-child(2) {
@@ -758,7 +847,7 @@
 /*-------------------- 2.3 Page Title Area -------------------*/
 
 .page-title-area {
-    top: 60px;
+    top: 50px;
     padding: 0 30px;
     background: #fff;
     position: sticky;
