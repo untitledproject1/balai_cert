@@ -73,7 +73,7 @@ class SAController extends Controller
         $user = \Auth::user();
         $negeri = $user->negeri;
 
-        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk')->where('id', $idProduk)->first();
+        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk', 'request_sert')->where('id', $idProduk)->first();
         $dokImportir = !is_null($dok) && $negeri == '2' ? $dok->dok_importir()->first() : null;
         $dokManufaktur = !is_null($dok) && $negeri == '2' ? $dok->dok_manufaktur()->first() : null;
         $infoDB = InfoTambahan::where('produk_id', $idProduk)->first();
