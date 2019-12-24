@@ -85,8 +85,8 @@
 -->
 
                     <ul class="list-group tablinks dropright">
-                        <li class="list-group-item dropdown-toggle" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Keramik
+                        <li class="list-group-item" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Keramik <i class="fas fa-angle-right float-right"></i>
                             <div class="dropdown-menu">
                                 <a id="message" class="dropdown-item" href="#">Apply SA</a>
                                 <div class="dropdown-divider"></div>
