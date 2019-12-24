@@ -81,14 +81,16 @@
                                 <input type="text" class="form-control format" name="nama">
                                 <small class="form-text text-muted">Wajib diisi</small><br> --}}
                                 <label>Format</label>
-                                <select class="form-control formatDok" name="formatDok">
-                                    <option selected=""> -- Pilih Format -- </option>
-                                    <option>Surat Permohonan F.03.01</option>
-                                    <option>Surat Pemberitahuan Jadwal Audit</option>
-                                    <option>Audit Plan</option>
-                                    <option>Sampling Plan</option>
-                                    <option>Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI</option>
-                                </select>
+                                <div class="selectInpt">
+                                    <select class="form-control formatDok" name="formatDok">
+                                        <option selected=""> -- Pilih Format -- </option>
+                                        <option>Surat Permohonan F.03.01</option>
+                                        <option>Surat Pemberitahuan Jadwal Audit</option>
+                                        <option>Audit Plan</option>
+                                        <option>Sampling Plan</option>
+                                        <option>Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI</option>
+                                    </select>
+                                </div>
                                 <small class="form-text text-muted">Wajib diisi</small><br>
                                 <label>File</label>
                                 <div class="custom-file">
@@ -98,8 +100,10 @@
                                 </div>
                                 <br><br>
                                 <div class="validMsg"></div><br>
+                                <hr>
                                 <button type="reset" class="reset_btn mr-2">Reset</button>
                                 <button type="button" class="submit_btn" onclick="ValidateSize('.file_format', '.formatDok', '#UbahFormatFile', '.validMsg')">Submit</button>
+                                
                             </form>
                         </div>
                     </div>

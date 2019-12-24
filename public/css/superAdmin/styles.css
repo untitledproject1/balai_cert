@@ -220,6 +220,28 @@
     box-shadow: none;
 }
 
+.selectInpt option {
+    padding: 20px;
+}
+
+.reset_btn {
+    padding: 10px 20px;
+    background: #EEEEEE;
+    font-size: 17px;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+}
+
+.submit_btn {
+    padding: 10px 40px;
+    background: #4CAF50;
+    font-size: 17px;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+}
+
 /* ==========
 =========== Atur Manual Book
 =================================== */
