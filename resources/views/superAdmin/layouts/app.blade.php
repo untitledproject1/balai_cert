@@ -82,7 +82,8 @@
         });
 
         //Datatables
-        $('#example').DataTable( {
+        $('#example').DataTable();
+        $('#dashboard_dataTable').DataTable( {
             "paging":   false,
             "info":     false
         } );
