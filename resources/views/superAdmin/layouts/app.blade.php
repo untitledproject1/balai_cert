@@ -97,7 +97,10 @@
         });
 
         //Datatables
-        $('#example').DataTable();
+        $('#example').DataTable( {
+            "paging":   false,
+            "info":     false
+        } );
 
     </script>
 
