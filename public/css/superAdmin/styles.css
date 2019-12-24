@@ -84,15 +84,15 @@
 ==================================== */
 
 .card_icon {
-    width: 70px;
+    width: 60px;
 }
 
 .container_card_data {
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .card_data_left {
-    padding: 40px 45px;
+    padding: 20px;
     background: #4A69BD;
     color: #fff;
     border-radius: 7px;
@@ -108,7 +108,7 @@
 }
 
 .card_data_middle {
-    padding: 40px 45px;
+    padding: 20px;
     background: #FA983A;
     color: #fff;
     border-radius: 7px;
@@ -124,7 +124,7 @@
 }
 
 .card_data_right {
-    padding: 40px 45px;
+    padding: 20px;
     background: #38ADA9;
     color: #fff;
     border-radius: 7px;
