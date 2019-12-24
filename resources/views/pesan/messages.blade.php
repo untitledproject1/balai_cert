@@ -61,13 +61,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3">
+               
                 <div class="wrap_content_messages"> 
 <!--
                     <div class="mb-3">
                         <button type="button" class="add_messages" data-toggle="modal" data-target="#addMessages"><i class="fas fa-plus"></i>&nbsp; Kirim Pesan</button>
                     </div>
 -->
-
+                    
                     <input class="form-control mb-3" type="text" name="" placeholder="Search..">
 
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
@@ -83,11 +84,21 @@
                     </div>
 -->
 
-                    <ul class="list-group tablinks">
-                        <li class="list-group-item dropright" onclick="listActive(this)">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Keramik</a>
+                    <ul class="list-group tablinks dropright">
+                        <li class="list-group-item dropdown-toggle" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Keramik
                             <div class="dropdown-menu">
                                 <a id="message" class="dropdown-item" href="#">Apply SA</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="message" class="dropdown-item" href="#">Pembuatan MOU</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="message" class="dropdown-item" href="#">Sign MOU</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="message" class="dropdown-item" href="#">Pembuatan Penawaran Harga</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="message" class="dropdown-item" href="#">Pembuatan Invoice dan Upload Kode Biling</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="message" class="dropdown-item" href="#">Pembuatan Dokumen Laporan Hasil Sertifikasi</a>
                             </div>
                         </li>
                         
@@ -143,39 +154,47 @@
                         <h5 class="mt-4 text-none">Klik menu di bagian kiri untuk melihat pesan</h5>
                     </div>
                     <div class="messages_main tabcontent lengit" id="pesan">
-                        <nav class="header sticky-top">
-                            <h4>Pesan dari tahap sertifikasi Apply SA</h4>
-                        </nav>
-                        <hr>
-                        <div class="mt-3">
-                            <p>Alyssa <span class="pemasaran">Pemasaran</span></p>
-                            <div class="mx-3">
-                                <div class="sender">
-                                    <p>Ini adalah isi pesan dari pengirim</p>
-                                </div>
-                                <div class="sender">
-                                    <p>Ini adalah isi pesan dari pengirim <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                                </div>
-                                <div class="sender">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                                </div>
-                                <p class="small_txt text-right mt-2">15/11 12:30</p>
+                        <div class="row">
+                            <div class="col-lg-6 text-left">
+                                <nav class="header sticky-top">
+                                    <h4>Apply SA</h4>
+                                </nav>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <button class="btn_reply"><i class="fas fa-reply"></i> &nbsp; Balas</button>
                             </div>
                         </div>
-
+                        <hr class="full_width_hr">
                         <div class="mt-3">
-                            <p><b>Anda</b></p>
-                            <div class="mt-2 mx-3">
-                                <div class="receiver">
-                                    <p>Ini adalah Pesan dari penerima <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sint rem magnam voluptas recusandae maxime vel, eos explicabo earum sunt omnis ex accusamus non, debitis illum obcaecati necessitatibus suscipit distinctio.</p>
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <span class="name mr-2">Lucas</span> 
+                                        <span class="badge_pemasaran">Seksi Pemasaran</span>
+                                    </div>
+                                    <div class="col-lg-4 text-right">
+                                        <img src="{{ asset('images/icon/clock.svg') }}" alt=""> <span class="date">22 Desember 2019</span>
+                                    </div>
                                 </div>
-                                <div class="receiver">
-                                    <p>Ini adalah Pesan dari penerima</p>
+                                <p class="isi">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="mt-3">
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <span class="name mr-2">Anda</span> 
+                                    </div>
+                                    <div class="col-lg-4 text-right">
+                                        <img src="{{ asset('images/icon/clock.svg') }}" alt=""> <span class="date">25 Desember 2019</span>
+                                    </div>
                                 </div>
-                                <div class="receiver">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt sint quod id dolor totam inventore ut voluptatum quo beatae, enim, natus sequi hic blanditiis reiciendis tenetur minus optio dolore eum.</p>
-                                </div>
-                                <p class="small_txt text-right mt-2">15/11 14:30</p>
+                                <p class="isi">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                </p>
                             </div>
                         </div>
                     </div>
