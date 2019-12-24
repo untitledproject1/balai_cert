@@ -140,6 +140,72 @@
 }
 
 
+.table_data {
+    transition: all 300ms ease;
+}
+
+.table_data:hover {
+    background: #eee;
+}
+
+.table_data h6 {
+    color: #002b51;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.info_jenis_dalam { 
+    padding: 4px 8px;
+    border: 1.3px solid #45be93;
+    font-size: 13px;
+    background: rgba(69, 190, 147, 0.2);
+    color: #45be93;
+    border-radius: 37px;
+}
+
+.info_jenis_impor {
+    padding: 4px 8px;
+    border: 1.3px solid #f1c40f;
+    font-size: 13px;
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+    border-radius: 37px;
+}
+
+.tahap_sert_on {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(39, 174, 96, 0.9);
+    border-radius: 5px;
+}
+
+.tahap_sert_pending {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(243, 156, 18, 0.7);
+    border-radius: 5px;
+}
+
+.tahap_sert_off {
+    display: inline-block;
+    cursor: default;
+    height: auto;
+    padding: 10px 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    background: rgba(127, 140, 141, 0.7);
+    border-radius: 5px;
+}
+
+
 /* ===== 
 ==== Atur Format File
 ================================ */

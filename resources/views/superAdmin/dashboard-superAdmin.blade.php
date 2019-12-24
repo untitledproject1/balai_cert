@@ -81,7 +81,7 @@
                             <td >{{ $key+=1 }}</td>
                             <td><h6>{{ ucfirst($data->produk) }}</h6>{{ $data->jenis_produk }}</td>
                             <td>{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
-                            <td ><h6>{{ $data->nama_perusahaan }} <span style="font-size: 12px;" class="{{ $data->negeri == 1 ? 'info_jenis_dalam' : 'info_jenis_impor' }}">{{ $data->negeri == 1 ? 'produsen' : 'importir' }}</span></h6><span>{{ $data->pimpinan_perusahaan }}</span></td>
+                            <td ><h6>{{ $data->nama_perusahaan }} <span style="font-size: 12px;" class="{{ $data->negeri == 1 ? 'info_jenis_dalam' : 'info_jenis_impor' }}">{{ $data->negeri == 1 ? 'produsen' : 'importir' }}</span></h6><span class="mt-4">{{ $data->pimpinan_perusahaan }}</span></td>
                             <td>
                                 <div class="row no-gutters">
                                     <div class="col-lg-1 col-md-1">
