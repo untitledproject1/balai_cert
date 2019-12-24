@@ -25,6 +25,10 @@ Route::group(['middleware'=>'verified'], function() {
 	    return view('sukses_verifikasi');
 	});
 
+	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum']], function() {
+
+		Route::post('/message_send/{idProduk}/{admin_id}/{client_id?}', 'ProdukController@send_message_client');
+	});
 
 	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum', 'super_admin']], function() {
 		// Route::get('/editDok', 'HomeController@editDok');
@@ -40,7 +44,6 @@ Route::group(['middleware'=>'verified'], function() {
 	Route::group(['middleware'=>'roles','roles'=>'client'], function() {
 		
 		Route::get('/history', 'ProdukController@history');
-		Route::post('/message_send/{idProduk}/{admin_id}', 'ProdukController@send_message_client');
 		// dashboard
 		Route::get('/dashboard', 'ProdukController@dashboard');
 		Route::get('/profil', 'HomeController@profil');

@@ -19,6 +19,7 @@ class AppHelper
 
     public function getMessageProp($kode_tahap, $tahap_sert, $request_sert, $role = null) {
         $data = [];
+        // $kode_tahap = 10;
         if ($kode_tahap < 11 || $kode_tahap == 13) {
             if ($role == 'client') {
         		$data = ['Seksi Pemasaran'];
@@ -47,13 +48,13 @@ class AppHelper
     		$data = ['Auditor'];
     	} elseif ($kode_tahap >= 22) {
     		if ($role == 'client') {
-                $data = ['Client'];
-            } else {
                 if ($request_sert == 'kirim') {
         			$data = ['Subag Umum'];
         		} elseif ($request_sert == 'ambil') {
         			$data = ['Seksi Pemasaran'];
         		}
+            } else {
+                $data = ['Client'];
             }
     	}
 
@@ -62,7 +63,7 @@ class AppHelper
     		if ($value->kode_tahap == $kt) {
     			array_push($data, $value->tahapan);
 
-                if ($value->kode_tahap == 23 || $kode_tahap == 24) {
+                if ($kt == 23 || $kt == 24) {
                     $rcvr = explode(',', $value->receiver);
                     if ($request_sert == 'kirim') {
                         array_push($data, $rcvr[1]);
@@ -74,6 +75,7 @@ class AppHelper
                 }
     		}
     	}
+        // dd($data, $kode_tahap, $request_sert);
     	
     	return $data;
     }
@@ -83,7 +85,7 @@ class AppHelper
         foreach ($tahap_sert as $key => $value) {
             if ($kt == $value->kode_tahap) {
 
-                if ($value->kode_tahap == 23 || $kode_tahap == 24) {
+                if ($kt == 23 || $kt == 24) {
                     $rId = explode(',', $value->receiver_id);
                     if ($request_sert == 'kirim') {
                         $data = ['receiver_id' => $rId[1]];
@@ -95,6 +97,7 @@ class AppHelper
                 }
             }
         }
+        // dd($kt, $data);
 
         return $data;
     }

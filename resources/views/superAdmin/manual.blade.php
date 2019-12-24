@@ -107,14 +107,5 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).on("click", ".ubah_manual", function() {
-            $('#UbahManual').prop('action', $(this).data('url'));
-            $('.roleName').val($(this).data('role'));
-            $('.modal-title').html($(this).data('judul'));
-        });
-
-    </script>
-
 </div>
 @endsection
