@@ -44,7 +44,7 @@ class CheckRole
                 \View::share('userAuth', $getUser);
                 \View::share('role', $role);
 
-                if ($role !== 'super_admin') {
+                // if ($role !== 'super_admin') {
                     $tahapan = \DB::table('master_tahap as mt')
                         ->leftJoin('users as u', function($join) {
                             $join->on('u.role_id', '=', 'mt.role_id');
@@ -62,7 +62,7 @@ class CheckRole
                         }
                     }
                     \View::share('tahap_sert', $tahapan);
-                }
+                // }
 
                 \View::share('uri', $url);
             }
