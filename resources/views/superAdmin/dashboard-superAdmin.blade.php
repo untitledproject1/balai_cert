@@ -55,7 +55,7 @@
     <div class="wrap_content">
        <div class="card mt-3 p-3">
            <div class="card-body">
-
+                <h5>List Sertifikasi Produk Terbaru</h5><br><br>
                 {{-- @if()
                 <div class="text-center">
                     <img style="width: 300px;" src="{{ asset('images/empty-superAdmin.png') }}" alt="">
@@ -70,7 +70,6 @@
                             <th width="20%" style="align-self: center;">Perusahaan</th>
                             <th width="25%">Kontak Perusahaan</th>
                             <th width="28%">Tahap Sertifikasi</th>
-                            <th width="10%">Lihat Produk</th>
                         </tr>
                     </thead>
 
@@ -137,7 +136,6 @@
                                   @endif
                               </div>
                             </td>
-                            <td class="text-center align-middle"><a class="view_produk" href="{{ url('/'.$page($role, $data->kode_tahap).'/'.$data->id.'/'.$link($role).'/'.$data->produk_id) }}">Tinjau</a></td>
                         </tr>
                         @endforeach
                     </tbody>

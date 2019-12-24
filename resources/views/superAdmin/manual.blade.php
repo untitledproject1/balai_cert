@@ -1,5 +1,7 @@
 @extends('superAdmin.layouts.main')
 
+@section('title_page', 'Manual Book User')
+
 @section('content-super-admin')
 <div class="col-lg">
     <div class="wrap_content">

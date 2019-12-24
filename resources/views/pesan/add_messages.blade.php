@@ -13,7 +13,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{-- tambah kondisi saat client_id ada, dan saat client_id tidak ada --}}
                 <form id="message_send" method="POST" action="
                 @if(isset($user))
                     @if(!is_null($produk) && !is_null($produk->request_sert))
@@ -51,6 +50,9 @@
                             @endif
                         @else
                             <div class="col-lg-6"><b>{{ $user->name }}</b></div>
+                            <div class="col-lg-6">
+                                <label class="badge badge-secondary">{{ $user->nama_perusahaan }}</label>
+                            </div>
                         @endif
                         </div>
                         {{-- <select class="custom-select" id="inputGroupSelect01">

@@ -1,12 +1,14 @@
 @extends('superAdmin.layouts.main')
 
+@section('title_page', 'Format Dokumen')
+
 @section('content-super-admin')
 
 <div class="col-lg">
     <div class="wrap_content">
         <div class="card mt-3 p-3">
             <div class="card-body">
-                <h5>Atur Format File</h5><br>
+                <h5>Atur Format Dokumen</h5><br>
 
                 <button type="button" class="tambah_data ubah_format" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{ Route('format_file_ubah') }}" data-judul="Tambah Format File"><i class="fas fa-plus"></i> &nbsp; Tambah Data</button>
                 <br><br>
