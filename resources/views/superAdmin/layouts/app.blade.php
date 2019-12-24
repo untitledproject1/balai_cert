@@ -19,8 +19,6 @@
     <!-- Data Table -->
     <link rel="stylesheet" href="{{ url('https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
-    <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <!-- others css -->
     <link rel="stylesheet" href="{{ asset('css/superAdmin/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superAdmin/default-css.css') }}">
@@ -65,20 +63,7 @@
     <script src="{{ asset('js/superAdmin/metisMenu.min.js') }}"></script>
     <script src="{{ asset('js/superAdmin/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('js/superAdmin/jquery.slicknav.min.js') }}"></script>
-
-    <!-- start chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- start zingchart js -->
-    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script>
-        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
-
-    </script>
-    <!-- all line chart activation -->
-    <script src="{{ asset('js/superAdmin/line-chart.js') }}"></script>
+    
     <!-- others plugins -->
     <script src="{{ asset('js/superAdmin/plugins.js') }}"></script>
     <script src="{{ asset('js/superAdmin/scripts.js') }}"></script>
@@ -87,8 +72,8 @@
     <script src="{{ url('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js') }}"></script>
 
-    <!-- Sweet Alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <!-- Sweet Alert -->
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script> 
 
     <script type="text/javascript">
         //Navbar scrolled
