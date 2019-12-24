@@ -19,6 +19,9 @@
                                 <a href="{{ Route('dashboard_superAdmin') }}" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li>
+                                <a href="{{ Route('sertifikasi_produk') }}" aria-expanded="true"><i class="ti-dashboard"></i><span>List Sertifikasi</span></a>
+                            </li>
+                            <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Pengaturan
                                 </span></a>
                                 <ul class="collapse">

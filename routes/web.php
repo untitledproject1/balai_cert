@@ -258,12 +258,18 @@ Route::group(['middleware'=>'verified'], function() {
 	Route::group(['middleware'=>'roles','roles'=>'super_admin'], function() {
 		Route::prefix('bc_admin/super')->group(function() {
 
+			// dashboard
 			Route::get('/dashboard', 'SuperAdmin\HomeAdminController@index')->name('dashboard_superAdmin');
+
+			// pengaturan
 			Route::get('/pengaturan/format_file', 'SuperAdmin\HomeAdminController@format_file')->name('format_file');
 			Route::post('/format_file_ubah/{id?}', 'SuperAdmin\HomeAdminController@format_file_ubah')->name('format_file_ubah');
 			Route::post('/format_file_hapus/{id}', 'SuperAdmin\HomeAdminController@format_file_hapus')->name('format_file_hapus');
 			Route::get('/manual/user', 'SuperAdmin\HomeAdminController@manual')->name('manual_book');
 			Route::post('/manual_user/{id}', 'SuperAdmin\HomeAdminController@manual_edit')->name('ubah_manual');
+
+			// serifikasi
+			Route::get('/cert_list', 'SuperAdmin\CertController@index')->name('sertifikasi_produk');
 
 		});
 	});

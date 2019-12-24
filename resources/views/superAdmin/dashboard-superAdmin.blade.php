@@ -55,13 +55,13 @@
     <div class="wrap_content">
        <div class="card mt-3 p-3">
            <div class="card-body">
-                <h5>List Sertifikasi Produk Terbaru</h5><br><br>
+                <h5>List Sertifikasi Produk Terbaru</h5><br>
                 {{-- @if()
                 <div class="text-center">
                     <img style="width: 300px;" src="{{ asset('images/empty-superAdmin.png') }}" alt="">
                     <h5 class="mt-4">Beberapa konten akan ada di sini</h5>
                 </div> --}}
-                <table id="example" class="table" style="width:100%">
+                <table id="dashboard_dataTable" class="table" style="width:100%">
                     <thead>
                         <tr>
                             <th width="5%">No</th>
