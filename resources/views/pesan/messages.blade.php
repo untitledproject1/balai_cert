@@ -71,9 +71,26 @@
                     <input class="form-control mb-3" type="text" name="" placeholder="Search..">
 
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
+                    
+<!--
+                    <div class="btn-group dropright">
+                      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Keramik
+                      </button>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Apply SA</a>
+                      </div>
+                    </div>
+-->
 
                     <ul class="list-group tablinks">
-                        <li id="message" class="list-group-item" onclick="listActive(this)">Keramik</li>
+                        <li class="list-group-item dropright" onclick="listActive(this)">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Keramik</a>
+                            <div class="dropdown-menu">
+                                <a id="message" class="dropdown-item" href="#">Apply SA</a>
+                            </div>
+                        </li>
+                        
                         <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
                         <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li>
                     </ul>

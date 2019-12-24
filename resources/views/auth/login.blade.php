@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content-navbar')
-
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+        <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
         <section class="login_content">
             <div class="login_inner">
