@@ -101,7 +101,6 @@
                                 <br><br>
                                 <div class="validMsg"></div><br>
                                 <hr>
-                                <button type="reset" class="reset_btn mr-2">Reset</button>
                                 <button type="button" class="submit_btn" onclick="ValidateSize('.file_format', '.formatDok', '#UbahFormatFile', '.validMsg')">Submit</button>
                                 
                             </form>

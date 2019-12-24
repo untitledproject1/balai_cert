@@ -94,7 +94,6 @@
                                         </div>
                                         <br><br>
                                         <div class="validMsg"></div><br>
-                                        <button type="reset" class="reset_btn mr-2">Reset</button>
                                         <button type="button" class="submit_btn" onclick="ValidateSize('.file_manual', '', '#UbahManual', '.validMsg')">Submit</button>
                                     </form>
                                 </div>
