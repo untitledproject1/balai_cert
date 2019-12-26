@@ -51,12 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function role() {
         return $this->belongsTo('App\Role', 'role_id', 'id');
     }
-
     
     public function produk_client() {
-        $model = $this->hasMany('App\Produk', 'user_id')->get();
-        return $model;
+        return $this->hasMany('App\Produk', 'user_id');
     }
+
 
     public function produk() {
         $model = $this->produk_client();

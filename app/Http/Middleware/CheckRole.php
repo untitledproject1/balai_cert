@@ -35,7 +35,7 @@ class CheckRole
                 //     $getUri = $role != 'client' && $url[5] == 'cert_list' ? $url[5].'/'.$url[6] : $url[5];
                 // }
                 $getUri = '';
-                if ($role != 'client' && isset($url[6])) {
+                if ($role != 'client' && $role != 'super_admin' && isset($url[6])) {
                     $idProduk = intval($url[6]);
                     $sert_doc = \DB::table('sert_doc')->where('produk_id', $idProduk)->first();
                     \View::share('sert_doc', $sert_doc);
@@ -44,14 +44,16 @@ class CheckRole
                 \View::share('userAuth', $getUser);
                 \View::share('role', $role);
 
-                // if ($role !== 'super_admin') {
+                if ( $role !== 'super_admin' || 
+                    ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard')) 
+                ) {
                     $tahapan = \DB::table('master_tahap as mt')
                         ->leftJoin('users as u', function($join) {
                             $join->on('u.role_id', '=', 'mt.role_id');
                         })
                         ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
                         ->get();
-                    if ($request->getRequestUri() !== '/dashboard') {
+                    if ($role == 'client' && $request->getRequestUri() !== '/dashboard') {
                         $subagId = explode(',', $tahapan->where('kode_tahap', 23)->first()->role_id)[1];
                         $subag = $getUser->where('role_id', $subagId)->first();
                         foreach ($tahapan as $key => $value) {
@@ -62,7 +64,7 @@ class CheckRole
                         }
                     }
                     \View::share('tahap_sert', $tahapan);
-                // }
+                }
 
                 \View::share('uri', $url);
             }

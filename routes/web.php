@@ -270,6 +270,7 @@ Route::group(['middleware'=>'verified'], function() {
 
 			// serifikasi
 			Route::get('/cert_list', 'SuperAdmin\CertController@index')->name('sertifikasi_produk');
+			Route::get('/cert_list/{company_id}', 'SuperAdmin\CertController@detail_produk')->name('detail_produk');
 
 		});
 	});

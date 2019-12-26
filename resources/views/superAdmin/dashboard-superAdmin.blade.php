@@ -56,6 +56,7 @@
        <div class="card mt-3 p-3">
            <div class="card-body">
                 <h5>List Sertifikasi Produk Terbaru</h5><br>
+                <a href="{{ Route('sertifikasi_produk') }}" class="btn btn-primary">Lihat lebih banyak</a>
                 {{-- @if()
                 <div class="text-center">
                     <img style="width: 300px;" src="{{ asset('images/empty-superAdmin.png') }}" alt="">

@@ -39,7 +39,7 @@ class HomeAdminController extends Controller
 	public function format_file() {
 		$dbFormat = FormatFile::all();
 
-		return view('superAdmin.format_file', ['format' => $dbFormat]);
+		return view('superAdmin.pengaturan.format_file', ['format' => $dbFormat]);
 	}
 
 	public function format_file_ubah(Request $request, $id = null) {
@@ -102,7 +102,7 @@ class HomeAdminController extends Controller
 
     public function manual() {
         $manual = Role::all();
-        return view('superAdmin.manual', ['manual' => $manual]);
+        return view('superAdmin.pengaturan.manual', ['manual' => $manual]);
     }
 
     public function manual_edit(Request $request, $id) {
