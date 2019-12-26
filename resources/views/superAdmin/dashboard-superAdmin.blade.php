@@ -1,7 +1,3 @@
- {{-- @extends('home') --}}
-
- {{-- @section('card-header', 'Dasboard')  --}}
-
 @extends('superAdmin.layouts.main')
 
 @section('title_page', 'Dashboard')
@@ -53,7 +49,7 @@
  {{-- Dashboard Content --}}
 <div class="col-lg">
     <div class="wrap_content">
-       <div class="card mt-3 p-3">
+       <div class="card mt-3">
            <div class="card-body">
                 <h5>List Sertifikasi Produk Terbaru</h5><br>
                 <a href="{{ Route('sertifikasi_produk') }}" class="btn btn-primary">Lihat lebih banyak</a>

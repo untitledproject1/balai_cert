@@ -35,7 +35,7 @@
                 </div>
             </a>
 
-           <a href="{{ url('/pesan') }}" class="list-group-item">
+           <a href="{{ url('messages') }}" class="list-group-item">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <i class="fas fa-envelope fa-lg"></i>
