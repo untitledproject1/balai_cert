@@ -69,7 +69,7 @@
                     </div>
 -->
                     
-                    <input class="form-control mb-3" type="text" name="" placeholder="Search..">
+                    <input id="search_produk_msg" class="form-control mb-3" type="text" name="" placeholder="Search..">
 
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
                     
@@ -84,9 +84,10 @@
                     </div>
 -->
 
-                    <ul class="list-group tablinks dropright">
+                    <ul id="list_produk_msg" class="list-group tablinks dropright">
+                        @foreach($produk as $data)
                         <li class="list-group-item" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Keramik <i class="fas fa-angle-right float-right"></i>
+                            {{ $data->produk }} <i class="fas fa-angle-right float-right"></i>
                             <div class="dropdown-menu">
                                 <a id="message" class="dropdown-item" href="#">Apply SA</a>
                                 <div class="dropdown-divider"></div>
@@ -101,9 +102,10 @@
                                 <a id="message" class="dropdown-item" href="#">Pembuatan Dokumen Laporan Hasil Sertifikasi</a>
                             </div>
                         </li>
+                        @endforeach
                         
-                        <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
-                        <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li>
+                        {{-- <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
+                        <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li> --}}
                     </ul>
 
                     {{-- </a> --}}
@@ -275,6 +277,14 @@
         $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
     });
 
+    function listActive(elem) {
+        var li = document.getElementsByClassName('list-group-item')
+        for (i = 0; i < li.length; i++) {
+            li[i].classList.remove('list-group-active')
+        }
+        elem.classList.add('list-group-active');
+    }
+
     $(document).ready(function() {
         $('#message').click(function() {
             $('#pesan').show();
@@ -297,15 +307,33 @@
             $('#pesan2').hide();
             $('#hilang').hide();
         })
+        
+        $.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
+        $('#search_produk_msg').keyup(function() {
+            $.post('{{ url('/search_produk') }}', {
+                user_id: '{{ $userAuth->id }}',
+                produk: $(this).val()
+            }).done(function(data) {
+                // console.log(data);
+                var list = '';
+                if (data.data.length == 0) {
+                    list = 'Produk tidak ditemukan!';
+                } else {
+                    for (var i = 0; i < data.data.length; i++) {
+                        list+= "<li class='list-group-item' onclick='listActive(this)' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.data[i].produk+" <i class='fas fa-angle-right float-right'></i><div class='dropdown-menu'><a id='message' class='dropdown-item' href='#'>Apply SA</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan MOU</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Sign MOU</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Penawaran Harga</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Invoice dan Upload Kode Biling</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Dokumen Laporan Hasil Sertifikasi</a></div></li>";
+                    }
+                }
+                $('#list_produk_msg').html(list);
+            }).fail(function(err) {
+                console.log(err.responseJSON);
+            });
+        })
     })
 
-    function listActive(elem) {
-        var li = document.getElementsByClassName('list-group-item')
-        for (i = 0; i < li.length; i++) {
-            li[i].classList.remove('list-group-active')
-        }
-        elem.classList.add('list-group-active');
-    }
 
 </script>
 @endsection

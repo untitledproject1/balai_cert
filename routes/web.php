@@ -28,14 +28,15 @@ Route::group(['middleware'=>'verified'], function() {
 
 	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum']], function() {
 
-		Route::post('/message_send/{idProduk}/{admin_id}/{client_id?}', 'ProdukController@send_message_client');
+		Route::get('/messages', 'MessageController@index');
+		Route::post('/message_send/{idProduk}/{admin_id}/{client_id?}', 'MessageController@send_message_client');
+		Route::post('/search_produk', 'MessageController@search_produk');
 	});
 
 	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum', 'super_admin']], function() {
 		// Route::get('/editDok', 'HomeController@editDok');
 
 		Route::get('/pesan', 'HomeController@pesan');
-		Route::get('/messages', 'HomeController@messages');
 		Route::get('/setting', 'HomeController@setting');
 	});
 

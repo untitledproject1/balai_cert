@@ -48,7 +48,8 @@ class CheckRole
                     \View::share('breadcrumbs', \AppHelper::instance()->breadcrumbs($request->segments()));
                 }
 
-                if ( $role !== 'super_admin' || 
+                if ( 
+                    ( $role !== 'super_admin' && ($role == 'client' && ($url[3] !== 'messages')) ) || 
                     ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard')) 
                 ) {
                     $tahapan = \DB::table('master_tahap as mt')

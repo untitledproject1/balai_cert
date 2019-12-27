@@ -39,10 +39,6 @@ class HomeController extends Controller
         return view('pesan/messages_produk');
     }
 
-    public function messages() {
-        return view('pesan/messages');
-    }
-
     public function view_dok($file) {
         $pdf = \PDF::loadView('dok.'.$file);
         $pdf->setPaper('A4');

@@ -74,25 +74,4 @@ class ProdukController extends Controller
 
     	return view('dashboard.history', ['produk' => $produk]);
     }
-
-    public function send_message_client(Request $request, $idProduk, $admin_id, $client_id = null) {
-        $d = \Validator::make($request->all(), [
-            'pesan' => 'required|string|max:255',
-        ]);
-        if ($d->fails()) {return redirect()->back()->withErrors($d);}
-
-        $produk = Produk::find($idProduk);
-
-        $pesan = new Pesan;
-        if (!is_null($client_id)) {
-            $pesan->client = intval($client_id);
-        }
-        $pesan->admin = intval($admin_id);
-        $pesan->produk_id = $produk->id;
-        $pesan->kode_tahap = $produk->kode_tahap;
-        $pesan->pesan = $request->pesan;
-        $pesan->save();
-
-        return redirect('messages');
-    }
 }
