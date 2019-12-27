@@ -143,8 +143,8 @@
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ isset($userAuth) ? $userAuth->name : Auth::user()->name }}<i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 {{-- <a class="dropdown-item" href="profil.html">Profil</a> --}}
-                                <a class="dropdown-item" href="{{ route('pengaturan_akun') }}">Pengaturan Akun</a>
-                                <a class="dropdown-item" href="{{ __('Logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                                <a class="dropdown-item" href="{{ route('pengaturan_akun') }}"><i class="fas fa-cog"></i> &nbsp; Pengaturan Akun</a>
+                                <a class="dropdown-item" href="{{ __('Logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> &nbsp; Log Out</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form> 
