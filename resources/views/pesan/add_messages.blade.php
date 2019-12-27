@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body">
                 <form id="message_send" method="POST" action="
-                @if(isset($user))
+                @if($role != 'client')
                     @if(!is_null($produk) && !is_null($produk->request_sert))
                     {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, $produk->request_sert)['receiver_id'].'/'.$user->id) }}
                     @else
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label for="">Kepada</label>
                         <div class="row">
-                        @if(!isset($user))
+                        @if($role == 'client')
                             @if(!is_null($produk) && !is_null($produk->request_sert))
                                 <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[2] }}</b></div>
                                 @if($role == 'client')

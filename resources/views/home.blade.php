@@ -23,12 +23,12 @@
                            </div>
                        </div>
                        <div class="col-lg-4 align-self-center">
-                           @if($role != 'client')
-                            @include('modal_all_doc')
-                            <div class="text-right">
-                                <button type="button" class="modal_btn" data-toggle="modal" data-target=".modal-all-doc">Lihat Dokumen Pengajuan Sertifikasi</button>
-                            </div>
-                            @endif       
+                        @if($role != 'client')
+                          @include('modal_all_doc')
+                          <div class="text-right">
+                              <button type="button" class="modal_btn" data-toggle="modal" data-target=".modal-all-doc">Lihat Dokumen Pengajuan Sertifikasi</button>
+                          </div>
+                        @endif       
                        </div>
                    </div>
                 </div>

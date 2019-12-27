@@ -214,7 +214,7 @@ class JAController extends Controller
     	return redirect()->back()->with('successMsg', 'Form berhasil diisi, tunggu kelengkapan dokumen dari client');
     }
     public function verify_dokSert($idProduk) {
-        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk')->where('id', $idProduk)->first();
+        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk', 'request_sert')->where('id', $idProduk)->first();
         $lpModel = new LaporanAudit;
         $laporanAudit = $lpModel->where('produk_id', $idProduk)->first();
         $dokImportir = null;

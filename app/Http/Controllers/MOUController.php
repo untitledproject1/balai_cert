@@ -49,7 +49,7 @@ class MOUController extends Controller
 
     public function cmou($id, $idProduk) {
         $user = User::find($id);
-        $produk = \DB::table('produk')->select('id','produk', 'kode_tahap')->where('id', $idProduk)->first();
+        $produk = \DB::table('produk')->select('id','produk', 'kode_tahap', 'request_sert')->where('id', $idProduk)->first();
         if (is_null($user) || is_null($produk)) {
             return redirect()->back();
         }
@@ -138,7 +138,7 @@ class MOUController extends Controller
     }
 
     public function mou($idProduk) {
-        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk')->where('id', $idProduk)->first();
+        $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk', 'request_sert')->where('id', $idProduk)->first();
         $kode_tahap = $produk->kode_tahap;
         $bidPrice = BidPrice::where('produk_id', $idProduk)->first();
         $mou = Mou::where('produk_id', $idProduk)->first();

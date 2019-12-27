@@ -30,40 +30,40 @@
             </thead>
             <tbody>
                 @if(!$produk->isEmpty())
-                @foreach($produk as $key => $data)
-                <tr class="table_data">
-                    <td>{{ $key+=1 }}</td>
-                    <td>
-                        <h6>{{ $data->produk }}</h6>
-                    </td>
-                    <td>
-                        <div class="
-                                @if(is_null($data->tahapan))
-                                    tahap_sert_off
+                    @foreach($produk as $key => $data)
+                    <tr class="table_data">
+                        <td>{{ $key+=1 }}</td>
+                        <td>
+                            <h6>{{ $data->produk }}</h6>
+                        </td>
+                        <td>
+                            <div class="
+                                    @if(is_null($data->tahapan))
+                                        tahap_sert_off
+                                    @elseif(!is_null($data->kode_tahap) && intval($data->kode_tahap) === 10)
+                                        tahap_sert_pending
+                                    @else
+                                        tahap_sert_on
+                                    @endif
+                                ">
+                                @if(!is_null($data->kode_tahap) && intval($data->kode_tahap) !== 10)
+                                    @if(intval($data->kode_tahap === 23))
+                                    {{ $data->tahapan }}<br><small>(Menunggu penerimaan sertifikat oleh client)</small>
+                                    @elseif(intval($data->kode_tahap === 24))
+                                    &nbsp;Client sudah menerima sertifikat
+                                    @else
+                                    {{ $data->tahapan }}
+                                    @endif
                                 @elseif(!is_null($data->kode_tahap) && intval($data->kode_tahap) === 10)
-                                    tahap_sert_pending
+                                {{ $data->tahapan }}<br>
                                 @else
-                                    tahap_sert_on
+                                Tidak ada sertifikasi produk yang berjalan
                                 @endif
-                            ">
-                            @if(!is_null($data->kode_tahap) && intval($data->kode_tahap) !== 10)
-                                @if(intval($data->kode_tahap === 23))
-                                {{ $data->tahapan }}<br><small>(Menunggu penerimaan sertifikat oleh client)</small>
-                                @elseif(intval($data->kode_tahap === 24))
-                                &nbsp;Client sudah menerima sertifikat
-                                @else
-                                {{ $data->tahapan }}
-                                @endif
-                            @elseif(!is_null($data->kode_tahap) && intval($data->kode_tahap) === 10)
-                            {{ $data->tahapan }}<br>
-                            @else
-                            Tidak ada sertifikasi produk yang berjalan
-                            @endif
-                        </div>
-                    </td>
-                    <td class="text-center align-middle"><a class="view_produk" href="{{ url('/'.$page($role, $data->kode_tahap).'/'.$user->id.'/'.$link($role).'/'.$data->id) }}"><i class="fas fa-eye"></i></a>
-                </tr>
-                @endforeach
+                            </div>
+                        </td>
+                        <td class="text-center align-middle"><a class="view_produk" href="{{ url('/'.$page($role, $data->kode_tahap).'/'.$user->id.'/'.$link($role).'/'.$data->id) }}"><i class="fas fa-eye"></i></a>
+                    </tr>
+                    @endforeach
                 @else
                 <tr>
                     <td colspan="4">

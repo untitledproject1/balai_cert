@@ -6,6 +6,7 @@
 
 <div class="col">
     <div class="wrap_content">
+        {{-- {{{dd($dok)}}} --}}
         @component('stepper') pemasaran,1,{{ $user->id }},{{ $idProduk }},{{ $kode_tahap }} @endcomponent
 
         @if( (!is_null($dok) && $dok->sni == 1) && (!is_null($infoDB) && $infoDB->lengkap == 1) )
@@ -72,8 +73,8 @@
                 @endif
                 
                 @if(
-                    ((!is_null($dok) && !is_null($dok->sni) && $dok->sni == 3) && (!is_null($infoDB) && !is_null($infoDB->lengkap) && $infoDB->lengkap == 3)) ||
-                    (is_null($dok) || is_null($infoDB)) ||
+                    ( (!is_null($dok) && !is_null($dok->sni) && $dok->sni == 3) && (!is_null($infoDB) && !is_null($infoDB->lengkap) && $infoDB->lengkap == 3) ) ||
+                    ( (is_null($infoDB) || !is_null($infoDB)) && !is_null($dok) ) ||
                     $kode_tahap >= 11
                 )
                 <div class="mb-2">
@@ -84,7 +85,7 @@
                 </div>
                 <br>
                 <div class="collapse" id="dok_sa">
-                    @if($dok->sni !== 1 && $infoDB->lengkap !== 1)
+                    @if(!is_null($dok) && $dok->sni !== 1 && $infoDB->lengkap !== 1)
                     <div id="save">
                         <a href="#send_file">
                             <div class="save_file_link">

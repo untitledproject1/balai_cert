@@ -91,13 +91,14 @@ class AppHelper
                         $data = ['receiver_id' => $rId[1]];
                     } elseif ($request_sert == 'ambil') {
                         $data = ['receiver_id' => $rId[0]];
+                        // dd($data);
                     }
                 } else {
                     $data = ['receiver_id' => $value->receiver_id];
                 }
             }
         }
-        // dd($kt, $data);
+        // dd($kt, $data, $request_sert);
 
         return $data;
     }
