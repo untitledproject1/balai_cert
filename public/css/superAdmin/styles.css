@@ -206,6 +206,26 @@
 }
 
 
+/* =====
+===== List Sertifikasi
+================================= */
+
+.view_produk {
+    text-align: center;
+    padding: 10px 20px;
+    background: #42A5F5;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.view_produk:hover {
+    background: #1E88E5;
+    color: #fff;
+    box-shadow: none;
+}
+
+
 /* ===== 
 ==== Atur Format File
 ================================ */
