@@ -54,7 +54,7 @@
                 <h5>List Sertifikasi Produk Terbaru</h5><br>
                 <a href="{{ Route('sertifikasi_produk') }}" class="btn btn-primary">Lihat lebih banyak</a>
                 {{-- @if()
-                <div class="text-center">
+                <div class="text-center mt-2">
                     <img style="width: 300px;" src="{{ asset('images/empty-superAdmin.png') }}" alt="">
                     <h5 class="mt-4">Beberapa konten akan ada di sini</h5>
                 </div> --}}

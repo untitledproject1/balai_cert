@@ -8,7 +8,6 @@
     <div class="wrap_content">
         <div class="card mt-3 p-3">
             <div class="card-body">
-            	<h5>Pengaturan Akun</h5><br>
             	@if(!$errors->isEmpty())
                 <ul class="alert alert-danger">
                     @foreach($errors->getMessages() as $key => $error)
@@ -21,7 +20,8 @@
                     <p class="alert alert-success">{{ \Session::get('success') }}</p>
                 </center>
                 @endif
-            	<form id="setAkunForm" method="POST" action="{{ url('/setting/account') }}">
+            	<div class="form_settings">
+            	    <form id="setAkunForm" method="POST" action="{{ url('/setting/account') }}">
                     @csrf
                     <div class="form-group ml-3 mt-4">
                         <label for="exampleInputPassword1">Nama Akun</label>
@@ -49,6 +49,7 @@
                         <button type="button" class="submit_btn ml-3" onclick="ValidateSize('null', '.setAcc', '#setAkunForm', '.validMsg2')">Simpan</button>
                     </div>
                 </form>
+            	</div>
             </div>
         </div>
     </div>
