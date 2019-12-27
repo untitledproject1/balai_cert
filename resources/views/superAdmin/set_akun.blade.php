@@ -8,7 +8,6 @@
     <div class="wrap_content">
         <div class="card mt-3 p-3">
             <div class="card-body">
-            	<h5>Pengaturan Akun</h5>
             	@if(!$errors->isEmpty())
                 <ul class="alert alert-danger">
                     @foreach($errors->getMessages() as $key => $error)
