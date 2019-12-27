@@ -39,7 +39,8 @@ class CertController extends Controller
     	return view('superAdmin.list_sert.cert_list', ['result' => $result]);
     }
 
-    public function detail_produk($company_id) {
+    public function detail_produk(Request $request, $company_id) {
+        // dd(\AppHelper::instance()->breadcrumbs($request->segments()));
         $user = User::find($company_id);
         if (is_null($user)) {
             abort(404);

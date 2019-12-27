@@ -101,4 +101,62 @@ class AppHelper
 
         return $data;
     }
+
+    public function breadcrumbs($url_segment) {
+        Global $breadcrumbs;
+        $breadcrumbs = [];
+
+        // list of breadcrumbs //
+
+        function manual_book($url_segment) {
+            global $breadcrumbs;
+            array_push($breadcrumbs, ['name' => 'Manual Book User', 'url' => Route('manual_book')]);
+        }
+
+        function format_dok($url_segment) {
+            global $breadcrumbs;
+            array_push($breadcrumbs, ['name' => 'Format Dokumen', 'url' => Route('format_dok')]);
+        }
+
+        function dashboard($url_segment) {
+            global $breadcrumbs;
+            array_push($breadcrumbs, ['name' => 'Dashboard', 'url' => Route('dashboard_superAdmin')]);
+        }
+
+        function cert_list($url_segment) {
+            global $breadcrumbs;
+            array_push($breadcrumbs, ['name' => 'List Perusahaan', 'url' => Route('sertifikasi_produk')]);
+        }
+
+        function cert_list_produk($url_segment) {
+            global $breadcrumbs;
+            cert_list($url_segment);
+            array_push($breadcrumbs, ['name' => 'List Produk Perusahaan', 'url' => Route('detail_produk', ['company_id' => $url_segment[3]])]);
+        }
+
+        // ------------------------- //
+
+
+        // breadcrumbs selection 
+
+        if ($url_segment['2'] == 'dashboard') {
+            dashboard($url_segment);
+        } elseif ($url_segment['2'] == 'cert_list') {
+            if (isset($url_segment['3'])) {
+                cert_list_produk($url_segment);
+            } else {
+                cert_list($url_segment);
+            }
+        } elseif ($url_segment['2'] == 'pengaturan') {
+            if ($url_segment['3'] == 'format_dok') {
+                format_dok($url_segment);
+            } else {
+                manual_book($url_segment);
+            }
+        }
+
+        // dd($breadcrumbs);
+
+        return $breadcrumbs;
+    }
 }

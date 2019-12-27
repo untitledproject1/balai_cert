@@ -24,7 +24,7 @@
                     @if(!is_null($produk) && !is_null($produk->request_sert))
                     {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, $produk->request_sert)['receiver_id']) }}
                     @else
-                    {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, null)['receiver_id'].'/'.isset($user) ? $user->id : null) }}
+                    {{ url('/message_send/'.$idProduk.'/'.AppHelper::instance()->getMessageParam($kode_tahap, $tahap_sert, null)['receiver_id']) }}
                     @endif
                 @endif
                 ">

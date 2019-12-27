@@ -44,6 +44,10 @@ class CheckRole
                 \View::share('userAuth', $getUser);
                 \View::share('role', $role);
 
+                if ($role == 'super_admin') {
+                    \View::share('breadcrumbs', \AppHelper::instance()->breadcrumbs($request->segments()));
+                }
+
                 if ( $role !== 'super_admin' || 
                     ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard')) 
                 ) {

@@ -127,4 +127,8 @@ class HomeAdminController extends Controller
 
         return redirect()->back()->with('msg', 'Manual User '.$manual->role_name.' berhasil diubah!');
     }
+
+    public function pengaturan_akun() {
+        return view('superAdmin.set_akun');
+    }
 }

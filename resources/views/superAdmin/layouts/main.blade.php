@@ -25,7 +25,7 @@
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Pengaturan
                                 </span></a>
                                 <ul class="collapse">
-                                    <li><a href="{{ Route('format_file') }}">Format Dokumen</a></li>
+                                    <li><a href="{{ Route('format_dok') }}">Format Dokumen</a></li>
                                     <li><a href="{{ Route('manual_book') }}">Manual Book User</a></li>
                                 </ul>
                             </li>
@@ -56,7 +56,7 @@
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                            {{-- <li id="full-view"><i class="ti-fullscreen"></i></li> --}}
-                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            {{-- <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                             <li class="dropdown">
                                 <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
                                     <span>2</span>
@@ -115,7 +115,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -127,18 +127,23 @@
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">@yield('title_page')</h4>
-                            {{-- <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
-                                <li><span>Dashboard</span></li>
-                            </ul> --}}
+                            <ul class="breadcrumbs pull-left">
+                                @foreach($breadcrumbs as $key => $bc)
+                                    @if(count($breadcrumbs)-1 == $key)
+                                    <li><span>{{ $bc['name'] }}</span></li>
+                                    @else
+                                    <li><a href="{{ $bc['url'] }}">{{ $bc['name'] }}</a></li>
+                                    @endif
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                     <div class="col-sm-6 clearfix"> 
                         <div class="user-profile pull-right">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ isset($userAuth) ? $userAuth->name : Auth::user()->name }}<i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="profil.html">Profil</a>
-                                <a class="dropdown-item" href="#">Pengaturan</a>
+                                {{-- <a class="dropdown-item" href="profil.html">Profil</a> --}}
+                                <a class="dropdown-item" href="{{ route('pengaturan_akun') }}">Pengaturan Akun</a>
                                 <a class="dropdown-item" href="{{ __('Logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf

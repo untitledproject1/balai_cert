@@ -67,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     }
 
     public function currentProduct() {
-        $model = $this->produk_client();
+        $model = $this->produk_client()->get();
         $result = null;
         if (count($model) > 0) {
             $result = $model->where('kode_tahap', '!=', 24);
@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     }
 
     public function total_available_cert() {
-        $model = $this->produk_client()->where('kode_tahap', '!=', 24);
+        $model = $this->produk_client()->where('kode_tahap', '!=', 24)->get();
         return 5 - count($model);
     }
 

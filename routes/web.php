@@ -16,6 +16,7 @@ Route::group(['middleware'=>'verified'], function() {
 	Route::get('/doc/download/{directory}/{file}', 'HomeController@downloadDoc');
 	Route::get('/manual/download/{role}', 'HomeController@manual');
 	Route::post('/setting/company', 'HomeController@settingComp');
+	Route::post('/setting/account', 'HomeController@settingAcc');
 
 	Route::get('/sukses_register', function () {
 	    return view('sukses_register');
@@ -36,7 +37,6 @@ Route::group(['middleware'=>'verified'], function() {
 		Route::get('/pesan', 'HomeController@pesan');
 		Route::get('/messages', 'HomeController@messages');
 		Route::get('/setting', 'HomeController@setting');
-		Route::post('/setting/account', 'HomeController@settingAcc');
 	});
 
 
@@ -262,15 +262,18 @@ Route::group(['middleware'=>'verified'], function() {
 			Route::get('/dashboard', 'SuperAdmin\HomeAdminController@index')->name('dashboard_superAdmin');
 
 			// pengaturan
-			Route::get('/pengaturan/format_file', 'SuperAdmin\HomeAdminController@format_file')->name('format_file');
+			Route::get('/pengaturan/format_dok', 'SuperAdmin\HomeAdminController@format_file')->name('format_dok');
 			Route::post('/format_file_ubah/{id?}', 'SuperAdmin\HomeAdminController@format_file_ubah')->name('format_file_ubah');
 			Route::post('/format_file_hapus/{id}', 'SuperAdmin\HomeAdminController@format_file_hapus')->name('format_file_hapus');
-			Route::get('/manual/user', 'SuperAdmin\HomeAdminController@manual')->name('manual_book');
+			Route::get('/pengaturan/manual_user', 'SuperAdmin\HomeAdminController@manual')->name('manual_book');
 			Route::post('/manual_user/{id}', 'SuperAdmin\HomeAdminController@manual_edit')->name('ubah_manual');
 
 			// serifikasi
 			Route::get('/cert_list', 'SuperAdmin\CertController@index')->name('sertifikasi_produk');
 			Route::get('/cert_list/{company_id}', 'SuperAdmin\CertController@detail_produk')->name('detail_produk');
+
+			// pengaturan akun
+			Route::get('/pengaturan_akun', 'SuperAdmin\HomeAdminController@pengaturan_akun')->name('pengaturan_akun');
 
 		});
 	});
