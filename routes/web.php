@@ -31,7 +31,7 @@ Route::group(['middleware'=>'verified'], function() {
 		Route::post('/tahap_sert', 'ProdukController@get_tahap_sert');
 		Route::get('/messages', 'MessageController@index');
 		Route::post('/message_send/{idProduk}/{admin_id}/{client_id?}', 'MessageController@send_message_client');
-		Route::post('/search_produk', 'MessageController@search_produk');
+		Route::get('/search_produk', 'MessageController@search_produk');
 		Route::post('/get_messages_tahap', 'MessageController@getMsg');
 		Route::post('/set_prop_msg', 'MessageController@set_prop');
 		Route::post('/send_ajax_msg', 'MessageController@send_msg_ajax');

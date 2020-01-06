@@ -211,20 +211,32 @@
             url: url,
             message: message
         }).done(function(data) {
-            console.log(data);
-            var msg = "";
-            msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
-            if (data.data.ket_pesan == 'client') {
-                msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+            // console.log(data);
+            
+            if (data.err) {
+                swal(data.err, {
+                    icon: "error",
+                });    
             } else {
-                msg+= "<span class='name mr-2'>"+data.msg_prop.name+"</span>";
+                var msg = "";
+                msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
+                if (data.data.ket_pesan == 'client') {
+                    msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                } else {
+                    msg+= "<span class='name mr-2'>"+data.msg_prop.name+"</span>";
+                }
+                if (data.data.ket_pesan == 'admin') {
+                    msg+= "<span class='badge_pemasaran'>"+data.msg_prop.role_name+"</span>";
+                }
+                msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><p class='isi'>"+data.data.pesan+"</p>";
+                msg+= "<span class='badge badge-success'>Baru Terkirim</span></div>";
+                msg+= "<hr>";
+                $('#msg_content').prepend(msg);
+
+                swal("Pesan berhasil terkirim", {
+                    icon: "success",
+                });
             }
-            if (data.data.ket_pesan == 'admin') {
-                msg+= "<span class='badge_pemasaran'>"+data.msg_prop.role_name+"</span>";
-            }
-            msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><p class='isi'>"+data.data.pesan+"</p></div>";
-            msg+= "<hr>";
-            $('#msg_content').prepend(msg);
             $('#addMessages').modal('hide');
 
         }).fail(function(err) {
@@ -238,11 +250,12 @@
             kode_tahap: kode_tahap,
             produk_id: produk_id
         }).done(function(data) {
+            // console.log(data);
             var msg = '';
             if (parseInt(produk_kode_tahap) < parseInt(kode_tahap)) {
                 msg = 'Pesan belum ada!';
                 $('.msg_modal').hide();     // hide akses modal pesan jika tahap sertifikasi sudah lewat
-            } else if (data.data.length === 0) {
+            } else if (data.data.length == 0) {
                 msg = 'Pesan belum ada!';
                 $('.msg_modal').hide();     // hide akses modal pesan jika pesan kosong
             } else {
@@ -261,7 +274,6 @@
                         msg+= "<hr>";
                     }
                 }
-                $('#msg_content').html(msg);
                 $('.msg_modal').show();
 
 
@@ -282,14 +294,21 @@
 
                     // ---- action kirim pesan
                     $('#submit_msg').on('click', function() {
-                        console.log($('.msg_modal_body').find('.pesan').val());
-                        send_msg_ajax(data.form_url, $('.msg_modal_body').find('.pesan').val());
+                        if ($('.msg_modal_body').find('.pesan').val() == '') {
+                            $('.msg_modal_body').find('.validMsgSend').html("<p class='alert alert-danger'>Harap cek kembali field input yang wajib diisi!</p>");
+                        } else {
+                            $('.msg_modal_body').find('.validMsgSend').html("");
+                            send_msg_ajax(data.form_url, $('.msg_modal_body').find('.pesan').val());
+                        }
+
                     });
 
                 }).fail(function(err) {
                     console.log(err.responseJSON);
                 });
             }
+            $('#msg_content').html(msg);
+
         }).fail(function(err) {
             console.log(err.responseJSON);
         });
@@ -323,7 +342,7 @@
 
         // ---- search product ------
         $('#search_produk_msg').keyup(function() {
-            $.post('{{ url('/search_produk') }}', {
+            $.get('{{ url('/search_produk') }}', {
                 user_id: '{{ $userAuth->id }}',
                 produk: $(this).val()
             }).done(function(data) {
