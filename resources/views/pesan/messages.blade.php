@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Isi Pesan</label>
-                                        <textarea class="form-control pesan" rows="3" placeholder="Isi pesan.."></textarea>
+                                        <textarea class="form-control pesan" rows="5" placeholder="Isi pesan.."></textarea>
                                         <small class="form-text text-muted">wajib diisi</small>
                                     </div>
                                     <div class="validMsgSend"></div>
@@ -216,7 +216,7 @@
             if (data.err) {
                 swal(data.err, {
                     icon: "error",
-                });    
+                }); 
             } else {
                 var msg = "";
                 msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
@@ -228,8 +228,8 @@
                 if (data.data.ket_pesan == 'admin') {
                     msg+= "<span class='badge_pemasaran'>"+data.msg_prop.role_name+"</span>";
                 }
-                msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><p class='isi'>"+data.data.pesan+"</p>";
-                msg+= "<span class='badge badge-success'>Baru Terkirim</span></div>";
+                msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data.pesan+"</span>";
+                msg+= "</div>";
                 msg+= "<hr>";
                 $('#msg_content').prepend(msg);
 
@@ -269,7 +269,7 @@
                     if (data.data[m].ket_pesan == 'admin') {
                         msg+= "<span class='badge_pemasaran'>"+data.data[m].role_name+"</span>";
                     }
-                    msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data[m].waktu_terkirim+"</span></div></div><p class='isi'>"+data.data[m].pesan+"</p></div>";
+                    msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data[m].waktu_terkirim+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data[m].pesan+"</span></div>";
                     if (m !== data.data.length - 1) {
                         msg+= "<hr>";
                     }

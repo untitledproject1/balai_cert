@@ -103,9 +103,8 @@
             </a>
 
 
-<!--
             {{-- {{ $uri == 'pesan' ? 'list_active' : '' }} --}}
-            <a href="{{ url('/pesan') }}" class="list-group-item ">
+            <a href="{{ url('/messages') }}" class="list-group-item ">
                 <div class="row">
                     <div class="col-lg-2">
                         {{-- {{ $uri == 'pesan' ? 'faicon_active' : '' }} --}}
@@ -116,7 +115,7 @@
                     </div>
                 </div>
             </a>
--->
+
             @else
             <a href="{{ Route('dashboard_superAdmin') }}" class="list-group-item">
                 <div class="row">

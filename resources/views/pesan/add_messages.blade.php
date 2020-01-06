@@ -2,6 +2,16 @@
     <img style="width: 30px;" src="{{ asset('images/icon/help.svg') }}" alt=""> &nbsp; Kirim Pesan
 </button>
 
+@if(\Session::has('msg_success'))
+<script type="text/javascript">
+    swal({
+        icon: "success",
+        title: "{{ \Session::get('msg_success') }}",
+        text: "Untuk melihat pesan secara lengkap, masuk ke menu pesan"
+    });
+</script>
+@endif
+
 <!-- Modal -->
 <div class="modal fade" id="modalTambahPesan" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">

@@ -35,7 +35,7 @@ class MessageController extends Controller
         $pesan->pesan = $request->pesan;
         $pesan->save();
 
-        return redirect('messages');
+        return redirect()->back()->with('msg_success', 'Pesan berhasil dikirim');
     }
 
     public function search_produk(Request $request) {
@@ -126,8 +126,7 @@ class MessageController extends Controller
         $pesan->produk_id = $produk->id;
         $pesan->kode_tahap = $produk->kode_tahap;
         $pesan->pesan = $request->message;
-        $pesan->created_at = '2019-12-24 08:17:11';
-        // $pesan->save();
+        $pesan->save();
 
         $user = \DB::table('users')->leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $admin_id)->select('users.name', 'role.role_name')->first();
 

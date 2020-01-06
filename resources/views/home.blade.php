@@ -41,8 +41,8 @@
     <div class="row justify-content-center mb-1">
         @yield('tahapan')
         @if( ($role == 'client' && isset($idProduk) && !is_null($idProduk)) || (isset($user) && isset($idProduk) ) )
-        @include('tahap_sert')
-        @include('pesan/add_messages')
+          @include('tahap_sert')
+          @include('pesan/add_messages')
         @endif
 
         @if (session('status'))

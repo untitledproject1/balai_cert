@@ -8,6 +8,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    <!-- Sweet Alert -->
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script> 
+
     <link type="image/png" rel="icon" href="{{ asset('images/icon/logo-polos.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -86,9 +89,6 @@
     @auth
     <script src="{{ asset('js/enable-push.js') }}"></script>
     @endauth
-
-    <!-- Sweet Alert -->
-    <script src="{{ asset('js/sweetalert.min.js') }}"></script> 
 
     <!-- Data Table -->
     <script src="{{ url('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js') }}"></script>
