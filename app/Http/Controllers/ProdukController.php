@@ -74,4 +74,13 @@ class ProdukController extends Controller
 
     	return view('dashboard.history', ['produk' => $produk]);
     }
+
+    public function get_tahap_sert(Request $request) {
+        $tahapan = \DB::table('master_tahap as mt')
+            ->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
+            ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
+            ->get();
+
+        return response()->json(['data' => $tahapan]);
+    }
 }

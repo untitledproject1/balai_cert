@@ -3,38 +3,6 @@
 @section('card-header', 'Pesan')
 
 @section('content')
-<script>
-    // function openMessage(evt, cityName) {
-    // var i, tabcontent, tablinks, hilang;
-    // tabcontent = document.getElementsByClassName("tabcontent");
-    // for (i = 0; i < tabcontent.length; i++) {
-    //   tabcontent[i].style.display = "none";
-    // }
-    // hilang = document.getElementsByClassName("hilang");
-    // for (i = 0; i < hilang.length; i++) {
-    //   hilang[i].style.display = "none";
-    // }
-
-    // tablinks = document.getElementsByClassName("tablinks");
-    // for (i = 0; i < tablinks.length; i++) {
-    //   tablinks[i].className = tablinks[i].className.replace(" active", "");
-    // }
-    //   document.getElementById(cityName).style.display = "block";
-    //   evt.currentTarget.className += "active";
-    // }
-    //  function hide(id)
-    // {
-    //   if (is_hide == true) {
-    //     document.getElementById(id).style.display = 'block';
-    //     is_hide = false;
-    //   }
-    //   else {
-    //     document.getElementById(id).style.display = 'none';
-    //     is_hide = true;
-    //   }
-    // }
-
-</script>
 
 <style>
     .tab {
@@ -86,10 +54,24 @@
 
                     <ul id="list_produk_msg" class="list-group tablinks dropright">
                         @foreach($produk as $data)
-                        <li class="list-group-item" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{-- <li class="list-group-item" onclick="listActive(this)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> --}}
+                        <li class="list-group-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ $data->produk }} <i class="fas fa-angle-right float-right"></i>
                             <div class="dropdown-menu">
-                                <a id="message" class="dropdown-item" href="#">Apply SA</a>
+                                @foreach($tahap_sert as $key => $tahap)
+                                    @if($tahap->kode_tahap !== 24 && $tahap->kode_tahap !== 10)
+                                    <a class="dropdown-item message_show" href="#" 
+                                        data-title="{{ $tahap->tahapan }}" 
+                                        data-kode_tahap="{{ $tahap->kode_tahap-1 }}"
+                                        data-produk_kode_tahap="{{ $data->kode_tahap }}" 
+                                        data-produk_id="{{ $data->id }}"
+                                        data-request_sert="{{ $data->request_sert }}"
+                                        data-role_name="{{ $role }}"
+                                    >{{ $tahap->tahapan }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    @endif
+                                @endforeach
+                                {{-- <a id="message" class="dropdown-item" href="#">Apply SA</a>
                                 <div class="dropdown-divider"></div>
                                 <a id="message" class="dropdown-item" href="#">Pembuatan MOU</a>
                                 <div class="dropdown-divider"></div>
@@ -99,7 +81,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a id="message" class="dropdown-item" href="#">Pembuatan Invoice dan Upload Kode Biling</a>
                                 <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Pembuatan Dokumen Laporan Hasil Sertifikasi</a>
+                                <a id="message" class="dropdown-item" href="#">Pembuatan Dokumen Laporan Hasil Sertifikasi</a> --}}
                             </div>
                         </li>
                         @endforeach
@@ -121,24 +103,26 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <form action="">
+                            <div class="modal-body msg_modal_body">
+                                <form id="message_send" method="POST" action="">
                                     <div class="form-group">
                                         <label>Kepada</label>
-                                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" required>
-                                            <option selected>Choose...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                        <div class="row kepada"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Tahap Sertifikasi</label>
+                                        {{-- <input class="form-control" type="text" value="{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[1] }}" readonly> --}}
+                                        <div class="row tahap_sert"></div>
                                     </div>
                                     <div class="form-group">
                                         <label>Isi Pesan</label>
-                                        <textarea class="form-control" id="" rows="3" placeholder="Isi pesan.."></textarea>
+                                        <textarea class="form-control pesan" rows="3" placeholder="Isi pesan.."></textarea>
+                                        <small class="form-text text-muted">wajib diisi</small>
                                     </div>
+                                    <div class="validMsgSend"></div>
                                     <div class="mt-3">
                                         <button type="reset" class="reset_btn">Reset</button>
-                                        <button type="button" class="submit_btn ml-2">Kirim</button>
+                                        <button type="button" id="submit_msg" class="submit_btn ml-2">Kirim</button>
                                     </div>
                                 </form>
                             </div>
@@ -151,26 +135,27 @@
 
             <div class="col-lg-9">
                 <div class="wrap_content_messages position-relative">
-                    <div id="hilang" class="col-lg-7 wrap_content_messages_detail hilang">
+                    <div class="col-lg-7 wrap_content_messages_detail hilang">
                         <img style="width: 350px;" src="{{ asset('images/messages.png') }}" alt="">
                         <h5 class="mt-4 text-none">Klik menu di bagian kiri untuk melihat pesan</h5>
                     </div>
-                    <div class="messages_main tabcontent lengit" id="pesan">
+                    <div class="messages_main tabcontent lengit">
                         <div class="row">
                             <div class="col-lg-6 text-left">
                                 <nav class="header sticky-top">
-                                    <h4>Apply SA</h4>
+                                    <h4 id="msg_title">Apply SA</h4>
                                 </nav>
                             </div>
-                            <div class="col-lg-6 text-right">
-                                <button class="btn_reply"><i class="fas fa-reply"></i> &nbsp; Balas</button>
+                            <div class="col-lg-6 text-right msg_modal">
+                                <button type="button" id="msg_modal_btn" class="modal_btn btn_reply" data-toggle="modal" data-target="#addMessages"><i class="fas fa-reply"></i> &nbsp; Balas</button>
                             </div>
                         </div>
                         <hr class="full_width_hr">
-                        <div class="mt-3">
+                        <div id="msg_content"></div>
+                        {{-- <div class="mt-3">
                             <div>
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-8 name_msg">
                                         <span class="name mr-2">Lucas</span> 
                                         <span class="badge_pemasaran">Seksi Pemasaran</span>
                                     </div>
@@ -183,8 +168,8 @@
                                 </p>
                             </div>
                         </div>
-                        <hr>
-                        <div class="mt-3">
+                        <hr> --}}
+                        {{-- <div class="mt-3">
                             <div>
                                 <div class="row">
                                     <div class="col-lg-8">
@@ -198,74 +183,9 @@
                                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
                                 </p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-                    <div class="messages_main tabcontent lengit" id="pesan2">
-                        <nav class="header sticky-top">
-                            <h4>Pesan dari tahap Pembuatan MOU</h4>
-                        </nav>
-                        <hr>
-                        <div class="mt-3">
-                            <p>Pemasaran</p>
-                            <div class="sender">
-                                <p>Ini adalah isi pesan dari pengirim</p>
-                            </div>
-                            <div class="sender">
-                                <p>Ini adalah isi pesan dari pengirim <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                            </div>
-                            <div class="sender">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                            </div>
-                            <p class="small_txt text-right mt-2">15/11 12:30</p>
-                        </div>
 
-                        <div class="mt-3">
-                            <p><b>Anda</b></p>
-                            <div class="receiver">
-                                <p>Ini adalah Pesan dari penerima <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sint rem magnam voluptas recusandae maxime vel, eos explicabo earum sunt omnis ex accusamus non, debitis illum obcaecati necessitatibus suscipit distinctio.</p>
-                            </div>
-                            <div class="receiver">
-                                <p>Ini adalah Pesan dari penerima</p>
-                            </div>
-                            <div class="receiver">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt sint quod id dolor totam inventore ut voluptatum quo beatae, enim, natus sequi hic blanditiis reiciendis tenetur minus optio dolore eum.</p>
-                            </div>
-                            <p class="small_txt text-right mt-2">15/11 14:30</p>
-                        </div>
-                    </div>
-                    <div class="messages_main tabcontent lengit" id="pesan3">
-                        <nav class="header sticky-top">
-                            <h4>Pesan dari tahap sertifikasi Sign MOU</h4>
-                        </nav>
-                        <hr>
-                        <div class="mt-3">
-                            <p>Pemasaran</p>
-                            <div class="sender">
-                                <p>Ini adalah isi pesan dari pengirim</p>
-                            </div>
-                            <div class="sender">
-                                <p>Ini adalah isi pesan dari pengirim <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                            </div>
-                            <div class="sender">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maiores optio autem mollitia labore atque possimus est esse, sit, facere consectetur vero a, fugit omnis, exercitationem minima aliquid. Molestias, soluta.</p>
-                            </div>
-                            <p class="small_txt text-right mt-2">15/11 12:30</p>
-                        </div>
-
-                        <div class="mt-3">
-                            <p><b>Anda</b></p>
-                            <div class="receiver">
-                                <p>Ini adalah Pesan dari penerima <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sint rem magnam voluptas recusandae maxime vel, eos explicabo earum sunt omnis ex accusamus non, debitis illum obcaecati necessitatibus suscipit distinctio.</p>
-                            </div>
-                            <div class="receiver">
-                                <p>Ini adalah Pesan dari penerima</p>
-                            </div>
-                            <div class="receiver">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt sint quod id dolor totam inventore ut voluptatum quo beatae, enim, natus sequi hic blanditiis reiciendis tenetur minus optio dolore eum.</p>
-                            </div>
-                            <p class="small_txt text-right mt-2">15/11 14:30</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -285,34 +205,123 @@
         elem.classList.add('list-group-active');
     }
 
+    // ---- send message func ----
+    function send_msg_ajax(url, message) {
+        $.post('{{ url('/send_ajax_msg') }}', {
+            url: url,
+            message: message
+        }).done(function(data) {
+            console.log(data);
+            var msg = "";
+            msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
+            if (data.data.ket_pesan == 'client') {
+                msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+            } else {
+                msg+= "<span class='name mr-2'>"+data.msg_prop.name+"</span>";
+            }
+            if (data.data.ket_pesan == 'admin') {
+                msg+= "<span class='badge_pemasaran'>"+data.msg_prop.role_name+"</span>";
+            }
+            msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><p class='isi'>"+data.data.pesan+"</p></div>";
+            msg+= "<hr>";
+            $('#msg_content').prepend(msg);
+            $('#addMessages').modal('hide');
+
+        }).fail(function(err) {
+            console.log(err.responseJSON);
+        });
+    }
+
+    // ---- get message func ----
+    function get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap) {
+        $.post('{{ url('/get_messages_tahap') }}', {
+            kode_tahap: kode_tahap,
+            produk_id: produk_id
+        }).done(function(data) {
+            var msg = '';
+            if (parseInt(produk_kode_tahap) < parseInt(kode_tahap)) {
+                msg = 'Pesan belum ada!';
+                $('.msg_modal').hide();     // hide akses modal pesan jika tahap sertifikasi sudah lewat
+            } else if (data.data.length === 0) {
+                msg = 'Pesan belum ada!';
+                $('.msg_modal').hide();     // hide akses modal pesan jika pesan kosong
+            } else {
+                for (var m = 0; m < data.data.length; m++) {
+                    msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
+                    if (data.data[m].ket_pesan == 'client') {
+                        msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                    } else {
+                        msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
+                    }
+                    if (data.data[m].ket_pesan == 'admin') {
+                        msg+= "<span class='badge_pemasaran'>"+data.data[m].role_name+"</span>";
+                    }
+                    msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data[m].waktu_terkirim+"</span></div></div><p class='isi'>"+data.data[m].pesan+"</p></div>";
+                    if (m !== data.data.length - 1) {
+                        msg+= "<hr>";
+                    }
+                }
+                $('#msg_content').html(msg);
+                $('.msg_modal').show();
+
+
+                // ---- set modal balas pesan ----
+
+                    // - seleksi penerima pesan
+                $.post('{{ url('set_prop_msg') }}', {
+                    request_sert: request_sert, 
+                    role: role_name,
+                    kode_tahap: kode_tahap,
+                    tahap_sert: '{{ json_encode($tahap_sert) }}',
+                    user: '{{ isset($user) ? json_encode($user) : null }}',
+                    produk_id: produk_id
+                }).done(function(data) {
+                    $('.msg_modal_body').find('.kepada').html(data.penerima);
+                    $('.msg_modal_body').find('.tahap_sert').html(data.tahap);
+                    // $('.msg_modal_body').find('#message_send').prop('action', data.form_url);
+
+                    // ---- action kirim pesan
+                    $('#submit_msg').on('click', function() {
+                        console.log($('.msg_modal_body').find('.pesan').val());
+                        send_msg_ajax(data.form_url, $('.msg_modal_body').find('.pesan').val());
+                    });
+
+                }).fail(function(err) {
+                    console.log(err.responseJSON);
+                });
+            }
+        }).fail(function(err) {
+            console.log(err.responseJSON);
+        });
+    }
+
     $(document).ready(function() {
-        $('#message').click(function() {
-            $('#pesan').show();
-            $('#pesan2').hide();
-            $('#pesan3').hide();
-            $('#hilang').hide();
-
-        })
-
-        $('#message2').click(function() {
-            $('#pesan2').show();
-            $('#pesan').hide();
-            $('#pesan3').hide();
-            $('#hilang').hide();
-        })
-
-        $('#message3').click(function() {
-            $('#pesan3').show();
-            $('#pesan').hide();
-            $('#pesan2').hide();
-            $('#hilang').hide();
-        })
-        
         $.ajaxSetup({
             headers:
             { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
 
+        // ---- get message ------
+        $('.message_show').on('click', function() {
+            $('.messages_main').show();
+            $('.hilang').hide();
+
+            // change message title
+            $('.messages_main').find('#msg_title').html($(this).data('title'));
+
+            // ---- get message ajax ----
+            var kode_tahap = $(this).data('kode_tahap');
+            var produk_id = $(this).data('produk_id');
+            var request_sert = $(this).data('request_sert');
+            var role_name = $(this).data('role_name');
+            var produk_kode_tahap = $(this).data('produk_kode_tahap');
+
+            // call get message func
+            get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
+        });
+
+
+        // ---- search product ------
         $('#search_produk_msg').keyup(function() {
             $.post('{{ url('/search_produk') }}', {
                 user_id: '{{ $userAuth->id }}',
@@ -324,16 +333,50 @@
                     list = 'Produk tidak ditemukan!';
                 } else {
                     for (var i = 0; i < data.data.length; i++) {
-                        list+= "<li class='list-group-item' onclick='listActive(this)' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.data[i].produk+" <i class='fas fa-angle-right float-right'></i><div class='dropdown-menu'><a id='message' class='dropdown-item' href='#'>Apply SA</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan MOU</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Sign MOU</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Penawaran Harga</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Invoice dan Upload Kode Biling</a><div class='dropdown-divider'></div><a id='message' class='dropdown-item' href='#'>Pembuatan Dokumen Laporan Hasil Sertifikasi</a></div></li>";
+                        
+                        list+= "<li class='list-group-item' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.data[i].produk+" <i class='fas fa-angle-right float-right'></i> <div class='dropdown-menu'>";
+
+                        for (var t = 0; t < data.tahap.length; t++) {
+                            var kdTahap = parseInt(data.tahap[t].kode_tahap)-1;
+                            if (data.tahap[t].kode_tahap != 10 && data.tahap[t].kode_tahap != 24) {
+                                list+= "<a class='dropdown-item message_show' href='#' data-title='"+data.tahap[t].tahapan+"' data-kode_tahap='"+kdTahap+"' data-produk_kode_tahap='"+data.data[i].kode_tahap+"' data-produk_id='"+data.data[i].id+"' data-request_sert='"+data.data[i].request_sert+"' data-role_name='{{ $role }}'>"+data.tahap[t].tahapan+"</a> <div class='dropdown-divider'></div>";
+                            }
+                            if (t == data.tahap.length - 1) {
+                                list+= "</div>";
+                            }
+                        }
+
+                        if (i == data.data.length - 1) {
+                            list+= "</li>";
+                        }
                     }
                 }
                 $('#list_produk_msg').html(list);
+                
+                // ----  ------
+                $('.message_show').on('click', function() {
+                    $('.messages_main').show();
+                    $('.hilang').hide();
+
+                    // change message title
+                    $('.messages_main').find('#msg_title').html($(this).data('title'));
+
+                    // get message ajax
+                    kode_tahap = $(this).data('kode_tahap');
+                    produk_id = $(this).data('produk_id');
+                    request_sert = $(this).data('request_sert');
+                    role_name = $(this).data('role_name');
+                    produk_kode_tahap = $(this).data('produk_kode_tahap');
+
+                    // call get message func
+                    get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
+                });
+
             }).fail(function(err) {
                 console.log(err.responseJSON);
             });
         })
     })
-
 
 </script>
 @endsection

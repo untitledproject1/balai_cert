@@ -49,13 +49,11 @@ class CheckRole
                 }
 
                 if ( 
-                    ( $role !== 'super_admin' && ($role == 'client' && ($url[3] !== 'messages')) ) || 
+                    ( $role !== 'super_admin' ) || 
                     ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard')) 
                 ) {
                     $tahapan = \DB::table('master_tahap as mt')
-                        ->leftJoin('users as u', function($join) {
-                            $join->on('u.role_id', '=', 'mt.role_id');
-                        })
+                        ->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
                         ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
                         ->get();
                     if ($role == 'client' && $request->getRequestUri() !== '/dashboard') {

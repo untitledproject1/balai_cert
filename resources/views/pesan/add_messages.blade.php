@@ -35,18 +35,14 @@
                         @if($role == 'client')
                             @if(!is_null($produk) && !is_null($produk->request_sert))
                                 <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[2] }}</b></div>
-                                @if($role == 'client')
                                 <div class="col-lg-6">
                                     <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, $produk->request_sert, $role)[0] }}</label>
                                 </div>
-                                @endif
                             @else
                                 <div class="col-lg-6"><b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[2] }}</b></div>
-                                @if($role == 'client')
                                 <div class="col-lg-6">
                                     <label class="badge badge-secondary">{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null, $role)[0] }}</label>
                                 </div>
-                                @endif
                             @endif
                         @else
                             <div class="col-lg-6"><b>{{ $user->name }}</b></div>

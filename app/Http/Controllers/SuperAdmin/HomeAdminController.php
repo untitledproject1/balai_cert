@@ -7,6 +7,7 @@ use App\FormatFile;
 use App\Role;
 use App\Produk;
 use App\Persyaratan_dalam_negeri;
+use App\User;
 
 class HomeAdminController extends Controller
 {
@@ -33,7 +34,11 @@ class HomeAdminController extends Controller
 
         $result = $unique->sortByDesc('created_at');
 
-		return view('superAdmin.dashboard-superAdmin', ['client' => $result]);
+        $company = User::where('negeri', '!=', null)->select('id')->count();
+        $cert = Produk::where('kode_tahap', 24)->select('id')->count();
+        $produk = Produk::select('id')->count();
+
+		return view('superAdmin.dashboard-superAdmin', ['client' => $result, 'company_amount' => $company, 'cert_amount' => $cert, 'product_amount' => $produk]);
 	}
 
 	public function format_file() {

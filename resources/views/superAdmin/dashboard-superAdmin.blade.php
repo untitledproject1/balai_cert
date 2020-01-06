@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-lg-6 text-right">
                     <h4>Perusahaan</h4>
-                    <h2>999</h2>
+                    <h2>{{ $company_amount }}</h2>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-lg-6 text-right">
                     <h4>Sertifikasi</h4>
-                    <h2>999</h2>
+                    <h2>{{ $cert_amount }}</h2>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-lg-6 text-right">
                     <h4>Produk</h4>
-                    <h2>999</h2>
+                    <h2>{{ $product_amount }}</h2>
                 </div>
             </div>
         </div>

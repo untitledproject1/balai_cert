@@ -1,9 +1,9 @@
 // Format Dokumen
-    $(document).on("click", ".ubah_format", function() {
-        $('#UbahFormatFile').prop('action', $(this).data('url'));
-        $('.formatDok').val($(this).data('format'));
-        $('.modal-title').html($(this).data('judul'));
-    });
+$(document).on("click", ".ubah_format", function() {
+    $('#UbahFormatFile').prop('action', $(this).data('url'));
+    $('.formatDok').val($(this).data('format'));
+    $('.modal-title').html($(this).data('judul'));
+});
 
 // Manual Book
 $(document).on("click", ".ubah_manual", function() {
