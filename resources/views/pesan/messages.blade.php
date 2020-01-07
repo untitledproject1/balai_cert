@@ -374,9 +374,9 @@
         $('#search_produk_msg').keyup(function() {
             $.get('{{ url('/search_produk') }}', {
                 user_id: '{{ $userAuth->id }}',
-                produk: $(this).val()
+                produk: $(this).val(),
+                admin_id: null
             }).done(function(data) {
-                // console.log(data);
                 var list = '';
                 if (data.data.length == 0) {
                     list = 'Produk tidak ditemukan!';

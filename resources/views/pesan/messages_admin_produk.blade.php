@@ -78,7 +78,7 @@
                             {{ $data->produk }} <i class="fas fa-angle-right float-right"></i>
                             <div class="dropdown-menu">
                                 @foreach($tahap_sert as $key => $tahap)
-                                    @if($tahap->kode_tahap !== 24 && $tahap->kode_tahap !== 10)
+                                    @if($tahap->kode_tahap !== 24 && $tahap->kode_tahap !== 10 && $tahap->receiver_id == $userAuth->id)
                                     <a class="dropdown-item message_show" href="#" 
                                         data-title="{{ $tahap->tahapan }}" 
                                         data-kode_tahap="{{ $tahap->kode_tahap-1 }}"
@@ -394,9 +394,9 @@
         $('#search_produk_msg').keyup(function() {
             $.get('{{ url('/search_produk') }}', {
                 user_id: '{{ $company_id }}',
-                produk: $(this).val()
+                produk: $(this).val(),
+                admin_id: '{{ $userAuth->id }}'
             }).done(function(data) {
-                // console.log(data);
                 var list = '';
                 if (data.data.length == 0) {
                     list = 'Produk tidak ditemukan!';

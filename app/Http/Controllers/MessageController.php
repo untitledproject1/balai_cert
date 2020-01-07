@@ -47,7 +47,18 @@ class MessageController extends Controller
             ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
             ->get();
 
-    	return response()->json(['data' => $produk, 'tahap' => $tahapan]);
+	    $result = collect([]);
+	    if (!is_null($request->admin_id)) {
+	        foreach ($tahapan as $key => $value) {
+	        	if ($value->receiver_id == $request->admin_id) {
+	        		$result->push($value);
+	        	}
+	        }
+	    } else {
+	    	$result = $tahapan;
+	    }
+
+    	return response()->json(['data' => $produk, 'tahap' => $result]);
     }
 
     public function getMsg(Request $request) {
