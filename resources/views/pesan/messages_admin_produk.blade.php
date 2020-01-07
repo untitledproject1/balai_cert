@@ -28,6 +28,22 @@
 <div class="row no-gutters">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-12">
+                <div class="wrap_content"> 
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <a class="btn btn-light" href="{{ url('/messages/admin') }}"><i class="fa fa-arrow-left"></i><span class="pl-3">Kembali</span></a> | 
+                        </div>
+                        <div class="col-lg-10" style="line-height: 2.5;">
+                            <h6>
+                                {{ $user->nama_perusahaan }} <span style="font-size: 12px;" class="{{ $user->negeri == 1 ? 'info_jenis_dalam' : 'info_jenis_impor' }}">{{ $user->negeri == 1 ? 'produsen' : 'importir' }}</span>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                
                 <div class="wrap_content_messages"> 
@@ -36,8 +52,11 @@
                         <button type="button" class="add_messages" data-toggle="modal" data-target="#addMessages"><i class="fas fa-plus"></i>&nbsp; Kirim Pesan</button>
                     </div>
 -->
-                    
+                    @if(count($produk) != 0)
                     <input id="search_produk_msg" class="form-control mb-3" type="text" name="" placeholder="Search..">
+                    @else
+                    <center><b>Produk kosong</b></center>
+                    @endif
 
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
                     
@@ -226,12 +245,13 @@
                 var msg = "";
                 msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
                 if (data.data.ket_pesan == 'client') {
-                    msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                    msg+= "<span class='name mr-2'>{{ $user->name }}</span>";
                 } else {
-                    msg+= "<span class='name mr-2'>"+data.msg_prop.name+"</span>";
+                    msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                    // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                 }
-                if (data.data.ket_pesan == 'admin') {
-                    msg+= "<span class='badge_pemasaran'>"+data.msg_prop.role_name+"</span>";
+                if (data.data.ket_pesan == 'client') {
+                    msg+= "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
                 }
                 msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data.pesan+"</span>";
                 msg+= "</div>";
@@ -255,7 +275,6 @@
             kode_tahap: kode_tahap,
             produk_id: produk_id
         }).done(function(data) {
-            // console.log(data);
             var msg = '';
             if (parseInt(produk_kode_tahap) < parseInt(kode_tahap)) {
                 msg = 'Pesan belum ada!';
@@ -267,12 +286,13 @@
                 for (var m = 0; m < data.data.length; m++) {
                     msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
                     if (data.data[m].ket_pesan == 'client') {
-                        msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                        msg+= "<span class='name mr-2'>{{ $user->name }}</span>";
                     } else {
-                        msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
+                        msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                        // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                     }
-                    if (data.data[m].ket_pesan == 'admin') {
-                        msg+= "<span class='badge_pemasaran'>"+data.data[m].role_name+"</span>";
+                    if (data.data[m].ket_pesan == 'client') {
+                        msg+= "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
                     }
                     msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data[m].waktu_terkirim+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data[m].pesan+"</span></div>";
                     if (m !== data.data.length - 1) {
@@ -350,7 +370,7 @@
     }
 
     var submit_msg_btn = $('#submit_msg');
-
+    
     $(document).ready(function() {
         $.ajaxSetup({
             headers:
@@ -373,7 +393,7 @@
         // ---- search product ------
         $('#search_produk_msg').keyup(function() {
             $.get('{{ url('/search_produk') }}', {
-                user_id: '{{ $userAuth->id }}',
+                user_id: '{{ $company_id }}',
                 produk: $(this).val()
             }).done(function(data) {
                 // console.log(data);

@@ -29,7 +29,8 @@ Route::group(['middleware'=>'verified'], function() {
 	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum']], function() {
 
 		Route::post('/tahap_sert', 'ProdukController@get_tahap_sert');
-		Route::get('/messages', 'MessageController@index');
+		
+		// Route pesan
 		Route::post('/message_send/{idProduk}/{admin_id}/{client_id?}', 'MessageController@send_message_client');
 		Route::get('/search_produk', 'MessageController@search_produk');
 		Route::post('/get_messages_tahap', 'MessageController@getMsg');
@@ -48,6 +49,9 @@ Route::group(['middleware'=>'verified'], function() {
 	// route client	
 	Route::group(['middleware'=>'roles','roles'=>'client'], function() {
 		
+		// route halaman pesan client
+		Route::get('/messages', 'MessageController@index');
+
 		Route::get('/history', 'ProdukController@history');
 		// dashboard
 		Route::get('/dashboard', 'ProdukController@dashboard');
@@ -106,6 +110,10 @@ Route::group(['middleware'=>'verified'], function() {
 		Route::get('/company/{id}', 'CompanyController@single');
 		Route::get('/cert_list/{status}', 'CompanyController@cert_list');
 		// Route::get('/cert_list/history', 'CompanyController@cert_history');
+
+		// route halaman pesan admin
+		Route::get('/messages/admin', 'MessageController@pesan_admin');
+		Route::get('/messages/admin/{company_id}', 'MessageController@pesan_admin_produk');
 	});
 
 	// $url = explode('/', url()->current());

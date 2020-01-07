@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Produk;
 use App\Pesan;
+use App\User;
 
 class MessageController extends Controller
 {
 	public function index() {
 		$user = \Auth::user();
-		$produk = Produk::where('user_id', $user->id)->where('kode_tahap', '!=', 24)->get();
+		$produk = Produk::where('user_id', $user->id)->get();
 
         return view('pesan/messages', ['produk' => $produk]);
     }
@@ -39,7 +40,7 @@ class MessageController extends Controller
     }
 
     public function search_produk(Request $request) {
-    	$produk = Produk::where('user_id', $request->user_id)->where('produk', 'like', '%'.$request->produk.'%')->where('kode_tahap', '!=', 24)->select('id', 'produk', 'request_sert', 'kode_tahap')->get();
+    	$produk = Produk::where('user_id', $request->user_id)->where('produk', 'like', '%'.$request->produk.'%')->select('id', 'produk', 'request_sert', 'kode_tahap')->get();
 
     	$tahapan = \DB::table('master_tahap as mt')
             ->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')
@@ -131,5 +132,23 @@ class MessageController extends Controller
         $user = \DB::table('users')->leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $admin_id)->select('users.name', 'role.role_name')->first();
 
         return response()->json([ 'data' => $pesan, 'msg_prop' => $user ]);
+    }
+
+    public function pesan_admin() {
+    	$client = User::where('negeri', 1)
+            ->select('users.id', 'users.nama_perusahaan', 'users.negeri', 'users.pimpinan_perusahaan', 'users.provinsi', 'users.kota', 'users.alamat_perusahaan', 'users.email_perusahaan', 'users.no_telp')->get();
+
+
+    	return view('pesan.messages_admin', ['client' => $client]);
+    }
+
+    public function pesan_admin_produk($company_id) {
+    	$user = User::where('id', $company_id)->select('id', 'name', 'nama_perusahaan', 'negeri')->first();
+    	if (is_null($user)) {
+    		abort(404);
+    	}
+    	$produk = Produk::where('user_id', $company_id)->get();
+
+    	return view('pesan.messages_admin_produk', ['produk' => $produk, 'company_id' => $company_id, 'user' => $user]);
     }
 }

@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Isi Pesan</label>
-                        <textarea class="form-control pesan" name="pesan" cols="30" rows="3" placeholder="Isi pesan.."></textarea>
+                        <textarea class="form-control pesan" name="pesan" rows="5" placeholder="Isi pesan.."></textarea>
                         <small class="form-text text-muted">wajib diisi</small>
                     </div>
                     <div class="validMsgSend"></div>
