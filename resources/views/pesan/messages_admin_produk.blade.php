@@ -31,10 +31,10 @@
             <div class="col-lg-12">
                 <div class="wrap_content"> 
                     <div class="row">
-                        <div class="col-lg-2">
-                            <a class="btn btn-light" href="{{ url('/messages/admin') }}"><i class="fa fa-arrow-left"></i><span class="pl-3">Kembali</span></a> | 
+                        <div class="col-lg-1">
+                            <a class="btn btn-light" href="{{ url('/messages/admin') }}" title="Kembali"><i class="fa fa-arrow-left"></i></a> | 
                         </div>
-                        <div class="col-lg-10" style="line-height: 2.5;">
+                        <div class="col-lg-11" style="line-height: 2.5;">
                             <h6>
                                 {{ $user->nama_perusahaan }} <span style="font-size: 12px;" class="{{ $user->negeri == 1 ? 'info_jenis_dalam' : 'info_jenis_impor' }}">{{ $user->negeri == 1 ? 'produsen' : 'importir' }}</span>
                             </h6>
@@ -231,31 +231,31 @@
 
     // ---- send message func ----
     function send_msg_ajax(url, message) {
-        $.post('{{ url('/send_ajax_msg') }}', {
+        $.post('{{ url(' / send_ajax_msg ') }}', {
             url: url,
             message: message
         }).done(function(data) {
             // console.log(data);
-            
+
             if (data.err) {
                 swal(data.err, {
                     icon: "error",
-                }); 
+                });
             } else {
                 var msg = "";
-                msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
+                msg += "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
                 if (data.data.ket_pesan == 'client') {
-                    msg+= "<span class='name mr-2'>{{ $user->name }}</span>";
+                    msg += "<span class='name mr-2'>{{ $user->name }}</span>";
                 } else {
-                    msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                    msg += "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
                     // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                 }
                 if (data.data.ket_pesan == 'client') {
-                    msg+= "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
+                    msg += "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
                 }
-                msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data.created_at+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data.pesan+"</span>";
-                msg+= "</div>";
-                msg+= "<hr>";
+                msg += "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>" + data.data.created_at + "</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>" + data.data.pesan + "</span>";
+                msg += "</div>";
+                msg += "<hr>";
                 $('#msg_content').prepend(msg);
 
                 swal("Pesan berhasil terkirim", {
@@ -271,32 +271,32 @@
 
     // ---- get message func ----
     function get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap) {
-        $.post('{{ url('/get_messages_tahap') }}', {
+        $.post('{{ url(' / get_messages_tahap ') }}', {
             kode_tahap: kode_tahap,
             produk_id: produk_id
         }).done(function(data) {
             var msg = '';
             if (parseInt(produk_kode_tahap) < parseInt(kode_tahap)) {
                 msg = 'Pesan belum ada!';
-                $('.msg_modal').hide();     // hide akses modal pesan jika tahap sertifikasi sudah lewat
+                $('.msg_modal').hide(); // hide akses modal pesan jika tahap sertifikasi sudah lewat
             } else if (data.data.length == 0) {
                 msg = 'Pesan belum ada!';
-                $('.msg_modal').hide();     // hide akses modal pesan jika pesan kosong
+                $('.msg_modal').hide(); // hide akses modal pesan jika pesan kosong
             } else {
                 for (var m = 0; m < data.data.length; m++) {
-                    msg+= "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
+                    msg += "<div class='mt-3'><div class='row'><div class='col-lg-8 name_msg'>";
                     if (data.data[m].ket_pesan == 'client') {
-                        msg+= "<span class='name mr-2'>{{ $user->name }}</span>";
+                        msg += "<span class='name mr-2'>{{ $user->name }}</span>";
                     } else {
-                        msg+= "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
+                        msg += "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
                         // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                     }
                     if (data.data[m].ket_pesan == 'client') {
-                        msg+= "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
+                        msg += "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
                     }
-                    msg+= "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>"+data.data[m].waktu_terkirim+"</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>"+data.data[m].pesan+"</span></div>";
+                    msg += "</div><div class='col-lg-4 text-right'><img src='{{ asset('images/icon/clock.svg') }}' alt=''> <span class='date'>" + data.data[m].waktu_terkirim + "</span></div></div><span class='isi pl-2' style='font-size:15px;display:block;'>" + data.data[m].pesan + "</span></div>";
                     if (m !== data.data.length - 1) {
-                        msg+= "<hr>";
+                        msg += "<hr>";
                     }
                 }
                 $('.msg_modal').show();
@@ -304,15 +304,16 @@
 
                 // ---- set modal balas pesan ----
 
-                    // - seleksi penerima pesan
-                $.post('{{ url('set_prop_msg') }}', {
-                    request_sert: request_sert, 
-                    role: role_name,
-                    kode_tahap: kode_tahap,
-                    tahap_sert: '{{ json_encode($tahap_sert) }}',
-                    user: '{{ isset($user) ? json_encode($user) : null }}',
-                    produk_id: produk_id
-                }).done(function(data) {
+                // - seleksi penerima pesan
+                $.post('{{ url('
+                    set_prop_msg ') }}', {
+                        request_sert: request_sert,
+                        role: role_name,
+                        kode_tahap: kode_tahap,
+                        tahap_sert: '{{ json_encode($tahap_sert) }}',
+                        user: '{{ isset($user) ? json_encode($user) : null }}',
+                        produk_id: produk_id
+                    }).done(function(data) {
                     $('.msg_modal_body').find('.kepada').html(data.penerima);
                     $('.msg_modal_body').find('.tahap_sert').html(data.tahap);
                     // $('.msg_modal_body').find('#message_send').prop('action', data.form_url);
@@ -333,7 +334,7 @@
     function btn_reload(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap) {
         $('#btn_reload').on('click', function() {
             $('.preloader').show();
-            
+
             // call get message func
             get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
 
@@ -370,11 +371,12 @@
     }
 
     var submit_msg_btn = $('#submit_msg');
-    
+
     $(document).ready(function() {
         $.ajaxSetup({
-            headers:
-            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
 
         // call set_prop_msg func
@@ -392,7 +394,7 @@
 
         // ---- search product ------
         $('#search_produk_msg').keyup(function() {
-            $.get('{{ url('/search_produk') }}', {
+            $.get('{{ url(' / search_produk ') }}', {
                 user_id: '{{ $company_id }}',
                 produk: $(this).val(),
                 admin_id: '{{ $userAuth->id }}'
@@ -402,26 +404,26 @@
                     list = 'Produk tidak ditemukan!';
                 } else {
                     for (var i = 0; i < data.data.length; i++) {
-                        
-                        list+= "<li class='list-group-item' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.data[i].produk+" <i class='fas fa-angle-right float-right'></i> <div class='dropdown-menu'>";
+
+                        list += "<li class='list-group-item' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + data.data[i].produk + " <i class='fas fa-angle-right float-right'></i> <div class='dropdown-menu'>";
 
                         for (var t = 0; t < data.tahap.length; t++) {
-                            var kdTahap = parseInt(data.tahap[t].kode_tahap)-1;
+                            var kdTahap = parseInt(data.tahap[t].kode_tahap) - 1;
                             if (data.tahap[t].kode_tahap != 10 && data.tahap[t].kode_tahap != 24) {
-                                list+= "<a class='dropdown-item message_show' href='#' data-title='"+data.tahap[t].tahapan+"' data-kode_tahap='"+kdTahap+"' data-produk_kode_tahap='"+data.data[i].kode_tahap+"' data-produk_id='"+data.data[i].id+"' data-request_sert='"+data.data[i].request_sert+"' data-role_name='{{ $role }}'>"+data.tahap[t].tahapan+"</a> <div class='dropdown-divider'></div>";
+                                list += "<a class='dropdown-item message_show' href='#' data-title='" + data.tahap[t].tahapan + "' data-kode_tahap='" + kdTahap + "' data-produk_kode_tahap='" + data.data[i].kode_tahap + "' data-produk_id='" + data.data[i].id + "' data-request_sert='" + data.data[i].request_sert + "' data-role_name='{{ $role }}'>" + data.tahap[t].tahapan + "</a> <div class='dropdown-divider'></div>";
                             }
                             if (t == data.tahap.length - 1) {
-                                list+= "</div>";
+                                list += "</div>";
                             }
                         }
 
                         if (i == data.data.length - 1) {
-                            list+= "</li>";
+                            list += "</li>";
                         }
                     }
                 }
                 $('#list_produk_msg').html(list);
-                
+
                 // call set_prop_msg func
                 set_prop_msg();
 
