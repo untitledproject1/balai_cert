@@ -32,7 +32,7 @@
                 <div class="wrap_content"> 
                     <div class="row">
                         <div class="col-lg-1">
-                            <a class="btn btn-light" href="{{ url('/messages/admin') }}" title="Kembali"><i class="fa fa-arrow-left"></i></a> | 
+                            <a class="btn btn-light" href="{{ url('/messages_client') }}" title="Kembali"><i class="fa fa-arrow-left"></i></a>
                         </div>
                         <div class="col-lg-11" style="line-height: 2.5;">
                             <h6>
@@ -53,7 +53,7 @@
                     </div>
 -->
                     @if(count($produk) != 0)
-                    <input id="search_produk_msg" class="form-control mb-3" type="text" name="" placeholder="Search..">
+                    <input id="search_produk_msg" class="form-control mb-3" style="font-size: 14px;" type="text" placeholder="Cari produk..">
                     @else
                     <center><b>Produk kosong</b></center>
                     @endif
@@ -78,7 +78,7 @@
                             {{ $data->produk }} <i class="fas fa-angle-right float-right"></i>
                             <div class="dropdown-menu">
                                 @foreach($tahap_sert as $key => $tahap)
-                                    @if($tahap->kode_tahap !== 24 && $tahap->kode_tahap !== 10 && $tahap->receiver_id == $userAuth->id)
+                                    @if($tahap->kode_tahap !== 24 && $tahap->kode_tahap !== 10)
                                     <a class="dropdown-item message_show" href="#" 
                                         data-title="{{ $tahap->tahapan }}" 
                                         data-kode_tahap="{{ $tahap->kode_tahap-1 }}"
@@ -231,7 +231,7 @@
 
     // ---- send message func ----
     function send_msg_ajax(url, message) {
-        $.post('{{ url(' / send_ajax_msg ') }}', {
+        $.post('{{ url('/send_ajax_msg') }}', {
             url: url,
             message: message
         }).done(function(data) {
@@ -271,7 +271,7 @@
 
     // ---- get message func ----
     function get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap) {
-        $.post('{{ url(' / get_messages_tahap ') }}', {
+        $.post('{{ url('/get_messages_tahap') }}', {
             kode_tahap: kode_tahap,
             produk_id: produk_id
         }).done(function(data) {
@@ -289,7 +289,6 @@
                         msg += "<span class='name mr-2'>{{ $user->name }}</span>";
                     } else {
                         msg += "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
-                        // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                     }
                     if (data.data[m].ket_pesan == 'client') {
                         msg += "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
@@ -305,15 +304,14 @@
                 // ---- set modal balas pesan ----
 
                 // - seleksi penerima pesan
-                $.post('{{ url('
-                    set_prop_msg ') }}', {
-                        request_sert: request_sert,
-                        role: role_name,
-                        kode_tahap: kode_tahap,
-                        tahap_sert: '{{ json_encode($tahap_sert) }}',
-                        user: '{{ isset($user) ? json_encode($user) : null }}',
-                        produk_id: produk_id
-                    }).done(function(data) {
+                $.post('{{ url('/set_prop_msg') }}', {
+                    request_sert: request_sert,
+                    role: role_name,
+                    kode_tahap: kode_tahap,
+                    tahap_sert: '{{ json_encode($tahap_sert) }}',
+                    user: '{{ isset($user) ? json_encode($user) : null }}',
+                    produk_id: produk_id
+                }).done(function(data) {
                     $('.msg_modal_body').find('.kepada').html(data.penerima);
                     $('.msg_modal_body').find('.tahap_sert').html(data.tahap);
                     // $('.msg_modal_body').find('#message_send').prop('action', data.form_url);
@@ -344,7 +342,7 @@
         });
     }
 
-    // ---- set prop message ------
+    // ---- set prop message -----
     function set_prop_msg() {
         $('.message_show').on('click', function() {
             // $(this).parent().parent().addClass('list-group-active');
@@ -394,7 +392,7 @@
 
         // ---- search product ------
         $('#search_produk_msg').keyup(function() {
-            $.get('{{ url(' / search_produk ') }}', {
+            $.get('{{ url('/search_produk') }}', {
                 user_id: '{{ $company_id }}',
                 produk: $(this).val(),
                 admin_id: '{{ $userAuth->id }}'

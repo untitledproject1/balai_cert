@@ -111,9 +111,14 @@ Route::group(['middleware'=>'verified'], function() {
 		Route::get('/cert_list/{status}', 'CompanyController@cert_list');
 		// Route::get('/cert_list/history', 'CompanyController@cert_history');
 
-		// route halaman pesan admin
-		Route::get('/messages/admin', 'MessageController@pesan_admin');
-		Route::get('/messages/admin/{company_id}', 'MessageController@pesan_admin_produk');
+		// route halaman pesan ke client
+		Route::get('/messages_client', 'MessageController@pesan_client');
+		Route::get('/messages_client/{company_id}', 'MessageController@pesan_client_produk');
+
+		// route halaman pesan ke admin
+		Route::get('/messages_admin', 'MessageController@pesan_admin');
+		Route::post('/get_msg_admin', 'MessageController@get_pesan_admin');
+		Route::post('/send_ajax_msgAdmin/{id_pengirim}/{id_penerima}', 'MessageController@send_msg_admin');
 	});
 
 	// $url = explode('/', url()->current());

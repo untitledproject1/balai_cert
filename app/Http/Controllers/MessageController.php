@@ -47,18 +47,7 @@ class MessageController extends Controller
             ->select('mt.kode_tahap', 'mt.tahapan', 'u.id as receiver_id', 'u.name as receiver', 'mt.role_id')
             ->get();
 
-	    $result = collect([]);
-	    if (!is_null($request->admin_id)) {
-	        foreach ($tahapan as $key => $value) {
-	        	if ($value->receiver_id == $request->admin_id) {
-	        		$result->push($value);
-	        	}
-	        }
-	    } else {
-	    	$result = $tahapan;
-	    }
-
-    	return response()->json(['data' => $produk, 'tahap' => $result]);
+    	return response()->json(['data' => $produk, 'tahap' => $tahapan]);
     }
 
     public function getMsg(Request $request) {
@@ -145,21 +134,80 @@ class MessageController extends Controller
         return response()->json([ 'data' => $pesan, 'msg_prop' => $user ]);
     }
 
-    public function pesan_admin() {
+    public function pesan_client() {
     	$client = User::where('negeri', 1)
             ->select('users.id', 'users.nama_perusahaan', 'users.negeri', 'users.pimpinan_perusahaan', 'users.provinsi', 'users.kota', 'users.alamat_perusahaan', 'users.email_perusahaan', 'users.no_telp')->get();
 
 
-    	return view('pesan.messages_admin', ['client' => $client]);
+    	return view('pesan.messages_client', ['client' => $client]);
     }
 
-    public function pesan_admin_produk($company_id) {
+    public function pesan_client_produk($company_id) {
     	$user = User::where('id', $company_id)->select('id', 'name', 'nama_perusahaan', 'negeri')->first();
     	if (is_null($user)) {
     		abort(404);
     	}
     	$produk = Produk::where('user_id', $company_id)->get();
 
-    	return view('pesan.messages_admin_produk', ['produk' => $produk, 'company_id' => $company_id, 'user' => $user]);
+    	return view('pesan.messages_client_produk', ['produk' => $produk, 'company_id' => $company_id, 'user' => $user]);
+    }
+
+    public function pesan_admin(Request $request) {
+        if (!isset($request->ajax)) {
+            $user = User::where('negeri', null)
+                ->leftJoin('role', 'role.id', '=', 'users.role_id')
+                ->where('role.role', '!=', 'super_admin')
+                ->select('users.id', 'users.name', 'users.nama_perusahaan', 'role.role_name')->get();
+            
+            return view('pesan.messages_admin', ['user' => $user->sortBy('role_name')]);
+        } else {
+            $user = User::where('negeri', null)
+                ->leftJoin('role', 'role.id', '=', 'users.role_id')
+                ->where('users.id', '!=', $request->admin_id)
+                ->where('role.role_name', 'like', '%'.$request->role_name.'%')->where('role.role', '!=', 'super_admin')
+                ->select('users.id', 'users.name', 'users.nama_perusahaan', 'role.role_name')->get();
+
+            return response()->json(['data' => $user->sortBy('role_name')->values()]);
+        }
+
+    }
+
+    public function get_pesan_admin(Request $request) {
+        $pesan = Pesan::leftJoin('users as admin', 'admin.id', '=', 'pesan.admin')
+            ->leftJoin('users as admin2', 'admin2.id', '=', 'pesan.admin2')
+            ->leftJoin('role as role_admin', 'role_admin.id', '=', 'admin.role_id')
+            ->leftJoin('role as role_admin2', 'role_admin2.id', '=', 'admin2.role_id')
+            ->where('pesan.admin2', $request->id_penerima)
+            ->orWhere('pesan.admin', $request->id_penerima)
+            ->select('admin.id as id_pengirim', 'admin2.id as id_penerima', 'admin.name as pengirim', 'admin2.name as penerima', 'role_admin.role_name as role_pengirim', 'role_admin2.role_name as role_penerima', 'pesan.pesan', 'pesan.created_at as waktu_terkirim')->latest('waktu_terkirim')->get();
+        $result = collect([]);
+        foreach ($pesan as $key => $value) {
+            if (!is_null($value->id_penerima)) {
+                $result->push($value);
+            }
+        }
+
+        return response()->json(['pesan' => $result]);
+    }
+
+    public function send_msg_admin(Request $request, $id_pengirim, $id_penerima) {
+        $d = \Validator::make($request->all(), [
+            'message' => 'required|string|max:255',
+        ]);
+        // if ($d->fails()) {return redirect()->back()->withErrors($d);}
+        if ($d->fails()) {return response()->json([ 'err' => 'Proses pengiriman pesan gagal!' ]);}
+
+        $pesan = new Pesan;
+        $pesan->admin = intval($id_pengirim);
+        $pesan->admin2 = intval($id_penerima);
+        $pesan->pesan = $request->message;
+        // $pesan->created_at = '2019-09-09 15:40:00';
+        $pesan->save();
+
+        $getPesan = User::where('users.id', intval($id_pengirim))
+            ->leftJoin('role as role_admin', 'role_admin.id', '=', 'users.role_id')
+            ->select('users.id as id_pengirim', 'users.name as pengirim', 'role_admin.role_name as role_pengirim')->first();
+
+        return response()->json(['msg_prop' => $getPesan, 'msg' => $pesan]);
     }
 }

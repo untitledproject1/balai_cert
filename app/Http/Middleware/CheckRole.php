@@ -50,7 +50,7 @@ class CheckRole
 
                 if ( 
                     ( $role !== 'super_admin' ) || 
-                    ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard')) 
+                    ($role == 'super_admin' && ($url[5] == 'cert_list' || $url[5] == 'dashboard' || $url[5] == 'messages_client')) 
                 ) {
                     $tahapan = \DB::table('master_tahap as mt')
                         ->leftJoin('users as u', 'u.role_id', '=', 'mt.role_id')

@@ -104,7 +104,7 @@
 
 
             {{-- {{ $uri == 'pesan' ? 'list_active' : '' }} --}}
-            <a href="{{ url('/messages/admin') }}" class="list-group-item ">
+            <a href="{{ url('/messages_client') }}" class="list-group-item ">
                 <div class="row">
                     <div class="col-lg-2">
                         {{-- {{ $uri == 'pesan' ? 'faicon_active' : '' }} --}}
