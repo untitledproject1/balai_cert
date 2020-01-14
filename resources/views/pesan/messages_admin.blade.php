@@ -105,13 +105,20 @@
                                     <h6 id="msg_title"></h6>
                                 </nav>
                             </div>
-                            <div class="col-lg-4 text-right msg_modal">
+                            <div class="col-lg-5 text-right msg_modal">
                                 <div class="mr-2" style="float: right;">
-                                    <button type="button" id="msg_modal_btn" class="modal_btn btn_reply" data-toggle="modal" data-target="#addMessages"><i class="fas fa-reply"></i> &nbsp; Kirim Pesan</button>
+                                    <div class="btn_reload"></div>
                                 </div>
-                                <div class="btn_reload"></div>
                             </div>
                         </div>
+                        
+                        <div class="text-center mt-4">
+                           <div class="bg_info">
+                               <h6 class="my-3">Belum ada pesan yang dikirim</h6>
+                               <button type="button" id="msg_modal_btn" class="modal_btn btn_reply" data-toggle="modal" data-target="#addMessages"><i class="fas fa-reply"></i> &nbsp; Kirim Pesan</button>
+                           </div>
+                        </div>
+                        
                         <hr class="full_width_hr">
                         <div id="msg_content"></div>
                         
@@ -232,7 +239,7 @@
             var role_penerima = $(this).data('role_penerima');
             
             // change message title
-            $('.messages_main').find('#msg_title').html("<div style='font-size: 15px;'><span class='name mr-2'>"+penerima+"</span><br><br><span class='badge_pemasaran'>"+role_penerima+"</span></div>");
+            $('.messages_main').find('#msg_title').html("<div style='font-size: 15px;'><span class='name mr-2'>"+penerima+"</span><span class='badge_pemasaran'>"+role_penerima+"</span></div>");
             $('.messages_main').find('.btn_reload').html("<button id='btn_reload' class='btn btn-secondary' style='font-size:14px;'><i class='fas fa-redo'></i> &nbsp;&nbsp;Muat ulang</button>");
 
             // call get_msg func

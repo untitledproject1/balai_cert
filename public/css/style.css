@@ -1617,9 +1617,9 @@ i {
 
 .messages_main .btn_reply {
     display: inline-block;
-    padding: 5px 18px;
-    background: transparent;
-    color: rgba(0, 0, 0, .7);
+    padding: 8px 18px;
+    background: #002b51;
+    color: #fff;
     border: 1px solid rgba(0, 0, 0, .4);
     border-radius: 5px;
 }
@@ -1667,6 +1667,12 @@ i {
 
 .messages_date {
     font-size: 14px;
+}
+
+.bg_info {
+    margin: 0 -20px 0 -20px;
+    padding: 20px;
+    background: #E3F2FD;
 }
 
 
