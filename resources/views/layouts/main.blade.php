@@ -185,32 +185,77 @@
                         <a class="nav-link" href="#home"><i class="fas fa-search fa-lg"></i></a>
                     </li>
 -->
-                    {{-- <li class="nav-item mr-3">
+                    <li class="nav-item mr-3">
 
-                        <a class="nav-link" href="" id="notifDropdown" role="button" data-toggle="dropdown" data-target="#navbarDropdownNotif" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell fa-lg"></i><span class="badge badge-danger-notif">3</span></a>
-                        <div class="dropdown-menu dropdown-menu-right" style="margin-right: 100px" aria-labelledby="notifDropdown">
-                            <table width="100%">
-                                <tr>
-                                    <td width="25%"><span class="dropdown-item-img"><img src="{{ asset('images/icon/success.svg') }}" alt=""></span></td>
-                                    <td><span class="dropdown-item-text">Ini adalah contoh success messages</span></td>
-                                </tr>
-                            </table>
-                            <div class="dropdown-divider"></div>
-                            <table width="100%">
-                                <tr>
-                                    <td width="25%"><span class="dropdown-item-img"><img src="{{ asset('images/icon/error.svg') }}" alt=""></span></td>
-                                    <td><span class="dropdown-item-text">Ini adalah contoh error message</span></td>
-                                </tr>
-                            </table>
-                            <div class="dropdown-divider"></div>
-                            <table width="100%">
-                                <tr>
-                                    <td width="25%"><span class="dropdown-item-img"><img src="{{ asset('images/icon/warning.svg') }}" alt=""></span></td>
-                                    <td><span class="dropdown-item-text">Ini adalah contoh warning message</span></td>
-                                </tr>
-                            </table>
+                        <a class="nav-link" href="" id="notifDropdown" role="button" data-toggle="dropdown" data-target="#navbarDropdownNotif" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell fa-lg"></i>
+                            <span id="notif-count" class="badge badge-danger-notif">{{ $notif_amount == 0 ? '' : $notif_amount }}</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right p-3" style="margin-right: 100px;width: 450px;" aria-labelledby="notifDropdown">
+
+                            <a href="{{ url('/notif_log') }}" class="btn btn-outline-secondary mb-3" style="font-size: 14px;">Lihat log notifikasi</a>
+
+                            <div id="notif-container">
+                                @if($notif_amount == 0)
+                                <p>Tidak ada notifikasi terbaru</p>
+                                @else
+                                    @foreach($new_notif as $key => $notif)
+                                        @if($key != 0)
+                                        <hr>
+                                        @endif
+                                    <div class="row">
+                                        <div class="notif_id" style="display: none;">{{ $notif->id }}</div>
+                                        <div class="col-1"><i class="fas fa-envelope-square" style="font-size: 25px;"></i></div>
+                                        <div class="col-11">
+                                            <p>
+                                                <div style="font-size: 14px;float: left;">
+                                                    <!-- title -->
+                                                    <b class="notif-title">{{ ucfirst($notif->title) }}</b> &nbsp;-&nbsp;
+                                                    <!-- subtitle -->
+                                                    <div class="notif-subtitle" style="display: contents;">{{ ucfirst($notif->subtitle) }}</div><br>
+                                                </div>
+                                                <div style="float: right;">
+                                                    <div class="notif-time" style="font-size: 12px;">{{ date('Y-m-d H:i:s', strtotime($notif->created_at)) }}</div>
+                                                </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- content -->
+                                        <div class="col-11 offset-1 notif-content" style="font-size: 14px;">{{ substr($notif->data, 0, 50) }}...</div>
+                                    </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            
+                            <!-- element notif yang dibutuhkan saat push notif masuk (hide) -->
+                            <div id="notif-row">
+                                <div class="row">
+                                    <div class="col-1"><i class="fas fa-envelope-square" style="font-size: 25px;"></i></div>
+                                    <div class="col-11">
+                                        <p>
+                                            <div style="font-size: 14px;float: left;">
+                                                <!-- title -->
+                                                <b class="notif-title">Pesan Baru</b> &nbsp;-&nbsp;
+                                                <!-- subtitle -->
+                                                <div class="notif-subtitle" style="display: contents;">Lorem ipsum</div><br>
+                                            </div>
+                                            <div style="float: right;">
+                                                <div class="notif-time" style="font-size: 12px;">{{ date('Y-m-d H:i:s') }}</div>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <!-- content -->
+                                <div class="col-11 offset-1 notif-content" style="font-size: 14px;">{{ substr('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore.', 0, 50) }}...</div>
+                                </div>
+                            </div>
+                            <!-- end notif -->
+
                         </div>
-                    </li> --}}
+                    </li>
+                    
                     @if($role != 'super_admin')
                     <li class="nav-item dropdown mr-3">
                         <a href="{{ url('/manual/download/'.$role) }}" class="btn btn-success" target="_blank"> 
@@ -277,9 +322,23 @@
 <script>
 
     $(".rotate").click(function(){
- $(this).toggleClass("down")  ; 
-})
-    
+     $(this).toggleClass("down"); 
+    });
+
+    // hide notif element
+    $('#notif-row').hide();
+
+    $('#notifDropdown').on('click', function() {
+        if ($('#notif-count').html() != '') {
+            $.post('/read_notifications', {
+                'user_id': '{{ $userAuth->id }}'
+            }).done(function(data) {
+                $('#notif-count').html('');
+            }).fail(function(err) {
+                return ;
+            });
+        }
+    });
 </script>
 
 @endsection

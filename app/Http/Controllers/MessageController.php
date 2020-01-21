@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Produk;
 use App\Pesan;
 use App\User;
+use App\PushSubscriptions;
 
 class MessageController extends Controller
 {
@@ -119,19 +120,48 @@ class MessageController extends Controller
 
         $pesan = new Pesan;
         $pesan->ket_pesan = 'client';
+
+        // set users_id for push target
+        $users_id = $admin_id;
+
+        // jika pengirim pesan adalah admin
         if (!is_null($client_id)) {
             $pesan->client = $client_id;
             $pesan->ket_pesan = 'admin';
+
+            // set users_id for push target
+            $users_id = $client_id;
         }
         $pesan->admin = $admin_id;
         $pesan->produk_id = $produk->id;
         $pesan->kode_tahap = $produk->kode_tahap;
         $pesan->pesan = $request->message;
-        $pesan->save();
+        // $pesan->save();
 
-        $user = \DB::table('users')->leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $admin_id)->select('users.name', 'role.role_name')->first();
+        // get user_fcm_token
+        $user_token = [];
+        $tokens = PushSubscriptions::where('user_id', $users_id)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
 
-        return response()->json([ 'data' => $pesan, 'msg_prop' => $user ]);
+        // send notification to receiver
+        $id_penerima = $users_id;
+        $datas = [
+            'title' => 'Pesan baru',
+            'subtitle' => $produk->produk,
+            'data' => $pesan->pesan,
+            'toast_msg' => 'Anda telah menerima pesan baru!'
+        ];
+
+        $user = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $admin_id)->select('users.name', 'role.role_name')->first();
+
+        return response()->json([
+            'data' => $pesan,
+            'msg_prop' => $user,
+            // data yang dibutuhkan untuk push notif
+            'notif_data' => ['user_token' => $user_token, 'datas' => $datas, 'id_penerima' => $id_penerima]  
+        ]);
     }
 
     public function pesan_client() {

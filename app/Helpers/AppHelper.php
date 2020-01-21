@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use \Carbon\Carbon; 
+use App\Notifications;
 
 /**
 * AppHelper berisi beberapa global functions
@@ -159,5 +160,61 @@ class AppHelper
         // dd($breadcrumbs);
 
         return $breadcrumbs;
+    }
+
+    public function push_notif($user_ids, $datas, $id_penerima) {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+        $headers = [
+            "Authorization: key=AAAA_JbzqLE:APA91bHUmLyyElawC1fjhnMWkXIhCzoOHQ8Mj5gch9nM3zsc4DUGR3UaLpsYiXegzwNzErezTJevwMu1lfXq16SjBryFcBjPjmk0uBmgAxeX3hUhgkQU2JbeIASbk16UB64ceHQgTENU",
+            "Content-Type: application/json"
+        ];
+
+        $data = [
+            "registration_ids" => [],
+            "data" => []
+        ];
+        
+        // store notif log
+        $notifDB = new Notifications;
+        $notifDB->id = date('YmdHis').''.uniqid();
+        $notifDB->title = $datas['title'];
+        $notifDB->subtitle = $datas['subtitle'];
+        $notifDB->data = $datas['data'];
+        $notifDB->user_id = $id_penerima;
+        $notifDB->save();
+
+        // set users device id/endpoint
+        foreach ($user_ids as $key => $value) {
+            array_push($data['registration_ids'], $value);
+        }
+
+        // set notification data
+        $datas['time'] = date('Y-m-d H:i:s', strtotime($notifDB->created_at));
+        $data['data'] = $datas;
+
+        // Open connection
+        $ch = curl_init();
+
+        // Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+        // Execute post
+        $result = curl_exec($ch);
+        
+        // Close connection
+        curl_close($ch);
+
+
+        return $result;
     }
 }

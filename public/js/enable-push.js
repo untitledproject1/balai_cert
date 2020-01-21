@@ -1,104 +1,182 @@
-initSW();
-
-function initSW() {
-    if (!"serviceWorker" in navigator) {
-        //service worker isn't supported
-        return;
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
+});
 
-    //don't use it here if you use service worker
-    //for other stuff.
-    if (!"PushManager" in window) {
-        //push isn't supported
-        return;
-    }
 
-    //register the service worker
-    navigator.serviceWorker.register('../sw.js')
-        .then(() => {
-            console.log('serviceWorker installed!')
-            initPush();
-        })
+var loading= false;
+var isPushEnabled= false;
+var pushButtonDisabled= true;
+
+function RegisterServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+        console.log('Service workers aren\'t supported in this browser.')
+        return
+    } else {
+        navigator.serviceWorker.register('/sw.js')
+        .then(() => this.initialiseServiceWorker())
         .catch((err) => {
             console.log(err)
         });
+    }
 }
 
-function initPush() {
-    if (!navigator.serviceWorker.ready) {
-        return;
+function initialiseServiceWorker () {
+  if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+    console.log('Notifications aren\'t supported.')
+    return
+  }
+
+  if (Notification.permission === 'denied') {
+    console.log('The user has blocked notifications.')
+    return
+  }
+
+  if (!('PushManager' in window)) {
+    console.log('Push messaging isn\'t supported.')
+    return
+  }
+}
+
+function subscribe () {
+  navigator.serviceWorker.ready.then(registration => {
+    const options = { userVisibleOnly: true }
+    const vapidPublicKey = window.Laravel.vapidPublicKey
+
+    if (vapidPublicKey) {
+      options.applicationServerKey = this.urlBase64ToUint8Array(vapidPublicKey)
     }
 
-    new Promise(function (resolve, reject) {
-        const permissionResult = Notification.requestPermission(function (result) {
-            resolve(result);
-        });
+    registration.pushManager.subscribe(options)
+      .then(subscription => {
+        this.isPushEnabled = true
+        this.pushButtonDisabled = false
 
-        if (permissionResult) {
-            permissionResult.then(resolve, reject);
+        this.updateSubscription(subscription)
+      })
+      .catch(e => {
+        if (Notification.permission === 'denied') {
+          console.log('Permission for Notifications was denied')
+          this.pushButtonDisabled = true
+        } else {
+          console.log('Unable to subscribe to push.', e)
+          this.pushButtonDisabled = false
         }
+      })
+  })
+}
+
+
+function unsubscribe () {
+  navigator.serviceWorker.ready.then(registration => {
+    registration.pushManager.getSubscription().then(subscription => {
+      if (!subscription) {
+        this.isPushEnabled = false
+        this.pushButtonDisabled = false
+        return
+      }
+
+      subscription.unsubscribe().then(() => {
+        this.deleteSubscription(subscription)
+
+        this.isPushEnabled = false
+        this.pushButtonDisabled = false
+      }).catch(e => {
+        console.log('Unsubscription error: ', e)
+        this.pushButtonDisabled = false
+      })
+    }).catch(e => {
+      console.log('Error thrown while unsubscribing.', e)
     })
-        .then((permissionResult) => {
-            if (permissionResult !== 'granted') {
-                throw new Error('We weren\'t granted permission.');
-            }
-            subscribeUser();
-        });
+  })
 }
 
-
-function subscribeUser() {
-    navigator.serviceWorker.ready
-        .then((registration) => {
-            const subscribeOptions = {
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(
-                    'BPlME85QbhQIPj+tW1N8wUAInrDa8zdFLRSYyzTATAT9CUconj/vnIGSeH7Sgtpdr3im4fe1CKscoyshMdbKuko='
-                )
-            };
-
-            return registration.pushManager.subscribe(subscribeOptions);
-        })
-        .then((pushSubscription) => {
-            console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
-            storePushSubscription(pushSubscription);
-        });
+function togglePush () {
+  if (this.isPushEnabled) {
+    this.unsubscribe()
+  } else {
+    this.subscribe()
+  }
 }
 
-function urlBase64ToUint8Array(base64String) {
-    var padding = '='.repeat((4 - base64String.length % 4) % 4);
-    var base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
+function updateSubscription (subscription) {
+  const key = subscription.getKey('p256dh')
+  const token = subscription.getKey('auth')
+  const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0]
 
-    var rawData = window.atob(base64);
-    var outputArray = new Uint8Array(rawData.length);
+  const data = {
+    endpoint: subscription.endpoint,
+    publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+    authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+    contentEncoding
+  }
 
-    for (var i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
+  this.loading = true
+
+  $.post('/subscriptions', data)
+    .then(() => { this.loading = false })
 }
 
-function storePushSubscription(pushSubscription) {
-    const token = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+function sendNotification () {
+  this.loading = true
 
-    fetch('/push', {
-        method: 'POST',
-        body: JSON.stringify(pushSubscription),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': token
+  $.post('/notifications')
+    .catch(error => console.log(error.responseJSON))
+    .then((data) => { 
+        this.loading = false;
+        console.log(data);
+    })
+}
+
+/**
+ * https://github.com/Minishlink/physbook/blob/02a0d5d7ca0d5d2cc6d308a3a9b81244c63b3f14/app/Resources/public/js/app.js#L177
+ *
+ * @param  {String} base64String
+ * @return {Uint8Array}
+ */
+function urlBase64ToUint8Array (base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4)
+  const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/')
+
+  const rawData = window.atob(base64)
+  const outputArray = new Uint8Array(rawData.length)
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i)
+  }
+
+  return outputArray
+}
+    
+function displayNotification() {
+  if (Notification.permission == 'granted') {
+    navigator.serviceWorker.getRegistration().then(function(reg) {
+      var options = {
+        body: 'Here is a notification body!',
+        vibrate: [100, 50, 100],
+        data: {
+          dateOfArrival: Date.now(),
+          primaryKey: 1,
+          link: 'sa'
         }
-    })
-        .then((res) => {
-            return res.json();
-        })
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.log(err)
-        });
+      };
+      reg.showNotification('Hello world!', options);
+    });
+  }
 }
+
+$(document).ready(function () {
+  // RegisterServiceWorker()
+  // subscribe();
+  $('#notif').on('click',function () {
+    // displayNotification();
+    sendNotification();
+  })
+
+  // $('#acc').on('click',function () {
+  //   togglePush();
+  // })
+})

@@ -376,12 +376,13 @@ input[type="file"] {
 ===== Toast
 ================================== */
 
-.toast {
+.toast-container {
     display: block;
     right: 0;
-    width: 100%;
+    width: 350px;
     height: auto;
     z-index: 99999;
+    position: fixed;
 }
 
 .toast .toast-header {

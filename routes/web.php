@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware'=>'verified'], function() {
+Route::group(['middleware'=>['verified', 'getAddData']], function() {
 	Route::get('/cek/{file}', 'HomeController@view_dok');
 	Route::get('/sikat_bersih/{idProduk}', 'HomeController@deleteAll');
 	Route::get('/doc/download/{directory}/{file}', 'HomeController@downloadDoc');
@@ -36,6 +36,9 @@ Route::group(['middleware'=>'verified'], function() {
 		Route::post('/get_messages_tahap', 'MessageController@getMsg');
 		Route::post('/set_prop_msg', 'MessageController@set_prop');
 		Route::post('/send_ajax_msg', 'MessageController@send_msg_ajax');
+
+		// route halaman log notifikasi
+		Route::get('/notif_log', 'NotificationController@log');
 	});
 
 	Route::group(['middleware'=>'roles','roles'=>['client', 'pemasaran', 'kerjasama', 'kabidpjt', 'keuangan', 'sertifikasi', 'kabidpaskal', 'auditor', 'tim_teknis', 'komite_timTeknis', 'subag_umum', 'ketua_tim_teknis', 'ketua_sertifikasi', 'subag_umum', 'super_admin']], function() {
@@ -305,3 +308,14 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index');
+
+Route::post('/notifications', 'NotificationController@store');
+Route::post('/read_notifications', 'NotificationController@read');
+// Route::get('notifications', 'NotificationController@index');
+// Route::patch('notifications/{id}/read', 'NotificationController@markAsRead');
+// Route::post('notifications/mark-all-read', 'NotificationController@markAllRead');
+// Route::post('notifications/{id}/dismiss', 'NotificationController@dismiss');
+
+// Push Subscriptions
+Route::post('/subscriptions', 'PushController@update');
+// Route::post('subscriptions/delete', 'PushController@destroy');

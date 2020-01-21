@@ -6,13 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\VerifyApiEmail;
-// use NotificationChannels\WebPush\HasPushSubscriptions;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use Notifiable;
-    // use HasPushSubscriptions;
+    use Notifiable, HasPushSubscriptions;
     /**
      * The attributes that are mass assignable.
      *

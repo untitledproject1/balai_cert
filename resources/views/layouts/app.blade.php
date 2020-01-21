@@ -11,6 +11,12 @@
     <!-- Sweet Alert -->
     <script src="{{ asset('js/sweetalert.min.js') }}"></script> 
 
+    <!-- Scripts -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-messaging.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-auth.js"></script> --}}
+
     <link type="image/png" rel="icon" href="{{ asset('images/icon/logo-polos.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -51,9 +57,38 @@
             display: none;
         }
     </style>
+
+    <script>
+        window.Laravel = {!! json_encode([
+            'user' => Auth::user(),
+            'csrfToken' => csrf_token(),
+            'vapidPublicKey' => config('webpush.vapid.public_key'),
+            'pusher' => [
+                'key' => config('broadcasting.connections.pusher.key'),
+                'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+            ],
+        ]) !!};
+    </script>
 </head>
 
 <body style="background: #F9F9FB;">
+
+    <!-- Notif Toast -->
+    <div id="toast-notif" class="toast-container">
+        
+        <div id="toast-single" class="toast toast-notif mt-3 mr-3" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+          <div class="toast-header">
+            <img style="width: 25px;" src="{{ asset('images/icon/logo-polos.ico') }}" alt="...">
+            <strong class="mr-auto ml-2 toast-notif-title"></strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body">
+              <p class="toast-notif-text"></p>
+          </div>
+        </div>
+    </div>
 
     <div class="d-none d-md-block d-lg-block d-xl-block">
         <div class="prUpload"></div>
@@ -86,8 +121,15 @@
         </div>
     </div>
 
-    @auth
+    {{-- @auth
     <script src="{{ asset('js/enable-push.js') }}"></script>
+    @endauth --}}
+
+    @auth
+    {{-- <script src="{{ asset('js/enable-push.js') }}"></script> --}}
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script type="text/javascript" src="{{ asset('js/push.js') }}"></script>
     @endauth
 
     <!-- Data Table -->
@@ -109,7 +151,7 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     
     <script type="text/javascript">
-        
+        $('#toast-single').hide();
         
      // Datepicker
         $('.datepicker-here').datepicker({

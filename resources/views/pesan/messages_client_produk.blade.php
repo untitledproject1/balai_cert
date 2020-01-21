@@ -90,17 +90,6 @@
                                     <div class="dropdown-divider"></div>
                                     @endif
                                 @endforeach
-                                {{-- <a id="message" class="dropdown-item" href="#">Apply SA</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Pembuatan MOU</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Sign MOU</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Pembuatan Penawaran Harga</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Pembuatan Invoice dan Upload Kode Biling</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="message" class="dropdown-item" href="#">Pembuatan Dokumen Laporan Hasil Sertifikasi</a> --}}
                             </div>
                         </li>
                         @endforeach
@@ -108,8 +97,6 @@
                         {{-- <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
                         <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li> --}}
                     </ul>
-
-                    {{-- </a> --}}
                 </div>
 
                <!-- Modal -->
@@ -221,13 +208,17 @@
         $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
     });
 
-    // function listActive(elem) {
-    //     var li = document.getElementsByClassName('list-group-item')
-    //     for (i = 0; i < li.length; i++) {
-    //         li[i].classList.remove('list-group-active')
-    //     }
-    //     elem.classList.add('list-group-active');
-    // }
+    function sendNotification(user_token, datas, id_penerima) {
+      $.post('/notifications', {
+        'user_token': user_token,
+        'datas': datas,
+        'id_penerima': id_penerima
+      }).done(function(dt) {
+        console.log('Notification Pushed');
+      }).fail(function(err) {
+        return ;
+      })
+    }
 
     var modal_url = '';
 
@@ -250,7 +241,6 @@
                     msg += "<span class='name mr-2'>{{ $user->name }}</span>";
                 } else {
                     msg += "<span class='name mr-2' style='color: rgba(52,152,219,1.0);'>Anda</span>";
-                    // msg+= "<span class='name mr-2'>"+data.data[m].admin+"</span>";
                 }
                 if (data.data.ket_pesan == 'client') {
                     msg += "<span class='badge_pemasaran'>{{ $user->nama_perusahaan }}</span>";
@@ -265,6 +255,9 @@
                 });
             }
             $('#addMessages').modal('hide');
+
+            // send notification
+            sendNotification(data.notif_data.user_token, data.notif_data.datas, data.notif_data.id_penerima);
 
         }).fail(function(err) {
             console.log(err.responseJSON);

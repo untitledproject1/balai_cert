@@ -8,7 +8,7 @@
 @if(isset($flashInfo) && !empty($flashInfo))
     @foreach($flashInfo as $data)
         @if(!is_null($data))
-        <div class="toast position-fixed mt-3 mr-3" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+        <div class="toast toast-container position-fixed mt-3 mr-3" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
           <div class="toast-header py-2">
             <img src="{{ asset('images/icon/info-button.png') }}" alt="...">
             <strong class="mr-auto ml-2">Info</strong>

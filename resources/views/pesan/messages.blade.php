@@ -36,7 +36,6 @@
                         <button type="button" class="add_messages" data-toggle="modal" data-target="#addMessages"><i class="fas fa-plus"></i>&nbsp; Kirim Pesan</button>
                     </div>
 -->
-                    
                     <input id="search_produk_msg" class="form-control mb-3" type="text" name="" placeholder="Search..">
 
                     {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
@@ -200,13 +199,17 @@
         $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
     });
 
-    // function listActive(elem) {
-    //     var li = document.getElementsByClassName('list-group-item')
-    //     for (i = 0; i < li.length; i++) {
-    //         li[i].classList.remove('list-group-active')
-    //     }
-    //     elem.classList.add('list-group-active');
-    // }
+    function sendNotification(user_token, datas, id_penerima) {
+      $.post('/notifications', {
+        'user_token': user_token,
+        'datas': datas,
+        'id_penerima': id_penerima
+      }).done(function(dt) {
+        console.log('Notification Pushed');
+      }).fail(function(err) {
+        return ;
+      })
+    }
 
     var modal_url = '';
 
@@ -243,6 +246,9 @@
                 });
             }
             $('#addMessages').modal('hide');
+
+            // send notification
+            sendNotification(data.notif_data.user_token, data.notif_data.datas, data.notif_data.id_penerima);
 
         }).fail(function(err) {
             console.log(err.responseJSON);
