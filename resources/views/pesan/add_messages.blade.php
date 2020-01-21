@@ -55,10 +55,7 @@
                                 </div>
                             @endif
                         @else
-                            <div class="col-lg-6"><b>{{ $user->name }}</b></div>
-                            <div class="col-lg-6">
-                                <label class="badge badge-secondary">{{ $user->nama_perusahaan }}</label>
-                            </div>
+                            <div class="col-lg"><b>{{ $user->name }}</b> &nbsp; <label class="badge-company">{{ $user->nama_perusahaan }}</label></div>
                         @endif
                         </div>
                         {{-- <select class="custom-select" id="inputGroupSelect01">
@@ -73,14 +70,14 @@
                         <label for="">Produk</label>
                         <input class="form-control" type="text" value="{{ $produk->produk }}" readonly>
                     </div> --}}
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label for="">Tahap Sertifikasi</label><br>
                         {{-- <input class="form-control" type="text" value="{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert)[1] }}" readonly> --}}
                         <b>{{ \AppHelper::instance()->getMessageProp($kode_tahap, $tahap_sert, null)[1] }}</b>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label for="">Isi Pesan</label>
-                        <textarea class="form-control pesan" name="pesan" rows="5" placeholder="Isi pesan.."></textarea>
+                        <textarea class="form-control pesan" name="pesan" rows="5" placeholder="Isi pesan ketik di sini.."></textarea>
                         <small class="form-text text-muted">wajib diisi</small>
                     </div>
                     <div class="validMsgSend"></div>

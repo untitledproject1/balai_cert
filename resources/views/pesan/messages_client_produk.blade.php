@@ -147,12 +147,12 @@
                     </div>
                     <div class="messages_main tabcontent lengit">
                         <div class="row">
-                            <div class="col-lg-4 text-left">
+                            <div class="col-lg-6 text-left">
                                 <nav class="header sticky-top">
                                     <h6 id="msg_title"></h6>
                                 </nav>
                             </div>
-                            <div class="col-lg-4 text-right msg_modal">
+                            <div class="col-lg-3 text-right msg_modal">
                                 <div class="mr-2" style="float: right;">
                                     <button type="button" id="msg_modal_btn" class="modal_btn btn_reply" data-toggle="modal" data-target="#addMessages"><i class="fas fa-reply"></i> &nbsp; Balas</button>
                                 </div>

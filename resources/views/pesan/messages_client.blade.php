@@ -30,10 +30,14 @@
         <div class="row">
             <div class="col-lg">
                 <div class="wrap_content_messages">
-                    <h5>Pesan Client</h5><br>
-                    <div class="mb-3">
+                  <h5>Pesan Jabatan</h5>
+                   <div class="mb-3">
                         <a class="btn btn-outline-secondary mr-2" href="{{ url('/messages_admin') }}"><i class="fa fa-user-tie"></i> &nbsp;Pesan Jabatan</a>
                     </div>
+                    
+                    <br>
+                   
+                    <h5>Pesan Client</h5>
                     
                     <table id="example" class="table" style="width:100%">
                         <thead>
