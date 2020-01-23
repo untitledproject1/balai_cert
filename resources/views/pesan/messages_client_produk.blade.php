@@ -148,6 +148,7 @@
                     <div class="messages_main tabcontent lengit">
                         <div class="row">
                             <div class="col-lg-7 text-left">
+                                {{--  --}}
                                 <nav class="header sticky-top">
                                     <h6 id="msg_title"></h6>
                                 </nav>
