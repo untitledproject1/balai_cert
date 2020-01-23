@@ -27,17 +27,6 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm() {
-        // $user = \Auth::user();
-        // $flashInfo = null;
-        // if (!is_null($user->email_verified_at)) {
-        //     $flashInfo = 'Verifikasi email berhasil dilakukan!';
-        //     if (is_null($user->verified)) {
-        //         $user->verified = 1;
-        //         $user->save();
-        //     } else {
-        //         $flashInfo = null;
-        //     }
-        // }
 
         return view('auth.login');
     }

@@ -19,11 +19,13 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
 	const title = payload.data.title;
+	const subtitle = payload.data.subtitle;
 	const options = {
 		body: payload.data.toast_msg,
 		icon: './images/icon/logo-polos.ico',
 		badge: './images/icon/logo-polos.ico'
 	}
-	return self.registration.showNotification(title, options);
+
+	return self.registration.showNotification(title+'  ('+subtitle+')', options);
 });
 

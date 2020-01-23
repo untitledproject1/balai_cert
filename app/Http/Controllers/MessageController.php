@@ -145,7 +145,7 @@ class MessageController extends Controller
             array_push($user_token, $value->user_fcm_token);
         }
 
-        // send notification to receiver
+        // send notification to target
         $id_penerima = $users_id;
         $datas = [
             'title' => 'Pesan baru',
@@ -227,17 +227,40 @@ class MessageController extends Controller
         // if ($d->fails()) {return redirect()->back()->withErrors($d);}
         if ($d->fails()) {return response()->json([ 'err' => 'Proses pengiriman pesan gagal!' ]);}
 
-        $pesan = new Pesan;
-        $pesan->admin = intval($id_pengirim);
-        $pesan->admin2 = intval($id_penerima);
-        $pesan->pesan = $request->message;
-        // $pesan->created_at = '2019-09-09 15:40:00';
-        $pesan->save();
+        $idPengirim = intval($id_pengirim);
+        $idPenerima = intval($id_penerima);
 
+        // get user_fcm_token
+        $user_token = [];
+        $tokens = PushSubscriptions::where('user_id', $idPenerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // get sender data 
         $getPesan = User::where('users.id', intval($id_pengirim))
             ->leftJoin('role as role_admin', 'role_admin.id', '=', 'users.role_id')
             ->select('users.id as id_pengirim', 'users.name as pengirim', 'role_admin.role_name as role_pengirim')->first();
 
-        return response()->json(['msg_prop' => $getPesan, 'msg' => $pesan]);
+        // send notification to target
+        $datas = [
+            'title' => 'Pesan baru',
+            'subtitle' => $getPesan->role_pengirim,
+            'data' => $request->message,
+            'toast_msg' => 'Anda telah menerima pesan baru!'
+        ];
+
+        $pesan = new Pesan;
+        $pesan->admin = $idPengirim;
+        $pesan->admin2 = $idPenerima;
+        $pesan->pesan = $request->message;
+        // $pesan->save();
+
+        return response()->json([
+            'msg_prop' => $getPesan,
+            'msg' => $pesan,
+            // data yang dibutuhkan untuk push notif
+            'notif_data' => ['user_token' => $user_token, 'datas' => $datas, 'id_penerima' => $idPenerima]  
+        ]);
     }
 }

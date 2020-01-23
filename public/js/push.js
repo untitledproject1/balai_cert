@@ -37,6 +37,10 @@ messaging.requestPermission()
   console.log(err);
 })
 
+var notif_amount = $('#notif-count').html();
+var notif_container = $('#notif-container');
+var notif = $('#notif-row').clone().first();
+
 messaging.onMessage(function(payload) {
   var toast_notif = $('.toast-notif').clone().first();
 
@@ -62,12 +66,14 @@ messaging.onMessage(function(payload) {
   //       link: 'sa'
   //     }
   //   };
-  //   reg.showNotification('Hello world!', options);
+  //   console.log(req)
+  //   // reg.showNotification('Hello world!', options);
   // });
 
-  var notif_amount = $('#notif-count').html();
-  var notif_container = $('#notif-container');
-  var notif = $('#notif-row').clone().first();
+  set_notif(payload);
+})
+
+function set_notif(payload) {
   notif.show();
   
   // set data notif
@@ -84,8 +90,7 @@ messaging.onMessage(function(payload) {
     notif_container.prepend(notif);
     $('#notif-count').html(parseInt(notif_amount)+1);
   }
-})
-
+}
     
 function subscribe(token) {
   $.post('/subscriptions', {
