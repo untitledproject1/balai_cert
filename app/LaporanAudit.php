@@ -31,7 +31,7 @@ class LaporanAudit extends Model
             ->select('dn.*', 
                 'rvI.id as rvI_id',
                 'rvI.surat_permohonan_sertifikat_sni as rvI_surat_permohonan_sertifikat_sni',
-                'rvI.daftar_isian_dan_kuesioner as rvI_daftar_isian_dan_kuesioner',
+                'rvI.daftar_isian_dan_kuesioner_importer as rvI_daftar_isian_dan_kuesioner',
                 'rvI.copy_iui as rvI_copy_iui',
                 'rvI.copy_akte_notaris_perusahaan as rvI_copy_akte_notaris_perusahaan',
                 'rvI.copy_npwp as rvI_copy_npwp',
@@ -97,11 +97,13 @@ class LaporanAudit extends Model
             [new TinjauanPP, 'tinjauanPP', new ReviewTinjauanPP, 'review_tinjauan_pp_id', 'tinjauan_pp_id']
         ];
         foreach ($request->fileName as $key => $value) {
+            // $dokKey = $key != count($request->fileName)-1 ? $key+1 : $key;
             if (explode(',', $value)[1] == 'dokImportir') {$index = 0;}
             else {$index = 1;}
             $review = isset($request->review[$key]) ? $request->review[$key] : null;
             array_push($arr[$index], [explode(',', $value)[0], $request->dok[$key], $review]);
         }
+        // dd($request->fileName, $request->dok, $arr);
 
         return $arr;
     }
@@ -128,11 +130,12 @@ class LaporanAudit extends Model
             [new TinjauanPP, 'tinjauanPP', new ReviewTinjauanPP]
         ];
         foreach ($request->fileName as $key => $value) {
+            // $dokKey = $key != count($request->fileName)-1 ? $key+1 : $key;
             if (explode(',', $value)[1] == 'dokImportir') {$index = 0;}
             else {$index = 1;}
             array_push($arr[$index], [explode(',', $value)[0], $request->dok[$key]]);
         }
-
+        
         return $arr;
     }
 

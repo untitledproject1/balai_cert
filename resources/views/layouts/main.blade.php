@@ -176,7 +176,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <h5 class="mb-0" style="margin-left: 24px; ">@yield('card-header')</h5>
+            <h6 class="mb-0" style="margin-left: 24px; ">@yield('card-header')</h6>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -214,9 +214,6 @@
                                                     <!-- subtitle -->
                                                     <div class="notif-subtitle" style="display: contents;">{{ ucfirst($notif->subtitle) }}</div><br>
                                                 </div>
-                                                <div style="float: right;">
-                                                    <div class="notif-time" style="font-size: 12px;">{{ date('Y-m-d H:i:s', strtotime($notif->created_at)) }}</div>
-                                                </div>
                                             </p>
                                         </div>
                                     </div>
@@ -224,10 +221,13 @@
                                         <!-- content -->
                                         <div class="col-11 offset-1 notif-content" style="font-size: 14px;">{{ substr($notif->data, 0, 50) }}...</div>
                                     </div>
+                                    <div style="float: right;">
+                                        <div class="notif-time" style="font-size: 12px;">{{ date('Y-m-d H:i:s', strtotime($notif->created_at)) }}</div>
+                                    </div>
                                     @endforeach
                                 @endif
                             </div>
-                            
+
                             <!-- element notif yang dibutuhkan saat push notif masuk (hide) -->
                             <div id="notif-row">
                                 <div class="row">
@@ -236,21 +236,20 @@
                                         <p>
                                             <div style="font-size: 14px;float: left;">
                                                 <!-- title -->
-                                                <b class="notif-title">Pesan Baru</b> &nbsp;-&nbsp;
+                                                <b class="notif-title"></b> &nbsp;-&nbsp;
                                                 <!-- subtitle -->
-                                                <div class="notif-subtitle" style="display: contents;">Lorem ipsum</div><br>
-                                            </div>
-                                            <div style="float: right;">
-                                                <div class="notif-time" style="font-size: 12px;">{{ date('Y-m-d H:i:s') }}</div>
+                                                <div class="notif-subtitle" style="display: contents;"></div><br>
                                             </div>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="row">
-                                <!-- content -->
-                                <div class="col-11 offset-1 notif-content" style="font-size: 14px;">{{ substr('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore.', 0, 50) }}...</div>
+                                    <!-- content -->
+                                    <div class="col-11 offset-1 notif-content" style="font-size: 14px;"></div>
                                 </div>
-                            </div>
+                                <div style="float: right;">
+                                    <div class="notif-time" style="font-size: 12px;"></div>
+                                </div>
                             <!-- end notif -->
 
                         </div>

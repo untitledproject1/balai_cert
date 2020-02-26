@@ -12,6 +12,7 @@ use App\BidPrice;
 use App\TahapSert;
 use App\NoSurat;
 use App\Invoice;
+use App\PushSubscriptions;
 
 class MOUController extends Controller
 {
@@ -134,6 +135,29 @@ class MOUController extends Controller
         $produk->kode_tahap = 12;
         $produk->save();
 
+        // ---- Push notif -----
+        // get client data
+        $client = User::select('id')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $client->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan MOU',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Kerjasama telah membuat MOU',
+            'toast_msg' => 'Seksi Kerjasama telah membuat MOU',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
@@ -142,7 +166,7 @@ class MOUController extends Controller
         $kode_tahap = $produk->kode_tahap;
         $bidPrice = BidPrice::where('produk_id', $idProduk)->first();
         $mou = Mou::where('produk_id', $idProduk)->first();
-        $seksi_kerjasama = User::find($mou->doc_maker);
+        $seksi_kerjasama = !is_null($mou) ? User::find($mou->doc_maker) : null;
 
     	return view('mou.signMou', ['mou' => $mou, 'bidPrice' => $bidPrice, 'idProduk' => $idProduk, 'kode_tahap' => $kode_tahap, 'produk' => $produk, 'seksi_kerjasama' => $seksi_kerjasama]);
     }
@@ -180,6 +204,29 @@ class MOUController extends Controller
         $produk = Produk::find($dok->produk_id);
         $produk->kode_tahap = 13;
         $produk->save();
+
+        // ---- Push notif -----
+        // get client data
+        $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->select('users.id', 'users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Sign MOU',
+            'subtitle' => $produk->produk,
+            'data' => $client->nama_perusahaan.' telah menyelesaikan Sign MOU',
+            'toast_msg' => $client->nama_perusahaan.' telah menyelesaikan Sign MOU'
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
     	return redirect()->back();
     }

@@ -39,11 +39,13 @@ class AppHelper
                     $data = [['Client', 'Kabid Paskal']];
                 }
             } else {
-                if ($kode_tahap == 19) {
-                    $data = [['Ketua Tim Teknis', 'Komite Tim Teknis']];
-                } else {
-                    $data = ['Seksi Sertifikasi'];
-                }
+                // if ($kode_tahap == 19) {
+                //     $data = ['Komite Tim Teknis'];
+                //     // $data = [['Ketua Tim Teknis', 'Komite Tim Teknis']];
+                // } else {
+                //     $data = ['Seksi Sertifikasi'];
+                // }
+                $data = ['Seksi Sertifikasi'];
             }
     	} elseif ($kode_tahap == 17) {
     		$data = ['Auditor'];
@@ -51,52 +53,56 @@ class AppHelper
     		if ($role == 'client') {
                 if ($request_sert == 'kirim') {
         			$data = ['Subag Umum'];
-        		} elseif ($request_sert == 'ambil') {
+        		} else {
         			$data = ['Seksi Pemasaran'];
         		}
             } else {
                 $data = ['Client'];
             }
-    	}
+        }
 
         $kt = $kode_tahap != '24' ? $kode_tahap+1 : $kode_tahap;
     	foreach ($tahap_sert as $key => $value) {
     		if ($value->kode_tahap == $kt) {
     			array_push($data, $value->tahapan);
-
+                
                 if ($kt == 23 || $kt == 24) {
                     $rcvr = explode(',', $value->receiver);
                     if ($request_sert == 'kirim') {
                         array_push($data, $rcvr[1]);
-                    } elseif ($request_sert == 'ambil') {
+                    } else {
                         array_push($data, $rcvr[0]);
                     }
                 } else {
                     array_push($data, $value->receiver);
                 }
     		}
-    	}
+        }
+
         // dd($data, $kode_tahap, $request_sert);
-    	
     	return $data;
     }
 
     public function getMessageParam($kode_tahap, $tahap_sert, $request_sert = null) {
         $kt = $kode_tahap != '24' ? $kode_tahap+1 : $kode_tahap;
+        // dd($kt, $tahap_sert);
         foreach ($tahap_sert as $key => $value) {
             if ($kt == $value->kode_tahap) {
-
                 if ($kt == 23 || $kt == 24) {
-                    $rId = explode(',', $value->receiver_id);
+                    $rId = explode(',', $value->role_id);
+                    // dd($value->receiver_id, $tahap_sert, $rId);
                     if ($request_sert == 'kirim') {
                         $data = ['receiver_id' => $rId[1]];
                     } elseif ($request_sert == 'ambil') {
                         $data = ['receiver_id' => $rId[0]];
                         // dd($data);
+                    } else {
+                        $data = ['receiver_id' => $value->receiver_id];
                     }
                 } else {
                     $data = ['receiver_id' => $value->receiver_id];
                 }
+                // dd($kt, $data);
             }
         }
         // dd($kt, $data, $request_sert);
@@ -174,31 +180,35 @@ class AppHelper
             "registration_ids" => [],
             "data" => []
         ];
-        
-        // store notif log
-        $notifDB = new Notifications;
-        $notifDB->id = date('YmdHis').''.uniqid();
-        $notifDB->title = $datas['title'];
-        $notifDB->subtitle = $datas['subtitle'];
-        $notifDB->data = $datas['data'];
-        $notifDB->user_id = $id_penerima;
-        $notifDB->save();
 
         // set users device id/endpoint
         foreach ($user_ids as $key => $value) {
+            $data['registration_ids'] = [];
             array_push($data['registration_ids'], $value);
+            
+            // store notif log
+            $notifDB = new Notifications;
+            $notifDB->id = date('YmdHis').''.uniqid();
+            $notifDB->title = $datas['title'];
+            $notifDB->subtitle = $datas['subtitle'];
+            $notifDB->data = $datas['data'];
+            $notifDB->user_id = $id_penerima[$key];
+            $notifDB->save();
+            
+            // firebase request
+            $data['data'] = $datas;
+            $result = $this->firebaseRequest($url, $headers, $data);
         }
 
-        // set notification data
-        $datas['time'] = date('Y-m-d H:i:s', strtotime($notifDB->created_at));
-        $data['data'] = $datas;
+        return $result;
+    }
 
+    public function firebaseRequest($url, $headers, $data) {
         // Open connection
         $ch = curl_init();
 
         // Set the url, number of POST vars, POST data
         curl_setopt($ch, CURLOPT_URL, $url);
-        
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -214,7 +224,72 @@ class AppHelper
         // Close connection
         curl_close($ch);
 
-
         return $result;
     }
+
+    // public function register_bidPrice_notif_group($produk) {
+    //     // $auth = \Auth::user();
+    //     $role = $auth->role()->first()->role;
+    //     $push = PushSubscriptions::where('user_id', $auth->id)->first();
+        
+    //     if (!is_null($request->produk_id)) {
+    //         $get_produk = Produk::select('produk')->find($request->produk_id);
+    //         $produk = implode('_', explode(' ', $get_produk->produk));
+    //         if ($role == 'pemasaran' || $role == 'client') {
+    //             $notification_key_name = 'penawaranHarga_success_'.$produk;
+    //             $get_subsGroup = PushSubscriptionsGroup::where('notification_key_name', $notification_key_name)->first();
+    //             // set firebase request url
+    //             $this->url = 'https://fcm.googleapis.com/fcm/notification';
+    //             // update firebase request headers
+    //             array_push($this->headers, "project_id: 1084864309425");
+    
+    //             // check if the group doesn't exists
+    //             if (is_null($get_subsGroup)) {
+    //                 // then create the group
+    //                 // set the request data
+    //                 $data = [
+    //                     "operation" => "create",
+    //                     "notification_key_name" => $notification_key_name,
+    //                     "registration_ids" => [$push->user_fcm_token]
+    //                 ];
+    //                 // send request
+    //                 $response = $this->firebaseRequest('post', $data);
+    
+    //                 // insert response to db
+    //                 $groupNotif_key = json_decode($response, true);
+    //                 if (isset($groupNotif_key['notification_key'])) {
+    //                     $subsGroup = new PushSubscriptionsGroup;
+    //                     $subsGroup->notification_key_name = $notification_key_name;
+    //                     $subsGroup->notification_key = $groupNotif_key['notification_key'];
+    //                     $subsGroup->registration_ids = json_encode([$push->id]);
+    //                     $subsGroup->save();
+    //                 }
+    //             } else {
+    //                 $get_registrationIds = json_decode($get_subsGroup->registration_ids, true);
+    //                 // check if the user hasn't registered to group
+    //                 if (!in_array($push->id, $get_registrationIds)) {
+    //                     array_push($get_registrationIds, $push->id);
+    //                     // set the request data
+    //                     $data = [
+    //                         "operation" => "add",
+    //                         "notification_key_name" => $get_subsGroup->notification_key_name,
+    //                         "notification_key" => $get_subsGroup->notification_key,
+    //                         "registration_ids" => [$push->id]
+    //                     ];
+    //                     // send request
+    //                     $response = $this->firebaseRequest('post', $data);
+        
+    //                     // update notifications group
+    //                     $groupNotif_key = json_decode($response, true);
+    //                     if (isset($groupNotif_key['notification_key'])) {
+    //                         $get_subsGroup->registration_ids = json_encode($get_registrationIds);
+    //                         $get_subsGroup->save();
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return isset($response) ? json_decode($response, true) : null;
+    // }
 }

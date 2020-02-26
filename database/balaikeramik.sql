@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 23, 2019 at 08:34 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Host: localhost:3306
+-- Generation Time: Feb 19, 2020 at 08:31 AM
+-- Server version: 5.7.26-0ubuntu0.18.04.1
+-- PHP Version: 7.2.22-1+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -38,6 +38,17 @@ CREATE TABLE `audit_sampling_plan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `audit_sampling_plan`
+--
+
+INSERT INTO `audit_sampling_plan` (`id`, `produk_id`, `doc_maker`, `audit_plan`, `sampling_plan`, `created_at`, `updated_at`) VALUES
+(25, 71, 7, 'audit_plan-Test12-tes1-5de75239a42ea.pdf', 'sampling_plan-Test12-tes1-5de7527a55e62.pdf', '2019-12-04 06:29:13', '2019-12-04 06:30:24'),
+(26, 75, 7, 'audit_plan-PT_MUTIARA_INDAH-sendok_keramik-5de8ca1e88db1.pdf', 'sampling_plan-PT_MUTIARA_INDAH-sendok_keramik-5de8ca24dcd03.pdf', '2019-12-05 09:13:02', '2019-12-05 09:13:13'),
+(27, 73, 7, 'audit_plan-Maju_Jaya_Keramik-Kloset_Berdiri-5de8d9a61f3db.pdf', 'sampling_plan-Maju_Jaya_Keramik-Kloset_Berdiri-5de8d9aba5871.pdf', '2019-12-05 10:19:18', '2019-12-05 10:19:27'),
+(28, 76, 7, 'audit_plan-qwoeiu-Produk5-5de99c329863d.pdf', 'sampling_plan-qwoeiu-Produk5-5de99c36a938a.pdf', '2019-12-06 00:09:22', '2019-12-06 00:09:31'),
+(29, 74, 7, 'audit_plan-testinggg-Ubinss-5de9ef2a1a78e.pdf', 'sampling_plan-testinggg-Ubinss-5de9ef35a9f33.pdf', '2019-12-06 06:03:22', '2019-12-06 06:03:47');
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +74,21 @@ CREATE TABLE `bahan_hasil` (
   `form_523` varchar(255) DEFAULT NULL,
   `form_524` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bahan_hasil`
+--
+
+INSERT INTO `bahan_hasil` (`id`, `produk_id`, `lengkap`, `form_21`, `spek_pembelian`, `form_42`, `peralatan`, `form_22`, `form_31`, `form_32`, `form_41`, `form_511`, `form_512`, `form_521`, `form_522`, `form_523`, `form_524`) VALUES
+(53, 71, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,\"sad\"]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]'),
+(55, 73, 1, NULL, '[{\"jenis_bahan\":\"zinum\",\"spesifikasi\":\"kon\",\"pemasok\":\"lop\"},{\"jenis_bahan\":\"asd\",\"spesifikasi\":\"ad\",\"pemasok\":\"ad\"},{\"jenis_bahan\":\"aafafa\",\"spesifikasi\":\"asas\",\"pemasok\":\"dadad\"}]', 'B.4_4.2-Maju_Jaya_Keramik-Kloset_Berdiri-5de883f617d3d.pdf', '[{\"nama_alat\":\"saasfa\",\"nama_pembuat\":\"fafaf\",\"acuan\":\"sfsag\",\"sistem\":\"asgsg\",\"sertifikat\":\"vzcvdsaf\"},{\"nama_alat\":\"asfASFA\",\"nama_pembuat\":\"FSAFAW\",\"acuan\":\"WF\",\"sistem\":\"SFASFA\",\"sertifikat\":\"FASFSF\"},{\"nama_alat\":\"ADASDA\",\"nama_pembuat\":\"AWFEWAF\",\"acuan\":\"SDFSFSF\",\"sistem\":\"FQWFWF\",\"sertifikat\":\"SFSFS\"}]', '[null,\"asdfdfdg\"]', '[\"B.3_3.2-Maju_Jaya_Keramik-Kloset_Berdiri-5de882c1295a0.pdf\",null]', '[null,\"asdadaw\"]', '[\"B.4_4.1-Maju_Jaya_Keramik-Kloset_Berdiri-5de886bc03e03.pdf\",\"abcdefg\"]', '[\"B.5_5.1.1-Maju_Jaya_Keramik-Kloset_Berdiri-5de87b4d03004.pdf\",null]', '[\"B.5_5.1.2-Maju_Jaya_Keramik-Kloset_Berdiri-5de87b63285cc.pdf\",null]', '[\"B.5_5.2.1-Maju_Jaya_Keramik-Kloset_Berdiri-5de87b7cb0e37.pdf\",null]', '[\"B.5_5.2.2-Maju_Jaya_Keramik-Kloset_Berdiri-5de8856d7e700.pdf\",\"absbsddsf\"]', '[null,\"ajibeh\"]', '[0,null,null]'),
+(56, 75, 1, NULL, '[{\"jenis_bahan\":\"abu rokok\",\"spesifikasi\":\"dengan nikotin tinggi\",\"pemasok\":\"sampoerni\"}]', NULL, '[{\"nama_alat\":\"gunting\",\"nama_pembuat\":\"pak ginting\",\"acuan\":\"bantal guling\",\"sistem\":\"setiap jam\",\"sertifikat\":\"blm ada\"}]', '[null,\"dengan metode akupuntur yang digunakan sejak jaman dahulu\"]', '[\"B.3_3.2-PT_MUTIARA_INDAH-sendok_keramik-5de89ead58422.pdf\",null]', '[null,\"ini masuk ga\"]', '[\"B.4_4.1-PT_MUTIARA_INDAH-sendok_keramik-5de89ebb299d0.pdf\",\"pengendalian yang dilakukan oleh pengendalian air\"]', '[\"B.5_5.1.1-PT_MUTIARA_INDAH-sendok_keramik-5de89f8275b20.pdf\",null]', '[\"B.5_5.1.2-PT_MUTIARA_INDAH-sendok_keramik-5de89f8aa2455.pdf\",null]', '[\"B.5_5.2.1-PT_MUTIARA_INDAH-sendok_keramik-5de89f917a458.pdf\",null]', '[\"B.5_5.2.2-PT_MUTIARA_INDAH-sendok_keramik-5de89f9734a2d.pdf\",\"ini masuk ga 522\"]', '[\"B.5_5.2.3-PT_MUTIARA_INDAH-sendok_keramik-5de89f9dbcbe6.pdf\",null]', '[0,null,null]'),
+(57, 74, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]'),
+(58, 76, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[\"B.5_5.1.1-qwoeiu-Produk5-5de9819d36832.pdf\",\"lakjsl\"]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]'),
+(59, 77, 1, 'B.2_2.1-PT_SARI_WARNA-Gelas_Keramik-5de9f474a573e.pdf', NULL, 'B.4_4.2-PT_SARI_WARNA-Gelas_Keramik-5de9f49e12bd3.pdf', NULL, '[\"B.2_2.2-PT_SARI_WARNA-Gelas_Keramik-5de9f47b15091.pdf\",null]', '[\"B.3_3.2-PT_SARI_WARNA-Gelas_Keramik-5de9f48f78494.pdf\",null]', '[null,null]', '[\"B.4_4.1-PT_SARI_WARNA-Gelas_Keramik-5de9f494081c0.pdf\",\"ini rincianya\"]', '[\"B.5_5.1.1-PT_SARI_WARNA-Gelas_Keramik-5de9f4a2442a8.pdf\",\"ini manual\"]', '[\"B.5_5.1.2-PT_SARI_WARNA-Gelas_Keramik-5de9f4aa4ed91.pdf\",\"ini manualya\"]', '[\"B.5_5.2.1-PT_SARI_WARNA-Gelas_Keramik-5de9f4b555ef2.pdf\",\"ini manualnya\"]', '[\"B.5_5.2.2-PT_SARI_WARNA-Gelas_Keramik-5de9f4c0c480a.pdf\",\"ini manualmya\"]', '[\"B.5_5.2.3-PT_SARI_WARNA-Gelas_Keramik-5de9f4c9b16d8.pdf\",\"ini manual\"]', '[0,null,null]'),
+(60, 79, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]'),
+(62, 84, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]'),
+(64, 80, 1, NULL, '[{\"jenis_bahan\":null,\"spesifikasi\":null,\"pemasok\":null}]', NULL, '[{\"nama_alat\":null,\"nama_pembuat\":null,\"acuan\":null,\"sistem\":null,\"sertifikat\":null}]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null]', '[null,null,null]');
 
 -- --------------------------------------------------------
 
@@ -91,23 +117,38 @@ CREATE TABLE `bid_price` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `bid_price`
+--
+
+INSERT INTO `bid_price` (`id`, `produk_id`, `doc_maker`, `bid_price`, `tgl_pembuatan`, `hal`, `harga`, `status`, `verifikasi_bayar`, `tanggal_bayar`, `invoice_id`, `bukti_bayar`, `apprv_bukti_bayar`, `bpn`, `kode_ntpn`, `tgl_byr_keuangan`, `created_at`, `updated_at`) VALUES
+(98, 71, 3, 'Penawaran_harga-5de7486186a1020191204124713.pdf', '2019-12-04', 'sdfsdf', '{\"b_permohonan\":1000000,\"b_audit1\":1000000,\"b_kepala\":1000000,\"b_ppc\":1000000,\"b_pTeknis\":1000000,\"b_sert\":1000000,\"b_total\":6000000}', 1, '1', '2019-12-04', 27, 'Bukti_pembayaran-5de74d3133ee620191204130745.pdf', 1, 'BPN-5de750971abd620191204132215.pdf', 'asd87', '2019-12-04', '2019-12-04 05:47:13', '2019-12-04 06:22:15'),
+(103, 73, 3, 'Penawaran_harga-Maju_Jaya_Keramik-Kloset_Berdiri-5de8b8b4778f5.pdf', '2019-12-06', 'asdad', '{\"b_permohonan\":123123,\"b_audit1\":123123,\"b_kepala\":123123,\"b_ppc\":123123,\"b_pTeknis\":123123,\"b_sert\":123123,\"b_total\":738738}', 1, NULL, NULL, 29, 'Bukti_pembayaran-5de8c614ae94d20191205155548.pdf', 1, 'BPN-5de8c741bc75320191205160049.pdf', 'asdqewq', '2019-12-05', '2019-12-05 07:58:32', '2019-12-05 09:00:49'),
+(104, 75, 3, 'Penawaran_harga-5de8b98de717f20191205150221.pdf', '2019-12-26', 'ini halnya', '{\"b_permohonan\":3000000,\"b_audit1\":7000000,\"b_kepala\":900000,\"b_ppc\":900000,\"b_pTeknis\":1000000,\"b_sert\":3000000,\"b_total\":15800000}', 1, '1', '2019-12-12', 32, 'Bukti_pembayaran-5de8c19bdb96420191205153643.pdf', 1, 'BPN-5de8c74d35ea320191205160101.pdf', '121', '2019-12-18', '2019-12-05 08:00:43', '2019-12-05 09:01:01'),
+(105, 74, 3, 'Penawaran_harga-testinggg-Ubinss-5de8b943ed864.pdf', '2019-12-05', 'ini adalah hal', '{\"b_permohonan\":2000000,\"b_audit1\":1200000,\"b_kepala\":1500000,\"b_ppc\":1230000,\"b_pTeknis\":1500000,\"b_sert\":2000000,\"b_total\":9430000}', 1, NULL, NULL, 30, 'Bukti_pembayaran-5de8bfcbdb94f20191205152859.pdf', 1, 'BPN-5de8ccddee54120191205162445.pdf', '1222334', '2019-12-05', '2019-12-05 08:00:53', '2019-12-05 09:24:45'),
+(106, 76, 3, 'Penawaran_harga-qwoeiu-Produk5-5de9905415d58.pdf', '2019-12-06', 'asdad', '{\"b_permohonan\":123123,\"b_audit1\":123123,\"b_kepala\":123123,\"b_ppc\":123123,\"b_pTeknis\":123123,\"b_sert\":123123,\"b_total\":738738}', 1, '1', '2019-12-06', 33, 'Bukti_pembayaran-5de99ac99618320191206070321.pdf', 1, 'BPN-5de99ae96146220191206070353.pdf', 'asd8723', '2019-12-06', '2019-12-05 23:12:09', '2019-12-06 00:03:53'),
+(107, 77, 3, 'Penawaran_harga-PT_SARI_WARNA-Gelas_Keramik-5dea0ea695018.pdf', '2019-12-18', 'ini hal', '{\"b_permohonan\":10,\"b_audit1\":20,\"b_kepala\":10,\"b_ppc\":1,\"b_pTeknis\":1,\"b_sert\":1,\"b_total\":43}', 1, NULL, NULL, 34, NULL, NULL, NULL, NULL, NULL, '2019-12-06 08:14:57', '2019-12-06 08:28:53'),
+(115, 79, 3, 'Penawaran_harga-Test12-ProdukTest_5df73c6a2d33f.pdf', '2019-12-16', 'asdasd', '{\"b_permohonan\":2110043,\"b_audit1\":2000043,\"b_kepala\":2000043,\"b_ppc\":2000043,\"b_pTeknis\":2000043,\"b_sert\":2000043,\"b_total\":12110258}', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-16 07:15:25', '2019-12-16 08:13:21'),
+(123, 84, 3, 'Penawaran_harga-Test12-Produk_Baru_5e44e855673da.pdf', '2020-02-13', 'Test', '{\"b_permohonan\":5000000,\"b_audit1\":1000000,\"b_kepala\":1000000,\"b_ppc\":10000000,\"b_pTeknis\":10000000,\"b_sert\":1000000,\"b_total\":28000000}', 1, NULL, NULL, 35, 'Bukti_pembayaran-5e44ea862415220200213131950.pdf', 1, 'BPN-5e44eab685a4d20200213132038.pdf', '10101010', '2020-02-13', '2020-02-13 06:08:25', '2020-02-13 06:20:38'),
+(124, 80, 3, 'Penawaran_harga-Test12-vas_bunga1-5e4a392dc6fd9.pdf', '2020-02-17', 'test', '{\"b_permohonan\":10000000,\"b_audit1\":1000000,\"b_kepala\":1000000,\"b_ppc\":10000000,\"b_pTeknis\":1000000,\"b_sert\":1000000,\"b_total\":24000000}', 1, '1', '2020-02-17', 37, 'Bukti_pembayaran-5e4b5d75540f520200218104349.pdf', 1, 'BPN-5e4b691a814e320200218113330.pdf', '10101010', '2020-02-18', '2020-02-17 06:53:52', '2020-02-18 04:33:30');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `defaultharga`
+-- Table structure for table `defaultHarga`
 --
 
-CREATE TABLE `defaultharga` (
+CREATE TABLE `defaultHarga` (
   `id` bigint(20) NOT NULL,
   `jenis` varchar(255) NOT NULL,
   `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `defaultharga`
+-- Dumping data for table `defaultHarga`
 --
 
-INSERT INTO `defaultharga` (`id`, `jenis`, `harga`) VALUES
+INSERT INTO `defaultHarga` (`id`, `jenis`, `harga`) VALUES
 (1, 'sertifikasi produk', 21000000);
 
 -- --------------------------------------------------------
@@ -242,6 +283,21 @@ CREATE TABLE `info_tambahan` (
   `kuis6` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `info_tambahan`
+--
+
+INSERT INTO `info_tambahan` (`id`, `produk_id`, `lengkap`, `kuis1_opsi`, `kuis1_isi`, `kuis2_opsi`, `kuis2_isi`, `kuis3_opsi`, `kuis3_isi`, `kuis4_opsi`, `kuis4_isi`, `kuis5_opsi`, `kuis6`) VALUES
+(56, 71, 1, 0, 'null', NULL, 'null', NULL, 'null', NULL, 'null', NULL, NULL),
+(58, 73, 1, 1, '[\"Mizan\",\"20 sep 2019\"]', 1, 'BCA Group', 1, '[\"Wafer Tango\",\"Jl. Trunojoyo, no. 7\"]', 1, '[[\"MUI\",\"20 september 2019\"],null]', 1, '2019-12-06'),
+(59, 75, 1, 0, 'null', 1, 'Group dari PT MSN', 1, '[\"PT MSN\",\"jalan kayu agung 2 no 09\"]', 1, '[[\"PT HEXA\",\"maret 2020\"],null]', 1, '2019-12-19'),
+(60, 74, 1, 1, '[\"PT. Balai Keramik\",\"2020\"]', 1, 'null', NULL, 'null', NULL, 'null', NULL, NULL),
+(61, 76, 1, NULL, 'null', NULL, 'null', NULL, 'null', 1, '[[\"BKK\",\"2020\"],null]', NULL, NULL),
+(62, 77, 1, 0, 'null', 1, 'PT MSN', 0, 'null', 1, '[[\"PT HEXA\",\"20 Maret 2020\"],null]', 1, '2019-12-25'),
+(63, 79, 1, NULL, 'null', NULL, 'null', NULL, 'null', NULL, 'null', NULL, NULL),
+(65, 84, 1, NULL, 'null', NULL, 'null', NULL, 'null', NULL, 'null', NULL, NULL),
+(67, 80, 1, NULL, 'null', NULL, 'null', NULL, 'null', NULL, 'null', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -260,6 +316,20 @@ CREATE TABLE `invoice` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `doc_maker`, `invoice`, `status`, `tgl_pembuatan`, `kode_biling`, `masa_kode_biling`, `created_at`, `updated_at`) VALUES
+(27, 6, 'Invoice-5de748ef9995d20191204124935.pdf', 1, '2019-12-03', 'Kode_Biling-5de749257436220191204125029.pdf', '2019-12-11', '2019-12-04 05:49:35', '2019-12-04 05:50:29'),
+(29, 6, 'Invoice-Maju_Jaya_Keramik-Kloset_Berdiri-5de8bfc4f3fa6.pdf', 1, '2019-12-05', 'Kode_Biling-5de8c1048a5a120191205153412.pdf', '2019-12-12', '2019-12-05 07:59:51', '2019-12-05 08:34:12'),
+(30, 6, 'Invoice-testinggg-Ubinss-5de8ca453436c.pdf', 1, '2019-12-05', 'Kode_Biling-5de8cd028cb7420191205162522.pdf', '2019-12-12', '2019-12-05 08:03:11', '2019-12-05 09:25:22'),
+(32, 6, 'Invoice-PT_MUTIARA_INDAH-sendok_keramik-5de8c0a11622d.pdf', 1, '2019-12-03', 'Kode_Biling-5de8c0cb941bf20191205153315.pdf', '2020-01-02', '2019-12-05 08:32:15', '2019-12-05 08:33:15'),
+(33, 6, 'Invoice-qwoeiu-Produk5-5de997fe4f2ff.pdf', 1, '2019-12-06', 'Kode_Biling-5de99aab58e1c20191206070251.pdf', '2019-12-13', '2019-12-05 23:21:39', '2019-12-06 00:02:51'),
+(34, 6, 'Invoice-PT_SARI_WARNA-Gelas_Keramik-5dea11d805a5a.pdf', 1, '2019-12-19', 'Kode_Biling-5dea120caaeb620191206153212.pdf', '2019-12-26', '2019-12-06 08:28:53', '2019-12-06 08:32:12'),
+(35, 6, 'Invoice-Test12-Produk_Baru-5e44e9f9e3fbf.pdf', 1, '2020-02-13', 'Kode_Biling-5e44ea218569a20200213131809.pdf', '2020-02-20', '2020-02-13 06:16:29', '2020-02-13 06:18:09'),
+(37, 6, 'Invoice-Test12-vas_bunga1-5e4b4a0dabd95.pdf', 1, '2020-02-18', 'Kode_Biling-5e4b507d676ee20200218094829.pdf', '2020-02-25', '2020-02-18 02:20:49', '2020-02-18 02:48:29');
+
 -- --------------------------------------------------------
 
 --
@@ -274,6 +344,22 @@ CREATE TABLE `jadwal_audit` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jadwal_audit`
+--
+
+INSERT INTO `jadwal_audit` (`id`, `jadwal_audit`, `apprv`, `doc_maker`, `created_at`, `updated_at`) VALUES
+(4, 'Surat_Pemberitahuan_Jadwal_Audit-5de7517c8658d20191204132604.pdf', 1, 7, '2019-12-04 06:26:04', '2019-12-04 06:26:44'),
+(5, 'Surat_Pemberitahuan_Jadwal_Audit-5de8c80651fe920191205160406.pdf', 1, 7, '2019-12-05 09:04:06', '2019-12-05 09:04:38'),
+(6, 'Surat_Pemberitahuan_Jadwal_Audit-5de8d4fe4198320191205165926.pdf', 1, 7, '2019-12-05 09:59:26', '2019-12-05 10:02:41'),
+(7, 'Surat_Pemberitahuan_Jadwal_Audit-5de8d77c079e120191205171004.pdf', 1, 7, '2019-12-05 10:10:04', '2019-12-05 10:12:16'),
+(8, 'Surat_Pemberitahuan_Jadwal_Audit-5de99b5375e7320191206070539.pdf', 1, 7, '2019-12-06 00:05:39', '2019-12-06 00:06:15'),
+(9, 'Surat_Pemberitahuan_Jadwal_Audit-5e44eb19139c620200213132217.pdf', NULL, 7, '2020-02-13 06:22:17', '2020-02-13 06:22:17'),
+(11, 'Surat_Pemberitahuan_Jadwal_Audit-5e4b6e85a4d0c20200218115637.pdf', NULL, 7, '2020-02-18 04:56:37', '2020-02-18 04:56:37'),
+(12, 'Surat_Pemberitahuan_Jadwal_Audit-5e4b6fd2f3fae20200218120210.pdf', NULL, 7, '2020-02-18 05:02:11', '2020-02-18 05:02:11'),
+(13, 'Surat_Pemberitahuan_Jadwal_Audit-5e4b707e0d93d20200218120502.pdf', NULL, 7, '2020-02-18 05:05:02', '2020-02-18 05:05:02'),
+(16, 'Surat_Pemberitahuan_Jadwal_Audit-5e4b94ee5ceb220200218144030.pdf', 1, 7, '2020-02-18 07:40:30', '2020-02-18 07:42:56');
 
 -- --------------------------------------------------------
 
@@ -302,6 +388,21 @@ CREATE TABLE `kuesioner` (
   `kuis_128` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `kuesioner`
+--
+
+INSERT INTO `kuesioner` (`id`, `produk_id`, `lengkap`, `kuis1`, `kuis2`, `kuis3`, `kuis4`, `kuis_111`, `kuis_112`, `kuis_113`, `kuis_121`, `kuis_122`, `kuis_123`, `kuis_124`, `kuis_125`, `kuis_126`, `kuis_127`, `kuis_128`) VALUES
+(52, 71, 1, NULL, 0, '[null,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[null,null]', NULL),
+(54, 73, 1, '2019-12-06', 1, '[1,null]', '[1,\"B_4-Maju_Jaya_Keramik-Kloset_Berdiri-5de883a2b0134.pdf\"]', '[0,null]', '[1,2,null]', 'ISO meren', 'Uzumaki', 'Naruto', '[1,\"Di sunter\"]', 'Inspektur Jarjit', 1, '[[1,1,1],0]', '[0,null]', 'oke lah'),
+(55, 75, 1, '2019-12-25', 1, '[0,\"28-12-2019\"]', '[1,\"B_4-PT_MUTIARA_INDAH-sendok_keramik-5de88c0dd7f38.pdf\"]', '[1,0]', '[1,3,null]', 'sistem hidrolik bertingkat', 'insan kamil', 'syahrini', '[1,\"dipisah karena biar tidak bentrok\"]', 'boy kamil', 1, '[[0,0,1],1]', '[0,null]', 'organisasi ini berjalan rahasia dibawah kepimimpinan kerajaan konoha'),
+(56, 74, 1, '2019-12-12', 1, '[1,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[null,null]', NULL),
+(57, 76, 1, NULL, NULL, '[null,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[0,null]', NULL),
+(58, 77, 1, '2019-12-26', 1, '[1,null]', '[1,\"B_4-PT_SARI_WARNA-Gelas_Keramik-5de9f4031df8b.pdf\"]', '[1,1]', '[0,null,\"cara dengan menggunakan piring\"]', 'sistem sertifikasi BBK', 'Insan kamil', 'Bagus', '[0,null]', 'Ipin', 1, '[[1,0,0],0]', '[0,null]', 'oprasional mutu'),
+(59, 79, 1, NULL, NULL, '[null,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[null,null]', NULL),
+(61, 84, 1, NULL, NULL, '[null,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[null,null]', NULL),
+(63, 80, 1, NULL, NULL, '[null,null]', '[null,null]', '[null,null]', '[null,null,null]', NULL, NULL, NULL, '[null,null]', NULL, NULL, '[[null,null,null],null]', '[null,null]', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -321,6 +422,19 @@ CREATE TABLE `laporan_audit` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `laporan_audit`
+--
+
+INSERT INTO `laporan_audit` (`id`, `produk_id`, `auditor`, `dok_importir_id`, `dok_manufaktur_id`, `tinjauan_pp_id`, `jadwal_audit_id`, `tgl_audit`, `ringkasan`, `created_at`, `updated_at`) VALUES
+(4, 71, 'Auditor1', 69, NULL, 36, 4, '2019-12-04', 'asdiuads', '2019-12-04 06:26:04', '2019-12-04 06:28:15'),
+(5, 75, 'rizal fuzi', 72, NULL, 37, 5, '2019-12-05', 'dokumen sudah lengkap bro lanjtkan', '2019-12-05 09:04:06', '2019-12-05 09:11:28'),
+(6, 74, 'Lucas Barden', 73, NULL, 40, 6, '2019-12-06', 'semua data anda bagus! 10/10', '2019-12-05 09:59:26', '2019-12-06 02:34:25'),
+(7, 73, 'Auditor1', 71, NULL, 38, 7, '2019-12-05', 'lengkap', '2019-12-05 10:10:04', '2019-12-05 10:15:06'),
+(8, 76, 'Auditor3', 74, NULL, 39, 8, '2019-12-06', 'asdasd', '2019-12-06 00:05:39', '2019-12-06 00:08:22'),
+(9, 84, NULL, NULL, NULL, NULL, 9, NULL, NULL, '2020-02-13 06:22:17', '2020-02-13 06:22:17'),
+(16, 80, 'Aang Solihin', 80, NULL, 41, 16, '2020-02-18', 'Test ahh!!', '2020-02-18 07:40:30', '2020-02-18 09:41:34');
 
 -- --------------------------------------------------------
 
@@ -350,6 +464,17 @@ CREATE TABLE `laporan_hasil_sert` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `laporan_hasil_sert`
+--
+
+INSERT INTO `laporan_hasil_sert` (`id`, `produk_id`, `shu`, `bapc`, `closed_ncr`, `kelengkapan_dok`, `doc_maker`, `laporan_hasil_sert`, `tanggal_audit`, `tim_audit`, `hasil_assesmen`, `verifikasi`, `bapc_lap`, `hasil_pengujian`, `rekomendasi`, `status_timTeknis`, `input_evaluasi_tt`, `signed_lapSert`, `created_at`, `updated_at`) VALUES
+(23, 71, 'shu-Test12-tes1-5de753100104b.pdf', 'bapc-Test12-tes1-5de7531bc3ec1.pdf', 'closed_ncr-Test12-tes1-5de7531442c8d.pdf', 1, 7, 'Laporan_Hasil_Sertifikasi-5de80f70582c1.pdf', '4-4 Desember 2019', 'Tim1, Tim2, dan Tim3', '1', '1', '1', '0', 'nama: tim teknis1\r\nrekomendasi: asdkasdkjak\r\n\r\nnama: tim teknis2\r\nrekomendasi: asdkasdkjak', 1, NULL, 1, '2019-12-04 06:32:48', '2019-12-04 19:56:32'),
+(24, 75, 'shu-PT_MUTIARA_INDAH-sendok_keramik-5de8cae0dbad5.pdf', 'bapc-PT_MUTIARA_INDAH-sendok_keramik-5de8cae874771.pdf', 'closed_ncr-PT_MUTIARA_INDAH-sendok_keramik-5de8caed3916b.pdf', 1, 7, 'Laporan_Hasil_Sertifikasi-5de8d20ad286e.pdf', '11-13 Desember 2019', 'tim1,tim2', '0', '0', '1', '1', 'nama : insanx\r\nket : bagus lanjutkanx\r\n\r\nnama : ardin\r\nket : memuaskan lanjut\r\n\r\nnama: yoni\r\nket : sangat bagus lanjutkan\r\n\r\nnama: rifki\r\nket : mantul', 1, 'lanjutkan', 1, '2019-12-05 09:16:16', '2019-12-05 09:46:50'),
+(25, 73, 'shu-Maju_Jaya_Keramik-Kloset_Berdiri-5de8d9d3b850d.pdf', 'bapc-Maju_Jaya_Keramik-Kloset_Berdiri-5de8d9e0609d3.pdf', 'closed_ncr-Maju_Jaya_Keramik-Kloset_Berdiri-5de8d9e520a74.pdf', 1, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-05 10:20:03', '2019-12-05 10:20:35'),
+(26, 76, 'shu-qwoeiu-Produk5-5de99c687bc20.pdf', 'bapc-qwoeiu-Produk5-5de99c9846c7e.pdf', 'closed_ncr-qwoeiu-Produk5-5de99c9ceb8d7.pdf', 1, 7, 'Laporan_Hasil_Sertifikasi-5de9a497cb8b6.pdf', '6-7 Desember 2019', 'asd,as', '1', '1', '1', '1', 'nama: asd\r\nrekomendasi: asd', 1, 'zcxzxc', 1, '2019-12-06 00:10:16', '2019-12-06 00:45:11'),
+(27, 74, 'shu-testinggg-Ubinss-5de9efc87bd18.pdf', 'bapc-testinggg-Ubinss-5de9efcf90896.pdf', 'closed_ncr-testinggg-Ubinss-5de9efe05e641.pdf', 1, 7, 'Laporan_Hasil_Sertifikasi-5dea182d6ebc2.pdf', '6-8 Desember 2019', 'tim audit 1, tim audit 2', '1', '1', '1', '1', 'isi rekomendasi di sini...', 1, 'ini keputusan dari komite evaluasi rapat teknis', 1, '2019-12-06 06:06:00', '2019-12-06 08:58:21');
 
 -- --------------------------------------------------------
 
@@ -383,7 +508,7 @@ INSERT INTO `master_tahap` (`id`, `kode_tahap`, `tahapan`, `role_id`) VALUES
 (25, 21, 'Pembuatan Draft Sertifikasi', '6'),
 (26, 22, 'Cetak Draft Sertifikasi', '6'),
 (27, 23, 'Penjadwalan Ambil/Kirim Sertifikat', '2,11'),
-(28, 24, 'Selesai', NULL);
+(28, 24, 'Selesai', '2,11');
 
 -- --------------------------------------------------------
 
@@ -415,6 +540,66 @@ CREATE TABLE `mou` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `mou`
+--
+
+INSERT INTO `mou` (`id`, `produk_id`, `doc_maker`, `mou`, `tgl_kontrak`, `tgl_exp`, `status`, `created_at`, `updated_at`) VALUES
+(36, 71, 4, '5de7486232a4120191204124714.pdf', '2019-12-04', '2019-12-07', 2, '2019-12-04 05:44:53', '2019-12-04 05:47:14'),
+(40, 73, 4, '5de8b8a8c27b320191205145832.pdf', '2019-12-05', '2019-12-08', 2, '2019-12-05 06:49:16', '2019-12-05 07:58:32'),
+(45, 74, 4, '5de8b9362bbaa20191205150054.pdf', '2019-12-05', '2019-12-08', 2, '2019-12-05 07:56:05', '2019-12-05 08:00:54'),
+(46, 75, 4, '5de8b92c6155d20191205150044.pdf', '2019-12-18', '2019-12-21', 2, '2019-12-05 07:56:53', '2019-12-05 08:00:44'),
+(47, 76, 4, '5de98eca9487220191206061210.pdf', '2019-12-06', '2019-12-09', 2, '2019-12-05 22:59:16', '2019-12-05 23:12:10'),
+(48, 77, 4, '5dea0e0287fb320191206151458.pdf', '2019-12-09', '2019-12-09', 2, '2019-12-06 07:40:49', '2019-12-06 08:14:58'),
+(51, 79, 4, 'MOU-Test12-ProdukTest-5df72f0f82a3d.pdf', '2019-12-16', '2019-12-19', 2, '2019-12-16 07:02:12', '2019-12-16 07:15:27'),
+(57, 84, 4, 'MOU-Test12-Produk_Baru-5e44e7d9e75d9.pdf', '2020-02-13', '2020-02-16', 2, '2020-02-13 05:44:37', '2020-02-13 06:08:25'),
+(58, 80, 4, 'MOU-Test12-vas_bunga1-5e4a388173681.pdf', '2020-02-17', '2020-02-20', 2, '2020-02-17 06:36:14', '2020-02-17 06:53:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `read_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `title`, `subtitle`, `data`, `user_id`, `read_at`, `created_at`, `updated_at`) VALUES
+('202002041249495e3905fd3c27e', 'Pesan baru', 'Produk5', 'xzxc', 3, '2020-02-04 14:21:51', '2020-02-04 05:49:49', '2020-02-04 07:21:51'),
+('202002041250245e390620aea05', 'Pesan baru', 'Produk5', 'xzxc', 3, '2020-02-04 14:21:51', '2020-02-04 05:50:24', '2020-02-04 07:21:51'),
+('202002041250375e39062dcece3', 'Pesan baru', 'Produk5', 'xzxc', 3, '2020-02-04 14:21:51', '2020-02-04 05:50:37', '2020-02-04 07:21:51'),
+('202002041429085e391d443d86f', 'Pesan baru', 'Produk5', 'b', 3, '2020-02-04 14:29:16', '2020-02-04 07:29:08', '2020-02-04 07:29:16'),
+('202002041430185e391d8a78348', 'Pesan baru', 'Produk5', 'b', 3, '2020-02-04 14:30:34', '2020-02-04 07:30:18', '2020-02-04 07:30:34'),
+('202002041456385e3923b6cea73', 'Pesan baru', 'Seksi Kerjasama', 'test', 4, '2020-02-04 14:56:46', '2020-02-04 07:56:38', '2020-02-04 07:56:46'),
+('202002041502285e392514809dc', 'Pesan baru', 'Seksi Pemasaran', 'q', 3, '2020-02-04 15:02:40', '2020-02-04 08:02:28', '2020-02-04 08:02:40'),
+('202002041510565e39271062b53', 'Pesan baru', 'Seksi Kerjasama', 'yooo', 4, '2020-02-05 15:14:02', '2020-02-04 08:10:56', '2020-02-05 08:14:02'),
+('202002041604135e39338d0597b', 'Apply SA', '-vas bunga1', 'vas bunga1() telah mengisi form Apply SA', 3, '2020-02-04 16:13:23', '2020-02-04 09:04:13', '2020-02-04 09:13:23'),
+('202002041614055e3935dd5af32', 'Apply SA', 'Test12-vas bunga1', 'vas bunga1(Test12) telah mengisi form Apply SA', 3, '2020-02-04 16:14:14', '2020-02-04 09:14:05', '2020-02-04 09:14:14'),
+('202002041703065e39415ad2e0f', 'Apply SA', 'Test12(vas bunga1)', 'Test12(vas bunga1) telah mengisi form Apply SA', 3, '2020-02-05 14:00:22', '2020-02-04 10:03:06', '2020-02-05 07:00:22'),
+('202002051358545e3a67aef0097', 'Apply SA', 'Test12(vas bunga1)', 'Test12(vas bunga1) telah mengisi form Apply SA', 3, '2020-02-05 14:00:22', '2020-02-05 06:58:54', '2020-02-05 07:00:22'),
+('202002051425345e3a6deecfd11', 'Apply SA', 'vas bunga1', 'Seksi Pemasaran telah mem-verifikasi form Apply SA', 31, '2020-02-05 14:26:07', '2020-02-05 07:25:34', '2020-02-05 07:26:07'),
+('202002051428265e3a6e9a8ac0b', 'Apply SA', 'Test12(vas bunga1)', 'Test12(vas bunga1) telah mengisi form Apply SA', 3, '2020-02-06 08:54:48', '2020-02-05 07:28:26', '2020-02-06 01:54:48'),
+('202002051429005e3a6ebcdaf27', 'Apply SA', 'vas bunga1', 'Seksi Pemasaran telah mem-verifikasi form Apply SA', 31, '2020-02-05 14:57:04', '2020-02-05 07:29:00', '2020-02-05 07:57:04'),
+('202002051452005e3a7420241d3', 'Pembuatan MOU', 'vas bunga1', 'Seksi Kerjasama telah membuat MOU', 31, '2020-02-05 14:57:04', '2020-02-05 07:52:00', '2020-02-05 07:57:04'),
+('202002051456575e3a754981041', 'Pembuatan MOU', 'vas bunga1', 'Seksi Kerjasama telah membuat MOU', 31, '2020-02-05 14:57:04', '2020-02-05 07:56:57', '2020-02-05 07:57:04'),
+('202002051549305e3a819abc90b', 'Pembuatan MOU', 'vas bunga1', 'Seksi Kerjasama telah membuat MOU', 4, '2020-02-05 15:49:45', '2020-02-05 08:49:30', '2020-02-05 08:49:45'),
+('202002051558355e3a83bb7c47b', 'Pembuatan MOU', 'vas bunga1', 'Seksi Kerjasama telah membuat MOU', 31, '2020-02-05 16:02:15', '2020-02-05 08:58:35', '2020-02-05 09:02:15'),
+('202002051610245e3a86808a9dc', 'Sign MOU', 'vas bunga1', ' telah menyelesaikan Sign MOU', 4, '2020-02-05 16:10:31', '2020-02-05 09:10:24', '2020-02-05 09:10:31'),
+('202002060919375e3b77b9e3e23', 'Pembuatan Penawaran Harga', 'vas bunga1', 'Seksi Pemasaran telah membuat penawaran harga', 5, '2020-02-06 09:20:25', '2020-02-06 02:19:37', '2020-02-06 02:20:25'),
+('202002061025375e3b8731afcf3', 'Pembuatan Penawaran Harga', 'vas bunga1', 'Seksi Pemasaran telah membuat penawaran harga', 5, '2020-02-06 10:26:02', '2020-02-06 03:25:37', '2020-02-06 03:26:02');
+
 -- --------------------------------------------------------
 
 --
@@ -444,6 +629,87 @@ CREATE TABLE `no_surat` (
   `dok` varchar(255) NOT NULL,
   `no` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `no_surat`
+--
+
+INSERT INTO `no_surat` (`id`, `jenis`, `dok`, `no`) VALUES
+(95, 'mou', '5ddf925415b1a20191128162436.pdf', '100000/LSPro-BBK'),
+(96, 'penawaran_harga', 'Penawaran_harga-5ddf92d65bb4c20191128162646.pdf', '7546468512'),
+(97, 'invoice', 'Invoice-5ddf9341c7f0520191128162833.pdf', '99887554215'),
+(98, 'mou', '5de05da2e199420191129065202.pdf', '100000/LSPro-BBK'),
+(99, 'penawaran_harga', 'Penawaran_harga-5de05da239ffd20191129065202.pdf', '7546468512'),
+(100, 'invoice', 'Invoice-5de060bc762d620191129070516.pdf', '10887554215'),
+(101, 'mou', '201912021741155de4ea4b1b46a.pdf', '100001/LSPro-BBK'),
+(102, 'mou', '201912030535485de591c4bcd86.pdf', '100002/LSPro-BBK'),
+(103, 'penawaran_harga', 'Penawaran_harga-5de5910dc57fe20191203053245.pdf', '7546468513'),
+(104, 'invoice', 'Invoice-5de59bc4b94db20191203061828.pdf', '10887554216'),
+(105, 'mou', '5de5d7c6d1dc820191203103430.pdf', '100003/LSPro-BBK'),
+(106, 'penawaran_harga', 'Penawaran_harga-5de5d7c63271520191203103430.pdf', '7546468514'),
+(107, 'invoice', 'Invoice-5de5da498368920191203104513.pdf', '151/BPPI/BBK/INV-S/12/2019'),
+(108, 'mou', '5de6f5e2bdf6d20191204065514.pdf', '100004/LSPro-BBK'),
+(109, 'penawaran_harga', 'Penawaran_harga-5de6f5e2210aa20191204065514.pdf', '7546468515'),
+(110, 'invoice', 'Invoice-5de6f6b0bbc0d20191204065840.pdf', '152/BPPI/BBK/INV-S/12/2019'),
+(111, 'mou', '5de7486232a4120191204124714.pdf', '100005/LSPro-BBK'),
+(112, 'penawaran_harga', 'Penawaran_harga-5de7486186a1020191204124713.pdf', '7546468516'),
+(113, 'invoice', 'Invoice-5de748ef9995d20191204124935.pdf', '153/BPPI/BBK/INV-S/12/2019'),
+(114, 'mou', '5de77e02b825920191204163602.pdf', '123/LSPro-BBK'),
+(115, 'penawaran_harga', 'Penawaran_harga-5de77f37edbbd20191204164111.pdf', 'keramichh-04122019'),
+(116, 'mou', '5de889f4c266f20191205113916.pdf', '1234/LSPro-BBK'),
+(117, 'mou', '5de8a5396592820191205133537.pdf', '1235/LSPro-BBK'),
+(118, 'mou', '5de8a86c8c62920191205134916.pdf', '122/LSPro-BBK'),
+(119, 'mou', '5de8b8a8c27b320191205145832.pdf', '1235/LSPro-BBK'),
+(120, 'penawaran_harga', 'Penawaran_harga-5de8ab26c446920191205140054.pdf', 'kloset-berdiri-010233'),
+(121, 'invoice', 'Invoice-5de8ad6c2495520191205141036.pdf', 'kloset-berdiri-INV-199488'),
+(122, 'mou', '5de8add6627de20191205141222.pdf', '1236/LSPro-BBK'),
+(123, 'penawaran_harga', 'Penawaran_harga-5de8b3cc2481320191205143748.pdf', 'kloset-berdiri-010233'),
+(124, 'penawaran_harga', 'Penawaran_harga-Maju_Jaya_Keramik-Kloset_Berdiri-5de8b66b8ab38.pdf', 'kloset-berdiri-010233'),
+(125, 'mou', '5de8b6be4369820191205145022.pdf', 'ubinss/LSPro/BBK'),
+(126, 'mou', 'mou--Ubinss-5de8b7db1785c.pdf', 'ubinss/LSPro/BBK'),
+(127, 'mou', '5de8b9362bbaa20191205150054.pdf', 'ubinss/LSPro/bbk'),
+(128, 'mou', '5de8b92c6155d20191205150044.pdf', 'ubinsqq/LSPro/bbk'),
+(129, 'penawaran_harga', 'Penawaran_harga-Maju_Jaya_Keramik-Kloset_Berdiri-5de8b8b4778f5.pdf', 'kloset-berdiri-010234'),
+(130, 'invoice', 'Invoice-Maju_Jaya_Keramik-Kloset_Berdiri-5de8bfc4f3fa6.pdf', 'kloset-berdiri-INV-199489'),
+(131, 'penawaran_harga', 'Penawaran_harga-5de8b98de717f20191205150221.pdf', 'sendok-010234'),
+(132, 'penawaran_harga', 'Penawaran_harga-testinggg-Ubinss-5de8b943ed864.pdf', 'ubinss/102108'),
+(133, 'invoice', 'Invoice-testinggg-Ubinss-5de8ca453436c.pdf', 'ubinss-INV-199488'),
+(134, 'invoice', 'Invoice-5de8bacee3baa20191205150742.pdf', 'sendok-INV-199488'),
+(135, 'invoice', 'Invoice-PT_MUTIARA_INDAH-sendok_keramik-5de8c0a11622d.pdf', 'sendokx-INV-199488'),
+(136, 'mou', '5de98eca9487220191206061210.pdf', 'ubinsqq1/LSPro/bbk'),
+(137, 'penawaran_harga', 'Penawaran_harga-qwoeiu-Produk5-5de9905415d58.pdf', 'ubinss/102108'),
+(138, 'invoice', 'Invoice-qwoeiu-Produk5-5de997fe4f2ff.pdf', 'sendokx-INV-199489'),
+(139, 'mou', '5dea0e0287fb320191206151458.pdf', 'ub34/LSPro/bbk'),
+(140, 'penawaran_harga', 'Penawaran_harga-PT_SARI_WARNA-Gelas_Keramik-5dea0ea695018.pdf', '883/102108'),
+(141, 'invoice', 'Invoice-PT_SARI_WARNA-Gelas_Keramik-5dea11d805a5a.pdf', '343-INV-199489'),
+(142, 'mou', '5df33dc52698d20191213142909.pdf', 'ub35/LSPro/bbk'),
+(143, 'mou', 'MOU-Test12-ProdukTest-5df724388e80f.pdf', 'ub36/LSPro/bbk'),
+(144, 'penawaran_harga', 'Penawaran_harga-5df6f914d6ac820191216102508.pdf', '883/102108'),
+(145, 'penawaran_harga', 'Penawaran_harga-Test12-ProdukTest-5df6fdffa6e81.pdf', '883/102108'),
+(146, 'penawaran_harga', 'Penawaran_harga-Test12-ProdukTest-5df6fe97952af.pdf', '883/102109'),
+(147, 'penawaran_harga', 'Penawaran_harga-Test12-ProdukTest-5df704dbdc071.pdf', '883/102109'),
+(148, 'penawaran_harga', 'Penawaran_harga-Test12-ProdukTest-5df72436d1933.pdf', '883/102109'),
+(149, 'mou', 'MOU-Test12-ProdukTest-5df72f0f82a3d.pdf', 'ub37/LSPro/bbk'),
+(150, 'penawaran_harga', 'Penawaran_harga-Test12-ProdukTest_5df73c6a2d33f.pdf', '884/102109'),
+(151, 'mou', 'MOU-Test12-vas_bunga1_5e3a7953e2ecc.pdf', 'ub38/LSPro/bbk'),
+(152, 'mou', 'MOU-Test12-vas_bunga1-5e3a73e1ed247.pdf', 'ub38/LSPro/bbk'),
+(153, 'mou', 'MOU-Test12-vas_bunga1-5e3a741fea6b8.pdf', 'ub38/LSPro/bbk'),
+(154, 'mou', 'MOU-Test12-vas_bunga1-5e3a819a92cc0.pdf', 'ub39/LSPro/bbk'),
+(155, 'mou', 'MOU-Test12-vas_bunga1-5e3b82ec6e0ff.pdf', 'ub40/LSPro/bbk'),
+(156, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3a8ce8dfc59.pdf', '885/102109'),
+(157, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3b730b5ebe9.pdf', '886/102109'),
+(158, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3b767639603.pdf', '887/102109'),
+(159, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3b77b9bcabd.pdf', '888/102109'),
+(160, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3b808b9f436.pdf', '889/102109'),
+(161, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e3b873183e13.pdf', '890/102109'),
+(162, 'mou', 'MOU-Test12-Produk_Baru-5e44e7d9e75d9.pdf', 'ub41/LSPro/bbk'),
+(163, 'penawaran_harga', 'Penawaran_harga-Test12-Produk_Baru_5e44e542d47e3.pdf', '891/102109'),
+(164, 'penawaran_harga', 'Penawaran_harga-Test12-Produk_Baru_5e44e855673da.pdf', '892/102109'),
+(165, 'invoice', 'Invoice-Test12-Produk_Baru-5e44e9f9e3fbf.pdf', '344-INV-199489'),
+(166, 'mou', 'MOU-Test12-vas_bunga1-5e4a388173681.pdf', 'ub42/LSPro/bbk'),
+(167, 'penawaran_harga', 'Penawaran_harga-Test12-vas_bunga1-5e4a392dc6fd9.pdf', '893/102109'),
+(168, 'invoice', 'Invoice-Test12-vas_bunga1-5e4a64e5e7549.pdf', '345-INV-199489'),
+(169, 'invoice', 'Invoice-Test12-vas_bunga1-5e4b4a0dabd95.pdf', '346-INV-199489');
 
 -- --------------------------------------------------------
 
@@ -487,7 +753,7 @@ CREATE TABLE `persyaratan_dok_dalam_negeri` (
   `gambar_dan_spesifikasi_produk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'sa, importir',
   `tata_letak_pabrik` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'sa',
   `peta_rute_pabrik_dari_bandara_terdekat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'sa',
-  `daftar_isian_dan_kuesioner_importer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'importir',
+  `daftar_isian_dan_kuesioner` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'importir',
   `copy_api` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'importir',
   `penunjukkan_distributor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'importir',
   `sert_smm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'importir',
@@ -496,6 +762,22 @@ CREATE TABLE `persyaratan_dok_dalam_negeri` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `persyaratan_dok_dalam_negeri`
+--
+
+INSERT INTO `persyaratan_dok_dalam_negeri` (`id`, `produk_id`, `sni`, `pesan_form_kuesioner`, `dok_tidak_lengkap`, `surat_permohonan_sertifikat_sni`, `copy_iui`, `copy_akte_notaris_perusahaan`, `copy_tdp`, `copy_npwp`, `copy_sert_patent_merek`, `copy_sert_iso_9001`, `laporan_audit_sistem_mutu_terakhir`, `panduan_mutu`, `daftar_induk_dok`, `struktur_organisasi`, `diagram_alir_proses_produksi`, `surat_pertunjukkan_wakil_manajemen`, `ilustrasi_pembubuhan_tanda_sni`, `tabel_daftar_tipe_produk`, `gambar_dan_spesifikasi_produk`, `tata_letak_pabrik`, `peta_rute_pabrik_dari_bandara_terdekat`, `daftar_isian_dan_kuesioner`, `copy_api`, `penunjukkan_distributor`, `sert_smm`, `laporan_pengawasan_iso_9001_terakhir`, `review_dok_importir_id`, `created_at`, `updated_at`) VALUES
+(69, 71, 1, NULL, NULL, 'surat_permohonan_sertifikat_sni-Test12-tes1-5de7432eae8bb.pdf', 'copy_iui-Test12-tes1-5de74333e2eac.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 29, '2019-12-04 05:25:02', '2019-12-04 06:28:15'),
+(71, 73, 1, NULL, NULL, 'surat_permohonan_sertifikat_sni-Maju_Jaya_Keramik-Kloset_Berdiri-5de877ff47919.doc', 'copy_iui-Maju_Jaya_Keramik-Kloset_Berdiri-5de878190212b.pdf', 'copy_akte_notaris_perusahaan-Maju_Jaya_Keramik-Kloset_Berdiri-5de8781e3b25c.pdf', 'copy_tdp-Maju_Jaya_Keramik-Kloset_Berdiri-5de8784c5b5ee.pdf', 'copy_npwp-Maju_Jaya_Keramik-Kloset_Berdiri-5de8785159b6c.pdf', 'copy_sert_patent_merek-Maju_Jaya_Keramik-Kloset_Berdiri-5de8785c8275c.pdf', 'copy_sert_iso_9001-Maju_Jaya_Keramik-Kloset_Berdiri-5de87861bb8f6.pdf', 'laporan_audit_sistem_mutu_terakhir-Maju_Jaya_Keramik-Kloset_Berdiri-5de87866016b6.pdf', 'panduan_mutu-Maju_Jaya_Keramik-Kloset_Berdiri-5de8786c5440f.pdf', 'daftar_induk_dok-Maju_Jaya_Keramik-Kloset_Berdiri-5de8787136525.pdf', 'struktur_organisasi-Maju_Jaya_Keramik-Kloset_Berdiri-5de8787649897.pdf', 'diagram_alir_proses_produksi-Maju_Jaya_Keramik-Kloset_Berdiri-5de8787bb6295.pdf', 'surat_pertunjukkan_wakil_manajemen-Maju_Jaya_Keramik-Kloset_Berdiri-5de87885c35de.pdf', 'ilustrasi_pembubuhan_tanda_sni-Maju_Jaya_Keramik-Kloset_Berdiri-5de8788b13cee.pdf', 'tabel_daftar_tipe_produk-Maju_Jaya_Keramik-Kloset_Berdiri-5de878909c3b2.pdf', 'gambar_dan_spesifikasi_produk-Maju_Jaya_Keramik-Kloset_Berdiri-5de878953ce4d.pdf', 'tata_letak_pabrik-Maju_Jaya_Keramik-Kloset_Berdiri-5de8789a56b54.pdf', 'peta_rute_pabrik_dari_bandara_terdekat-Maju_Jaya_Keramik-Kloset_Berdiri-5de878a03d98e.pdf', NULL, NULL, NULL, NULL, NULL, 31, '2019-12-05 03:22:39', '2019-12-05 10:15:06'),
+(72, 75, 1, NULL, NULL, 'surat_permohonan_sertifikat_sni-PT_MUTIARA_INDAH-sendok_keramik-5de88a5635ef6.pdf', 'copy_iui-PT_MUTIARA_INDAH-sendok_keramik-5de88a826c177.pdf', 'copy_akte_notaris_perusahaan-PT_MUTIARA_INDAH-sendok_keramik-5de88a897f900.pdf', 'copy_tdp-PT_MUTIARA_INDAH-sendok_keramik-5de88a90c35b3.pdf', 'copy_npwp-PT_MUTIARA_INDAH-sendok_keramik-5de88a9822b8d.pdf', 'copy_sert_patent_merek-PT_MUTIARA_INDAH-sendok_keramik-5de88a9e87bc5.pdf', 'copy_sert_iso_9001-PT_MUTIARA_INDAH-sendok_keramik-5de88aa8163e7.pdf', 'laporan_audit_sistem_mutu_terakhir-PT_MUTIARA_INDAH-sendok_keramik-5de88aadb95fd.pdf', 'panduan_mutu-PT_MUTIARA_INDAH-sendok_keramik-5de88ab44fc91.pdf', 'daftar_induk_dok-PT_MUTIARA_INDAH-sendok_keramik-5de88aba6e13d.pdf', 'struktur_organisasi-PT_MUTIARA_INDAH-sendok_keramik-5de88ac08ba20.pdf', 'diagram_alir_proses_produksi-PT_MUTIARA_INDAH-sendok_keramik-5de88ac5871a8.pdf', 'surat_pertunjukkan_wakil_manajemen-PT_MUTIARA_INDAH-sendok_keramik-5de88acae0abc.pdf', 'ilustrasi_pembubuhan_tanda_sni-PT_MUTIARA_INDAH-sendok_keramik-5de88ad20f785.pdf', 'tabel_daftar_tipe_produk-PT_MUTIARA_INDAH-sendok_keramik-5de88ad9205a4.pdf', 'gambar_dan_spesifikasi_produk-PT_MUTIARA_INDAH-sendok_keramik-5de88adf989c8.pdf', 'tata_letak_pabrik-PT_MUTIARA_INDAH-sendok_keramik-5de88ae4d391f.pdf', 'peta_rute_pabrik_dari_bandara_terdekat-PT_MUTIARA_INDAH-sendok_keramik-5de88aea81be3.pdf', NULL, 'copy_api-PT_MUTIARA_INDAH-sendok_keramik-5de8c8f128567.pdf', 'penunjukkan_distributor-PT_MUTIARA_INDAH-sendok_keramik-5de8c8f7e6a0b.pdf', NULL, 'laporan_pengawasan_iso_9001_terakhir-PT_MUTIARA_INDAH-sendok_keramik-5de8c900ce074.pdf', 30, '2019-12-05 04:40:27', '2019-12-05 09:11:28'),
+(73, 74, 1, NULL, NULL, 'surat_permohonan_sertifikat_sni-testinggg-Ubinss-5de8aed6c08ec.pdf', 'copy_iui-testinggg-Ubinss-5de8af57e1e6f.jpg', 'copy_akte_notaris_perusahaan-testinggg-Ubinss-5de8aff50b507.jpg', 'copy_tdp-testinggg-Ubinss-5de8affbd0f12.jpg', 'copy_npwp-testinggg-Ubinss-5de8b00b63621.pdf', 'copy_sert_patent_merek-testinggg-Ubinss-5de8b012813cc.pdf', 'copy_sert_iso_9001-testinggg-Ubinss-5de8b0205fc6e.png', 'laporan_audit_sistem_mutu_terakhir-testinggg-Ubinss-5de8b025786ef.png', 'panduan_mutu-testinggg-Ubinss-5de8b02d25260.jpg', 'daftar_induk_dok-testinggg-Ubinss-5de8b03589122.png', 'struktur_organisasi-testinggg-Ubinss-5de8b03e24f1a.jpg', 'diagram_alir_proses_produksi-testinggg-Ubinss-5de8b04278274.jpg', 'surat_pertunjukkan_wakil_manajemen-testinggg-Ubinss-5de8b046b8ebe.jpg', 'ilustrasi_pembubuhan_tanda_sni-testinggg-Ubinss-5de8b04c2f88a.jpg', 'tabel_daftar_tipe_produk-testinggg-Ubinss-5de8b050712d0.jpg', 'gambar_dan_spesifikasi_produk-testinggg-Ubinss-5de8b054990ca.jpg', 'tata_letak_pabrik-testinggg-Ubinss-5de8b059d0d0b.jpg', 'peta_rute_pabrik_dari_bandara_terdekat-testinggg-Ubinss-5de8b05f4cc1d.jpg', NULL, 'copy_api-testinggg-Ubinss-5de9be5857ea8.jpg', 'penunjukkan_distributor-testinggg-Ubinss-5de9be62305d0.jpg', NULL, 'laporan_pengawasan_iso_9001_terakhir-testinggg-Ubinss-5de9be6bc68ea.jpg', 33, '2019-12-05 07:16:38', '2019-12-06 03:29:39'),
+(74, 76, 1, 'asmn', NULL, 'surat_permohonan_sertifikat_sni-qwoeiu-Produk5-5de96b8a72eb7.pdf', 'copy_iui-qwoeiu-Produk5-5de96b8f6939a.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 32, '2019-12-05 20:41:46', '2019-12-06 00:08:22'),
+(75, 77, 1, NULL, NULL, 'surat_permohonan_sertifikat_sni-PT_SARI_WARNA-Gelas_Keramik-5de9f35d9f06a.pdf', 'copy_iui-PT_SARI_WARNA-Gelas_Keramik-5de9f3625e357.pdf', 'copy_akte_notaris_perusahaan-PT_SARI_WARNA-Gelas_Keramik-5de9f36728181.pdf', 'copy_tdp-PT_SARI_WARNA-Gelas_Keramik-5de9f370e51fc.pdf', 'copy_npwp-PT_SARI_WARNA-Gelas_Keramik-5de9f377440a5.pdf', 'copy_sert_patent_merek-PT_SARI_WARNA-Gelas_Keramik-5de9f3850f8e8.pdf', 'copy_sert_iso_9001-PT_SARI_WARNA-Gelas_Keramik-5de9f38ab1f68.pdf', 'laporan_audit_sistem_mutu_terakhir-PT_SARI_WARNA-Gelas_Keramik-5de9f3953176b.pdf', 'panduan_mutu-PT_SARI_WARNA-Gelas_Keramik-5de9f39fe3594.pdf', 'daftar_induk_dok-PT_SARI_WARNA-Gelas_Keramik-5de9f3a62ec81.pdf', 'struktur_organisasi-PT_SARI_WARNA-Gelas_Keramik-5de9f3ab1532c.pdf', 'diagram_alir_proses_produksi-PT_SARI_WARNA-Gelas_Keramik-5de9f3b06c6cb.pdf', 'surat_pertunjukkan_wakil_manajemen-PT_SARI_WARNA-Gelas_Keramik-5de9f3b4ad9b5.pdf', 'ilustrasi_pembubuhan_tanda_sni-PT_SARI_WARNA-Gelas_Keramik-5de9f3b9b170d.pdf', 'tabel_daftar_tipe_produk-PT_SARI_WARNA-Gelas_Keramik-5de9f3c0b6c81.pdf', 'gambar_dan_spesifikasi_produk-PT_SARI_WARNA-Gelas_Keramik-5de9f3c615257.pdf', 'tata_letak_pabrik-PT_SARI_WARNA-Gelas_Keramik-5de9f3ca48fe3.pdf', 'peta_rute_pabrik_dari_bandara_terdekat-PT_SARI_WARNA-Gelas_Keramik-5de9ff5cf4105.pdf', NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-06 06:21:17', '2019-12-06 07:23:23'),
+(76, 79, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-12 06:51:39', '2019-12-12 06:51:39'),
+(78, 84, 1, 'Point ke -3 belum lengkap', '[\"copy_iui\",\"copy_akte_notaris_perusahaan\",\"copy_tdp\",\"copy_npwp\",\"copy_sert_patent_merek\",\"copy_sert_iso_9001\",\"laporan_audit_sistem_mutu_terakhir\",\"panduan_mutu\",\"daftar_induk_dok\",\"struktur_organisasi\",\"diagram_alir_proses_produksi\",\"surat_pertunjukkan_wakil_manajemen\",\"ilustrasi_pembubuhan_tanda_sni\",\"tabel_daftar_tipe_produk\",\"gambar_dan_spesifikasi_produk\",\"tata_letak_pabrik\",\"peta_rute_pabrik_dari_bandara_terdekat\"]', 'surat_permohonan_sertifikat_sni-Test12-Produk_Baru-5e44da18a02fa.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 05:04:38', '2020-02-13 05:36:30'),
+(79, 83, NULL, NULL, NULL, 'surat_permohonan_sertifikat_sni-Test12-qqqqqqqqq-5e47c12fbd491.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-15 10:00:15', '2020-02-15 10:00:15'),
+(80, 80, 2, NULL, '[\"daftar_isian_dan_kuesioner\",\"copy_iui\",\"copy_akte_notaris_perusahaan\",\"copy_tdp\",\"copy_npwp\",\"copy_api\",\"copy_sert_patent_merek\",\"penunjukkan_distributor\",\"struktur_organisasi\",\"ilustrasi_pembubuhan_tanda_sni\",\"tabel_daftar_tipe_produk\",\"sert_smm\",\"laporan_pengawasan_iso_9001_terakhir\"]', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 35, '2020-02-17 03:13:57', '2020-02-18 09:41:33');
 
 -- --------------------------------------------------------
 
@@ -524,11 +806,41 @@ CREATE TABLE `pesan` (
   `id` bigint(20) NOT NULL,
   `client` bigint(20) UNSIGNED DEFAULT NULL,
   `admin` bigint(20) UNSIGNED DEFAULT NULL,
+  `admin2` bigint(20) UNSIGNED DEFAULT NULL,
   `produk_id` bigint(20) UNSIGNED DEFAULT NULL,
   `kode_tahap` int(2) DEFAULT NULL,
   `pesan` text,
-  `created_at` datetime DEFAULT NULL
+  `ket_pesan` varchar(100) DEFAULT NULL COMMENT 'message sender',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pesan`
+--
+
+INSERT INTO `pesan` (`id`, `client`, `admin`, `admin2`, `produk_id`, `kode_tahap`, `pesan`, `ket_pesan`, `created_at`, `updated_at`) VALUES
+(14, NULL, 3, NULL, 76, 22, 'asdasd', 'client', '2019-12-23 06:47:52', '2019-12-23 06:47:52'),
+(16, 36, 3, NULL, 76, 22, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.', 'admin', '2019-12-24 01:17:11', '2019-12-24 01:17:11'),
+(19, NULL, 3, NULL, 76, 22, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.', 'client', '2020-01-06 06:40:45', '2020-01-06 06:40:45'),
+(25, NULL, 3, NULL, 76, 22, 'Tessssstttttttttt........', 'client', '2020-01-06 07:34:50', '2020-01-06 07:34:50'),
+(26, 36, 3, NULL, 76, 22, 'Harap di cek lagi!!!!!', 'admin', '2020-01-06 08:16:55', '2020-01-06 08:16:55'),
+(60, NULL, 3, NULL, 76, 22, 'sudah kok!', 'client', '2020-01-07 06:46:21', '2020-01-07 06:46:21'),
+(61, 36, 3, NULL, 76, 22, 'siap', 'admin', '2020-01-07 09:50:27', '2020-01-07 09:50:27'),
+(62, NULL, 3, NULL, 76, 22, 'testing', 'client', '2020-01-08 00:26:29', '2020-01-08 00:26:29'),
+(63, NULL, 3, 4, NULL, NULL, 'testing', NULL, '2020-01-08 00:26:29', '2020-01-08 00:26:29'),
+(64, NULL, 4, 3, NULL, NULL, 'Siapp', NULL, '2020-01-08 00:26:29', '2020-01-08 00:26:29'),
+(65, NULL, 4, 3, NULL, NULL, 'Siapp2', NULL, '2020-01-08 00:27:29', '2020-01-08 00:26:29'),
+(66, NULL, 3, 4, NULL, NULL, 'Ok...', NULL, '2020-01-10 00:07:21', '2020-01-10 00:07:21'),
+(71, NULL, 3, 4, NULL, NULL, 'test2', NULL, '2020-01-21 07:35:43', '2020-01-21 07:35:43'),
+(72, NULL, 3, 4, NULL, NULL, 'test2', NULL, '2020-01-21 07:41:49', '2020-01-21 07:41:49'),
+(73, NULL, 4, 3, NULL, NULL, 'yooo', NULL, '2020-02-04 07:21:28', '2020-02-04 07:21:28'),
+(74, NULL, 4, 3, NULL, NULL, 'yooo', NULL, '2020-02-04 07:22:07', '2020-02-04 07:22:07'),
+(75, NULL, 3, 4, NULL, NULL, 'test ah', NULL, '2020-02-04 07:25:27', '2020-02-04 07:25:27'),
+(76, NULL, 3, 4, NULL, NULL, 'test ah', NULL, '2020-02-04 07:26:30', '2020-02-04 07:26:30'),
+(77, NULL, 4, 3, NULL, NULL, 'yooo', NULL, '2020-02-04 07:27:33', '2020-02-04 07:27:33'),
+(78, NULL, 3, 4, NULL, NULL, 'test', NULL, '2020-02-04 07:56:38', '2020-02-04 07:56:38'),
+(80, NULL, 3, 4, NULL, NULL, 'yooo', NULL, '2020-02-04 08:10:56', '2020-02-04 08:10:56');
 
 -- --------------------------------------------------------
 
@@ -559,6 +871,69 @@ CREATE TABLE `produk` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id`, `user_id`, `produk`, `jenis_produk`, `kode_tahap`, `lembar_konSert`, `verify_konSert`, `verify_msg`, `draft_sert`, `status_sert_jadi`, `pesan_sert`, `request_sert`, `tgl_request_sert`, `resi_pengiriman`, `kon_resi`, `alamat_kirim`, `terima_sert`, `tgl_terima_sert`, `created_at`, `updated_at`) VALUES
+(71, 31, 'tes1', 'abc2', 24, 'Lembar_Konfirmasi_Penerbitan_Sertifikat_SPPT_SNI-5de858d8c2c2020191205.pdf', 1, NULL, 'Sertifikat_Produk-Test12-tes1-5de8594bcf8a0.pdf', 2, NULL, 'kirim', '2019-05-12', 'Resi_Pengiriman_tes1(Test12)5de862f660251.pdf', 1, NULL, 1, '2019-12-05', '2019-12-03 08:57:52', '2019-12-05 03:14:51'),
+(73, 34, 'Kloset Berdiri', 'Kloset keramik', 19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-05 03:22:00', '2019-12-05 10:19:27'),
+(74, 29, 'Ubinss', 'alat bangunan', 24, 'Lembar_Konfirmasi_Penerbitan_Sertifikat_SPPT_SNI-testinggg-Ubinss-5dea1a1adf30b.pdf', 1, NULL, 'Sertifikat_Produk-testinggg-Ubinss-5dea1b80d660d.pdf', 2, NULL, 'kirim', '2019-12-06', 'Resi_Pengiriman_Ubinss(testinggg)5dea22895c4c4.pdf', 1, NULL, 1, '2019-12-06', '2019-12-05 03:44:38', '2019-12-06 09:50:52'),
+(75, 35, 'sendok keramik', 'Peralatan makan', 24, 'Lembar_Konfirmasi_Penerbitan_Sertifikat_SPPT_SNI-5de8d2501852320191205.pdf', 1, NULL, 'Sertifikat_Produk-PT_MUTIARA_INDAH-sendok_keramik-5de8d31610c30.pdf', 2, NULL, 'kirim', '1970-01-01', 'Resi_Pengiriman_sendok keramik(PT MUTIARA INDAH)5de8d39826705.pdf', 1, NULL, 1, '2019-12-05', '2019-12-05 04:40:20', '2019-12-05 09:59:02'),
+(76, 36, 'Produk5', 'Keramik', 22, 'Lembar_Konfirmasi_Penerbitan_Sertifikat_SPPT_SNI-qwoeiu-Produk5-5de9feeee28ae.pdf', 1, 'asdjhasd', 'Sertifikat_Produk-qwoeiu-Produk5-5dea01726f299.pdf', 2, 'MXZnasd', 'ambil', NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-05 20:40:57', '2019-12-06 09:10:35'),
+(77, 37, 'Gelas Keramik', 'Peralatan Makan', 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-06 06:14:03', '2019-12-06 08:32:12'),
+(78, 29, 'Wastafel', 'Kebersihan', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-07 10:08:30', '2019-12-07 10:08:30'),
+(79, 31, 'ProdukTest', 'Keramik', 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-10 07:44:49', '2019-12-16 08:13:21'),
+(80, 31, 'vas bunga1', 'dekorasi ruangan', 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-13 03:49:31', '2020-02-18 07:42:56'),
+(81, 31, 'askdjh', 'kjahsd', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-13 03:59:27', '2019-12-13 03:59:27'),
+(82, 31, 'zzzzzzz', 'zzzzzzzzzzzzz', 24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-13 04:00:01', '2019-12-13 04:00:01'),
+(83, 31, 'qqqqqqqqq', 'qqqqqqq', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-12-13 04:00:25', '2019-12-13 04:00:25'),
+(84, 31, 'Produk Baru', 'Keramik', 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 04:56:14', '2020-02-13 06:20:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `push_subscriptions`
+--
+
+CREATE TABLE `push_subscriptions` (
+  `id` bigint(20) NOT NULL,
+  `user_fcm_token` varchar(500) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `push_subscriptions`
+--
+
+INSERT INTO `push_subscriptions` (`id`, `user_fcm_token`, `user_id`, `created_at`, `updated_at`) VALUES
+(13, 'f4j__V35AG41WHvZAuaccB:APA91bGdoSdyhvq5CGLVZ7L8ASfvmpyTOjjNmXyerYxFR8ysh2kxTJyp7FtE_Vb7itP802ifFFIwkaPY_O1nGondriJGX98tAU1LY-9uIR6maYAugn72icNTqqt1J7jL0jGul2m5O9z1', 36, '2020-01-24 04:35:31', '2020-02-18 06:47:03'),
+(14, 'dvST-DoB_ET2HvQT8q1oaR:APA91bF-oTB0hU87KXhSugzhojyXbFJlUmnTeMZNo2kjbbB7i4jIymDqPlIQqh_oxUxsb2OKIPra8aQwOG-OhTZ6bRZYh6FoqOZJ4cyhF2-E2TlX83chs_0d5t-KKQe5Gg9DspkUGRDP', 3, '2020-01-24 04:37:33', '2020-02-18 06:47:13'),
+(16, 'f4j__V35AG41WHvZAuaccB:APA91bGdoSdyhvq5CGLVZ7L8ASfvmpyTOjjNmXyerYxFR8ysh2kxTJyp7FtE_Vb7itP802ifFFIwkaPY_O1nGondriJGX98tAU1LY-9uIR6maYAugn72icNTqqt1J7jL0jGul2m5O9z1', 4, '2020-02-04 07:19:10', '2020-02-05 07:36:35'),
+(17, 'dvST-DoB_ET2HvQT8q1oaR:APA91bF-oTB0hU87KXhSugzhojyXbFJlUmnTeMZNo2kjbbB7i4jIymDqPlIQqh_oxUxsb2OKIPra8aQwOG-OhTZ6bRZYh6FoqOZJ4cyhF2-E2TlX83chs_0d5t-KKQe5Gg9DspkUGRDP', 31, '2020-02-04 08:16:25', '2020-02-10 06:40:37'),
+(18, 'dvST-DoB_ET2HvQT8q1oaR:APA91bF-oTB0hU87KXhSugzhojyXbFJlUmnTeMZNo2kjbbB7i4jIymDqPlIQqh_oxUxsb2OKIPra8aQwOG-OhTZ6bRZYh6FoqOZJ4cyhF2-E2TlX83chs_0d5t-KKQe5Gg9DspkUGRDP', 5, '2020-02-05 09:28:06', '2020-02-17 06:54:14'),
+(19, 'f4j__V35AG41WHvZAuaccB:APA91bGdoSdyhvq5CGLVZ7L8ASfvmpyTOjjNmXyerYxFR8ysh2kxTJyp7FtE_Vb7itP802ifFFIwkaPY_O1nGondriJGX98tAU1LY-9uIR6maYAugn72icNTqqt1J7jL0jGul2m5O9z1', 6, '2020-02-17 08:48:21', '2020-02-17 08:48:21'),
+(20, 'dvST-DoB_ET2HvQT8q1oaR:APA91bF-oTB0hU87KXhSugzhojyXbFJlUmnTeMZNo2kjbbB7i4jIymDqPlIQqh_oxUxsb2OKIPra8aQwOG-OhTZ6bRZYh6FoqOZJ4cyhF2-E2TlX83chs_0d5t-KKQe5Gg9DspkUGRDP', 7, '2020-02-18 01:38:26', '2020-02-18 07:30:31'),
+(21, 'f4j__V35AG41WHvZAuaccB:APA91bGdoSdyhvq5CGLVZ7L8ASfvmpyTOjjNmXyerYxFR8ysh2kxTJyp7FtE_Vb7itP802ifFFIwkaPY_O1nGondriJGX98tAU1LY-9uIR6maYAugn72icNTqqt1J7jL0jGul2m5O9z1', 9, '2020-02-18 04:44:29', '2020-02-18 07:10:30'),
+(22, 'f4j__V35AG41WHvZAuaccB:APA91bGdoSdyhvq5CGLVZ7L8ASfvmpyTOjjNmXyerYxFR8ysh2kxTJyp7FtE_Vb7itP802ifFFIwkaPY_O1nGondriJGX98tAU1LY-9uIR6maYAugn72icNTqqt1J7jL0jGul2m5O9z1', 8, '2020-02-18 07:55:48', '2020-02-18 07:55:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `push_subscriptions_group`
+--
+
+CREATE TABLE `push_subscriptions_group` (
+  `id` bigint(20) NOT NULL,
+  `notification_key_name` varchar(100) NOT NULL,
+  `notification_key` text NOT NULL,
+  `registration_ids` longtext,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -585,6 +960,19 @@ CREATE TABLE `review_dok_importir` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `review_dok_importir`
+--
+
+INSERT INTO `review_dok_importir` (`id`, `surat_permohonan_sertifikat_sni`, `daftar_isian_dan_kuesioner`, `copy_iui`, `copy_akte_notaris_perusahaan`, `copy_npwp`, `copy_tdp`, `copy_api`, `copy_sert_patent_merek`, `penunjukkan_distributor`, `struktur_organisasi`, `ilustrasi_pembubuhan_tanda_sni`, `tabel_daftar_tipe_produk`, `gambar_dan_spesifikasi_produk`, `sert_smm`, `laporan_pengawasan_iso_9001_terakhir`, `created_at`, `updated_at`) VALUES
+(29, '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-04 06:28:15', '2019-12-04 06:28:15'),
+(30, '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"tidak_ada\",\"null\"]', '[\"ada\",\"oke\"]', '2019-12-05 09:07:00', '2019-12-05 09:11:28'),
+(31, '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-05 10:15:06', '2019-12-05 10:15:06'),
+(32, '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-06 00:08:22', '2019-12-06 00:08:22'),
+(33, '[\"ada\",\"guddd\"]', '[\"ada\",\"mantullss\"]', '[\"ada\",\"hahahaaa\"]', '[\"ada\",\"hhhhhhhh\"]', '[\"ada\",\"qwerty\"]', '[\"ada\",\"123 testing\"]', '[\"ada\",\"abcdefghijklmnopqrstuvwxyz\"]', '[\"ada\",\"fefhffei\"]', '[\"ada\",\"ihfhiehf\"]', '[\"ada\",\"fheihfeihfie\"]', '[\"ada\",\"ihfehfeifh\"]', '[\"ada\",\"feifheifhiehfi\"]', '[\"ada\",\"fiheifhieh\"]', '[\"tidak_ada\",\"null\"]', '[\"ada\",\"feihfehf\"]', '2019-12-06 02:34:25', '2019-12-06 02:35:23'),
+(34, '[\"ada\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '2020-02-18 09:23:12', '2020-02-18 09:23:12'),
+(35, '[\"ada\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '2020-02-18 09:41:33', '2020-02-18 09:41:33');
 
 -- --------------------------------------------------------
 
@@ -628,6 +1016,20 @@ CREATE TABLE `review_tinjauan_pp` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `review_tinjauan_pp`
+--
+
+INSERT INTO `review_tinjauan_pp` (`id`, `struktur_organisasi`, `diagram_alir_produksi`, `daftar_peralatan`, `spesifikasi_peralatan`, `tata_letak_pabrik`, `peta_letak_pabrik_dari_bandara_terdekat`, `created_at`, `updated_at`) VALUES
+(28, '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-11-28 09:54:59', '2019-11-28 09:54:59'),
+(30, '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-11-28 10:23:16', '2019-11-28 10:23:16'),
+(34, '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-04 06:28:15', '2019-12-04 06:28:15'),
+(35, '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '[\"ada\",\"oke\"]', '2019-12-05 09:07:00', '2019-12-05 09:11:28'),
+(36, '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-05 10:15:06', '2019-12-05 10:15:06'),
+(37, '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '[\"tidak_ada\",\"null\"]', '2019-12-06 00:08:22', '2019-12-06 00:08:22'),
+(38, '[\"ada\",\"ehihfeifhef\"]', '[\"ada\",\"hfiehfeifi\"]', '[\"ada\",\"gudd\"]', '[\"ada\",\"aallaal\"]', '[\"ada\",\"ddwjoqo\"]', '[\"ada\",\"qwww\"]', '2019-12-06 02:34:25', '2019-12-06 02:36:21'),
+(39, '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '[\"null\",\"null\"]', '2020-02-18 09:41:34', '2020-02-18 09:41:34');
+
 -- --------------------------------------------------------
 
 --
@@ -637,7 +1039,7 @@ CREATE TABLE `review_tinjauan_pp` (
 CREATE TABLE `role` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `manual` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -681,59 +1083,25 @@ CREATE TABLE `sert` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `sert`
+--
+
+INSERT INTO `sert` (`id`, `sert_name`, `produk_id`, `pengisian_data`, `nomor`, `merek`, `tipe_jenis`, `regulasi_skema`, `skema_sert`, `created_at`, `updated_at`) VALUES
+(15, NULL, 69, NULL, 'cpcb-0001-IDN', 'oke', 'wahsdown; c55', 'permenperin no 85', 'tipe 5', '2019-12-03 04:48:17', '2019-12-03 04:48:17'),
+(16, NULL, 71, NULL, 'qweu87', 'sad', 'ksdj', 'kasjd', 'kasjd', '2019-12-04 06:31:34', '2019-12-04 06:31:34'),
+(17, NULL, 75, NULL, '123xy', 'sanyoxy', 'single dinamoxy', 'skema 441xy', 'skema produk baruxy', '2019-12-05 09:16:05', '2019-12-05 09:48:11'),
+(18, NULL, 73, NULL, 'zxmcnb', 'jahd', 'jhgasdj', 'jhgasdj', 'jhgasd', '2019-12-05 10:19:47', '2019-12-05 10:19:47'),
+(19, NULL, 76, NULL, 'asd', 'as', 'asd', 'asda', 'ds', '2019-12-06 00:09:50', '2019-12-06 00:09:50'),
+(20, NULL, 74, NULL, '009988288', 'Ubinsss.merk', 'tipe/jenis', 'regulasi/skema', 'skema sertifikasi produk', '2019-12-06 06:05:10', '2019-12-06 06:05:10');
+
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `sert_doc`
 -- (See below for the actual view)
 --
-CREATE TABLE `sert_doc` (
-`produk_id` bigint(20) unsigned
-,`surat_permohonan_sertifikat_sni` varchar(255)
-,`copy_iui` varchar(255)
-,`copy_akte_notaris_perusahaan` varchar(255)
-,`copy_tdp` varchar(255)
-,`copy_npwp` varchar(255)
-,`copy_sert_patent_merek` varchar(255)
-,`copy_sert_iso_9001` varchar(255)
-,`laporan_audit_sistem_mutu_terakhir` varchar(255)
-,`panduan_mutu` varchar(255)
-,`daftar_induk_dok` varchar(255)
-,`struktur_organisasi` varchar(255)
-,`diagram_alir_proses_produksi` varchar(255)
-,`surat_pertunjukkan_wakil_manajemen` varchar(255)
-,`ilustrasi_pembubuhan_tanda_sni` varchar(255)
-,`tabel_daftar_tipe_produk` varchar(255)
-,`gambar_dan_spesifikasi_produk` varchar(255)
-,`tata_letak_pabrik` varchar(255)
-,`peta_rute_pabrik_dari_bandara_terdekat` varchar(255)
-,`daftar_isian_dan_kuesioner_importer` varchar(255)
-,`copy_api` varchar(255)
-,`penunjukkan_distributor` varchar(255)
-,`laporan_pengawasan_iso_9001_terakhir` varchar(255)
-,`mou` varchar(255)
-,`bid_price` varchar(255)
-,`bukti_bayar` varchar(255)
-,`bpn` varchar(255)
-,`invoice` varchar(255)
-,`kode_biling` varchar(255)
-,`jadwal_audit` varchar(255)
-,`struktur_organisasi_tp` varchar(255)
-,`diagram_alir_produksi` varchar(255)
-,`daftar_peralatan` varchar(255)
-,`spesifikasi_peralatan` varchar(255)
-,`tata_letak_pabrik_tp` varchar(255)
-,`peta_letak_pabrik_dari_bandara_terdekat` varchar(255)
-,`audit_plan` varchar(255)
-,`sampling_plan` varchar(255)
-,`shu` varchar(255)
-,`bapc` varchar(255)
-,`closed_ncr` varchar(255)
-,`laporan_hasil_sert` varchar(255)
-,`lembar_konSert` varchar(255)
-,`draft_sert` varchar(255)
-,`resi_pengiriman` varchar(255)
-);
+-- CREATE TABLE `sert_doc` ();
 
 -- --------------------------------------------------------
 
@@ -755,6 +1123,20 @@ CREATE TABLE `tinjauan_pp` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tinjauan_pp`
+--
+
+INSERT INTO `tinjauan_pp` (`id`, `sni`, `dok_tidak_lengkap`, `struktur_organisasi`, `diagram_alir_produksi`, `daftar_peralatan`, `spesifikasi_peralatan`, `tata_letak_pabrik`, `peta_letak_pabrik_dari_bandara_terdekat`, `review_tinjauan_pp_id`, `created_at`, `updated_at`) VALUES
+(31, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, '2019-11-28 10:23:16', '2019-11-28 10:26:01'),
+(32, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28, '2019-11-28 10:23:16', '2019-11-28 10:26:01'),
+(36, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, '2019-12-04 06:28:15', '2019-12-04 06:28:15'),
+(37, 1, NULL, 'struktur_organisasi-PT_MUTIARA_INDAH-sendok_keramik-5de8c90939c94.pdf', 'diagram_alir_produksi-PT_MUTIARA_INDAH-sendok_keramik-5de8c90e4dbeb.pdf', 'daftar_peralatan-PT_MUTIARA_INDAH-sendok_keramik-5de8c91395fdd.pdf', 'spesifikasi_peralatan-PT_MUTIARA_INDAH-sendok_keramik-5de8c918bdd18.pdf', 'tata_letak_pabrik-PT_MUTIARA_INDAH-sendok_keramik-5de8c91ee8f2d.pdf', 'peta_letak_pabrik_dari_bandara_terdekat-PT_MUTIARA_INDAH-sendok_keramik-5de8c92385620.pdf', 35, '2019-12-05 09:07:00', '2019-12-05 09:11:28'),
+(38, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 36, '2019-12-05 10:15:06', '2019-12-05 10:15:06'),
+(39, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 37, '2019-12-06 00:08:22', '2019-12-06 00:08:22'),
+(40, 1, NULL, 'struktur_organisasi-testinggg-Ubinss-5de9be77a3595.jpeg', 'diagram_alir_produksi-testinggg-Ubinss-5de9be7e5612f.jpeg', 'daftar_peralatan-testinggg-Ubinss-5de9be8662326.jpeg', 'spesifikasi_peralatan-testinggg-Ubinss-5de9be967768a.jpeg', 'tata_letak_pabrik-testinggg-Ubinss-5de9be9f82b8e.jpeg', 'peta_letak_pabrik_dari_bandara_terdekat-testinggg-Ubinss-5de9bea5cf851.jpeg', 38, '2019-12-06 02:34:25', '2019-12-06 03:29:39'),
+(41, 2, '[\"struktur_organisasi\",\"diagram_alir_produksi\",\"daftar_peralatan\",\"spesifikasi_peralatan\",\"tata_letak_pabrik\",\"peta_letak_pabrik_dari_bandara_terdekat\"]', NULL, NULL, NULL, NULL, NULL, NULL, 39, '2020-02-18 09:41:34', '2020-02-18 09:41:34');
 
 -- --------------------------------------------------------
 
@@ -804,21 +1186,27 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `verified`, `email_verified_at`, `password`, `registeredDeviceId`, `role_id`, `negeri`, `nama_perusahaan`, `pimpinan_perusahaan`, `alamat_perusahaan`, `kota`, `provinsi`, `kode_pos`, `no_telp`, `no_fax`, `email_pengguna`, `alamat_pabrik`, `telp_pabrik`, `fax_pabrik`, `email_perusahaan`, `jml_pegawai_tetap`, `jml_pegawai_tidak_tetap`, `jml_line_produksi`, `contact_person`, `cp_num`, `no_npwp`, `npwp`, `no_nib`, `nib`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'pemasaran', 'bebas_pemasaran@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0897672', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-17 20:04:34', '2019-12-02 21:39:48'),
+(3, 'pemasaran', 'bebas_pemasaran@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', 'f4j__V35AG41WHvZAuaccB:APA91bE2LdRK7L8mISelzu6BJ2TWFuCkAZ1l3kADv7nfWOP2VTUNU8YQpSdH_t-j3V31kJkEb1Bd6ceu2ugJVAekLb8bCbYUU4yyqs19n4M7ZmkXAYUOwpP7dizcpjCkrsODz91GI7kl', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0897672', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-17 20:04:34', '2020-01-17 03:32:01'),
 (4, 'kerjasama', 'bebas_kerjasama@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '08928323', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(5, 'kabidPjt', 'bebas_kabidpjt@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C8GWmbvrhoFFBvrX495b3uOJpIyZW50atBQxMGwHigMDS2seYunQ2R0Z5JCl', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
+(5, 'kabidPjt', 'bebas_kabidpjt@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'qnmU7nnfK0C5xbXr5VCeySgMstF3DzmlcQlJ2WfRA037PqyrGrRhHE6wzuSX', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
 (6, 'keuangan', 'bebas_keuangan@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(7, 'sertifikasi', 'bebas_sertifikasi@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4tLw268cG4pdksuzmIPiRcgdyRzkMcYGX4anGvZbSpHGXOO8aAZpseKiLI9Y', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(8, 'auditor', 'bebas_auditor@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R1eencFRE1jb0QsGEbmIu0fcwpKECBkY3bfHZA98y4RVJSvLHU862hCSulYg', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(9, 'kabidpaskal', 'bebas_kabidpaskal@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5jXAI7k3r7S8ND75WULieCGy6opWNb1yikCpIn4nw2Yg9u9JLuGxqAVjdl63', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
+(7, 'sertifikasi', 'bebas_sertifikasi@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7TABHkioNOeRXtwPgFy9VWAcDWxla5BAjuZI3inAxe8SLGOEvNs8Fl3UMAh6', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
+(8, 'auditor', 'bebas_auditor@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'V6btVOKQKKziIzG6ptEIUCODQpv1nNBcO3jpeDphnYLj9wTuDALEOi0xk5co', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
+(9, 'kabidpaskal', 'bebas_kabidpaskal@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '9XFK73rubZig3GvwGqdCiYxDYZdu5FiU00cNNkNrD4osPyvmJHAml2Jxj6I7', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
 (10, 'tim_teknis', 'bebas_tim_teknis@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(12, 'subag_umum', 'bebas_subag@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Y9RLuA0kOFNiW92MKaitOiDNKuTdkFai9UmktBnKxV4E01GvzRjk4DglseRP', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(13, 'tim_teknis2', 'bebas_tim_teknis2@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
+(12, 'subag_umum', 'bebas_subag@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'mtSA9iTJA8lwA2VRlEoeOLaVp706TPiZNqfoOEgVYEC7epXzmfNQQ5p1kHtG', '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
 (14, 'ketua_komite_timTeknis', 'bebas_komite_timTeknis@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
 (24, 'ketua_tim_teknis', 'bebas_ketua_tim_teknis@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
 (25, 'ketua_sertifikasi', 'bebas_ketua_sertifikasi@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-08-13 23:51:27'),
-(32, 'super_admin', 'bebas_super_admin@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$7NfhfvHWB5VA3D0bQl65T.XKnKPWv4RcbaTajbnqEmnemk.QtyNmi', NULL, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-12-01 21:55:47'),
-(33, 'Testingg', 'naufalrifqi203@gmail.com', 1, '2019-07-15 20:32:20', '$2y$10$jwVsdscBuvW.g2qQi7GTxusSrjNwvnFy5D1pQ55EUHWI7z9v8I6BO', NULL, 1, '1', 'PT. QWerty', 'Jhon', 'Jl. Bandung Tengah', 'Bandung', 'Jawa Barat', '40233', '02298997', '02284989389', 'pengguna@mail.domain', 'Jl. Bandung Barat', '02208997497', '022984947', 'perusahaan@mail.com', '122', '11', '5', 'pengurus', '087666888', '11209084808', 'npwp-PT._QWerty-5dfc486b9c6d9.pdf', '22903984999', 'nib-PT._QWerty-5dfc486b9c6de.pdf', NULL, '2019-12-20 04:05:01', '2019-12-23 07:33:33');
+(28, 'Tri', 'syabanat@gmail.com', 1, '2019-11-28 07:20:17', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', NULL, 1, '1', 'PT Sejahtera', 'Ir.Tri Syabana Octabiar', 'Jl Masih Panjang dan Berliku No 28', 'Bandung', 'Jawa Barat', '40226', '087822851783', '1234502828', 'syabanat@gmail.com', 'Jl Hidup Tak akan pernah Lurus', '087654321123', '99792827781', 'syabanat@gmail.com', '900', '100', '1000', 'Dudung', '087822851786', NULL, 'npwp-PT_Sejahtera-5ddf742cebd49.pdf', NULL, 'nib-PT_Sejahtera-5ddf742cebd92.pdf', NULL, '2019-11-28 07:15:57', '2019-11-28 07:20:17'),
+(29, 'Testing untuk debug', 'naufalrifqi203@gmail.com', 1, '2019-11-28 07:55:43', '$2y$10$no1UxEGq3Bb7Lp6CRPygaOo8nC8JqX9YxD0XinnD8khXz0eWzx7NW', NULL, 1, '1', 'testinggg', 'andy', 'jalan jalan saja', 'bandung', 'jawa barat', '402324', '022231388', '2922984', 'email@mail.domain', 'jalan pabrik', '0292938984', '0299398', 'testing@mail.com', '121', '12', '20', 'Ali', '089892737', NULL, 'npwp-testinggg-5ddf7d5de813f.pdf', NULL, 'nib-testinggg-5ddf7d5de8189.pdf', NULL, '2019-11-28 07:55:10', '2019-11-28 07:55:43'),
+(31, 'Test', 'bebas1@gmail.com', 1, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', 'fv2KXvmD7w4:APA91bEWuKpuTV2a3aujHd-6BbpdCeAeB7CFBwOukaHm7rb_kVqctcyy5cR2gYM484qz_O67JcNgjgP_OE9GnY232pxJj5ZoKqk7fxAMz7SKKPAGRPuXUBX2fOrMx9UR3rC7NVefK3iS', 1, '1', 'Test12', 'Testasd', 'qweqjkweh', 'weqweq', 'weqwe', '123118', '123123', '12313', 'asd@asd.asd', 'qweqwe', '123', '123123', 'asd@asd.asd', '123', '123', '123', 'asdasd', '08927831', '23489234', 'npwp_201911290459165de0433445bf4.pdf', NULL, 'nib_201911290459165de0433445c45.pdf', 'w8wXkcaGcBY4OriJaqUP6vVwRU7tImTNZoSmpIYFqqKggw0egcaWxhrch1TJ', '2019-11-28 21:54:02', '2019-12-04 03:01:22'),
+(32, 'super_admin', 'bebas_super_admin@gmail.com', NULL, '2019-07-15 20:32:20', '$2y$10$qRabKj8M4me9hQ6usQTu9utWEnV83SyUW/7AvfsflkRSIQZMLkuGe', NULL, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-13 23:51:27', '2019-12-27 01:15:58'),
+(34, 'ican', 'muhammadinkamil@gmail.com', 1, '2019-12-05 03:18:44', '$2y$10$45TuShgTBsK.qHPKoqjwuuexya4Wr7iXIRiktR2zOnnQeA4kvq6dy', NULL, 1, '1', 'Maju Jaya Keramik', 'Muhammad Insan Kamil', 'Jl. Kayu Agung II no. 9 Turangga, Lengkong', 'Bandung', 'Jawa Barat', '40264', '081219052453', '0227117389', 'muhammadinkamil@gmail.com', 'Jl. Trunojoyo no.7, Bandung', '022809908', '022809908', 'maju@gmail.com', '300', '50', '40', 'Rizal Fuzi', '0878223456', '8873364753920012', 'npwp-Maju_Jaya_Keramik-5de8768ef3b84.pdf', '7786854535323', 'nib-Maju_Jaya_Keramik-5de8768ef3bcf.pdf', NULL, '2019-12-05 03:16:31', '2019-12-05 03:18:44'),
+(35, 'yoni kristikto', 'yoni.kristikto@gmail.com', 1, '2019-12-05 04:39:37', '$2y$10$UIN8kemXN1rKzCm1PFPXG.1OdYS1aqOXrz964E1jGo9GrI6lEqu1K', NULL, 1, '1', 'PT MUTIARA INDAH', 'Mr. Budi Setiawan', 'Jl. Pluto timur No 21, Cicadas.', 'Bandung', 'Jawa Barat', '33412', '022 61231', '02221', 'yoni.kristikto@gmail.com', 'Jl. Cagar Alam Indah No 30, Jayagiri', '022 21212', '01122', 'yoni.kristikto@gmail.com', '20', '50', '10', 'yoni kristikt', '087823165341', '90846135481274617', 'npwp-PT_MUTIARA_INDAH-5de88906daf00.pdf', '893657323435', 'nib-PT_MUTIARA_INDAH-5de88906daf49.pdf', NULL, '2019-12-05 04:35:18', '2019-12-05 04:39:37'),
+(36, 'asodiuo', 'bebas2@gmail.com', 1, '2019-07-15 20:32:20', '$2y$10$HIeJ/qm4aUI0E7GxTM/SWu0rnJT1IwjycTY/FIMJcv.aM.RUvdVo.', 'f2hTdsnILkImjkw-jgMPBD:APA91bFww9wkqrXoOS3nADwy94DQ4IG7vq69L8VAvIE0paDZfaHjYIh6BoOTEocBCH8mAO7_CZb2pW88gMufsI4cSSQ0chgmx-u_JO8zZBvTTEBc85NbabFtDG0yCOpRG5KNhtcP1myB', 1, '1', 'PT qwoeiu', 'aksdjh', 'asdiou', 'oqiwue', 'oiu', '123', '089878273', '2321', 'asd@as.asd', 'aasdjkh', '01928309', '123879', 'qw@asd.asd', '123', '12', '123', 'aksjdhkah askdjhka skdjhakjshdkjas', '0898768768', '213987', 'npwp-qwoeiu-5de96aa7e8ac1.pdf', '0898232', 'nib-qwoeiu-5de96aa7e8b09.pdf', NULL, '2019-12-05 20:38:00', '2020-01-18 09:20:19'),
+(37, 'Sukma andini', 'yoni.kristikto@widyatama.ac.id', 1, '2019-12-06 06:07:19', '$2y$10$UZpMCJ7cHolH3ygyMqzBieLi7Bruj40RERNShjqyfoUlKU6iVkSZK', NULL, 1, '1', 'PT SARI WARNA', 'Mr. Andy Setiawan', 'Jalan Pelan sari 9 No 02', 'Bandung', 'Jawa Barat', '12343', '022 4231', '022 2231', 'yoni.kristikto@widyatama.ac.id', 'Jalan hanya Itu 8 No 11', '021 4341', '232323', 'yoni.kristikto@widyatama.ac.id', '30', '10', '5', 'Albert patriyanto', '0977654', '12233445566778', 'npwp-PT_SARI_WARNA-5de9ef10ec27b.pdf', '893657323435', 'nib-PT_SARI_WARNA-5de9ef10ec2c5.pdf', NULL, '2019-12-06 06:02:57', '2019-12-06 06:07:19'),
+(38, 'asd', 'asd@asd.asd', NULL, NULL, '$2y$10$2fJPJl8/wB/1hrgcwjxjP.B2fJuaTdeBiXRbpA8Jf0ythC9oUDg2.', NULL, 1, '1', 'PT asdkj', 'kjashdk', 'asdkjh', 'Bandung', 'Jawa Barat', '40235', '089871236', '12378', 'asd@asda.asd', 'asdoiuadso', '123876', '87123', 'kjh@kjh.asd', '13', '123', '123', 'qweqwe', '0898823', '182376', 'npwp-asdkj-5df32e8c9dcad.pdf', NULL, 'nib-asdkj-5df32e8c9dcb6.pdf', NULL, '2019-12-13 06:24:12', '2019-12-13 06:24:12');
 
 -- --------------------------------------------------------
 
@@ -858,9 +1246,9 @@ ALTER TABLE `bid_price`
   ADD KEY `bid_price_invoice_id_foreign` (`invoice_id`);
 
 --
--- Indexes for table `defaultharga`
+-- Indexes for table `defaultHarga`
 --
-ALTER TABLE `defaultharga`
+ALTER TABLE `defaultHarga`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -924,13 +1312,13 @@ ALTER TABLE `kuesioner`
 ALTER TABLE `laporan_audit`
   ADD PRIMARY KEY (`id`),
   ADD KEY `laporan_audit_produk_id_foreign` (`produk_id`),
-  ADD KEY `laporan_audit_auditor_foreign` (`auditor`(191)),
+  ADD KEY `laporan_audit_auditor_foreign` (`auditor`),
   ADD KEY `laporan_audit_jadwal_audit_id_foreign` (`jadwal_audit_id`),
   ADD KEY `laporan_audit_dok_importir_id_foreign` (`dok_importir_id`),
   ADD KEY `laporan_audit_dok_manufaktur_id_foreign` (`dok_manufaktur_id`),
   ADD KEY `laporan_audit_tinjauan_pp_id_foreign` (`tinjauan_pp_id`),
-  ADD KEY `auditor` (`auditor`(191)),
-  ADD KEY `auditor_2` (`auditor`(191));
+  ADD KEY `auditor` (`auditor`),
+  ADD KEY `auditor_2` (`auditor`);
 
 --
 -- Indexes for table `laporan_hasil_sert`
@@ -961,6 +1349,13 @@ ALTER TABLE `mou`
   ADD KEY `mou_doc_maker_foreign` (`doc_maker`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `notif_log`
 --
 ALTER TABLE `notif_log`
@@ -978,7 +1373,7 @@ ALTER TABLE `no_surat`
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`(191));
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `persyaratan_dok_dalam_negeri`
@@ -1004,7 +1399,8 @@ ALTER TABLE `pesan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pengirim_foreign` (`client`),
   ADD KEY `penerima_foreign` (`admin`),
-  ADD KEY `produk_foreign` (`produk_id`);
+  ADD KEY `produk_foreign` (`produk_id`),
+  ADD KEY `admin2` (`admin2`);
 
 --
 -- Indexes for table `produk`
@@ -1012,6 +1408,19 @@ ALTER TABLE `pesan`
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id`),
   ADD KEY `produk_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `push_subscriptions`
+--
+ALTER TABLE `push_subscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `push_subscriptions_group`
+--
+ALTER TABLE `push_subscriptions_group`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `review_dok_importir`
@@ -1056,6 +1465,7 @@ ALTER TABLE `tinjauan_pp`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
@@ -1066,24 +1476,24 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `audit_sampling_plan`
 --
 ALTER TABLE `audit_sampling_plan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `bahan_hasil`
 --
 ALTER TABLE `bahan_hasil`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `bid_price`
 --
 ALTER TABLE `bid_price`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
--- AUTO_INCREMENT for table `defaultharga`
+-- AUTO_INCREMENT for table `defaultHarga`
 --
-ALTER TABLE `defaultharga`
+ALTER TABLE `defaultHarga`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -1114,37 +1524,37 @@ ALTER TABLE `group_tahapan`
 -- AUTO_INCREMENT for table `info_tambahan`
 --
 ALTER TABLE `info_tambahan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `jadwal_audit`
 --
 ALTER TABLE `jadwal_audit`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `kuesioner`
 --
 ALTER TABLE `kuesioner`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `laporan_audit`
 --
 ALTER TABLE `laporan_audit`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `laporan_hasil_sert`
 --
 ALTER TABLE `laporan_hasil_sert`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `master_tahap`
@@ -1162,7 +1572,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `mou`
 --
 ALTER TABLE `mou`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `notif_log`
@@ -1174,13 +1584,13 @@ ALTER TABLE `notif_log`
 -- AUTO_INCREMENT for table `no_surat`
 --
 ALTER TABLE `no_surat`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT for table `persyaratan_dok_dalam_negeri`
 --
 ALTER TABLE `persyaratan_dok_dalam_negeri`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `persyaratan_dok_luar_negeri`
@@ -1192,19 +1602,31 @@ ALTER TABLE `persyaratan_dok_luar_negeri`
 -- AUTO_INCREMENT for table `pesan`
 --
 ALTER TABLE `pesan`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
+-- AUTO_INCREMENT for table `push_subscriptions`
+--
+ALTER TABLE `push_subscriptions`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `push_subscriptions_group`
+--
+ALTER TABLE `push_subscriptions_group`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `review_dok_importir`
 --
 ALTER TABLE `review_dok_importir`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `review_dok_manufaktur`
@@ -1216,7 +1638,7 @@ ALTER TABLE `review_dok_manufaktur`
 -- AUTO_INCREMENT for table `review_tinjauan_pp`
 --
 ALTER TABLE `review_tinjauan_pp`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -1228,19 +1650,19 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `sert`
 --
 ALTER TABLE `sert`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tinjauan_pp`
 --
 ALTER TABLE `tinjauan_pp`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints for dumped tables
@@ -1292,6 +1714,12 @@ ALTER TABLE `invoice`
   ADD CONSTRAINT `invoice_user_id_foreign` FOREIGN KEY (`doc_maker`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `jadwal_audit`
+--
+ALTER TABLE `jadwal_audit`
+  ADD CONSTRAINT `jadwal_audit_user_id_foreign` FOREIGN KEY (`doc_maker`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `kuesioner`
 --
 ALTER TABLE `kuesioner`
@@ -1322,6 +1750,12 @@ ALTER TABLE `mou`
   ADD CONSTRAINT `mou_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `notif_log`
 --
 ALTER TABLE `notif_log`
@@ -1345,15 +1779,22 @@ ALTER TABLE `persyaratan_dok_luar_negeri`
 -- Constraints for table `pesan`
 --
 ALTER TABLE `pesan`
-  ADD CONSTRAINT `penerima_foreign` FOREIGN KEY (`admin`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `pengirim_foreign` FOREIGN KEY (`client`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `produk_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `admin2_foreign` FOREIGN KEY (`admin2`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penerima_foreign` FOREIGN KEY (`admin`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pengirim_foreign` FOREIGN KEY (`client`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `produk_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `produk`
 --
 ALTER TABLE `produk`
   ADD CONSTRAINT `produk_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `push_subscriptions`
+--
+ALTER TABLE `push_subscriptions`
+  ADD CONSTRAINT `push_subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tinjauan_pp`

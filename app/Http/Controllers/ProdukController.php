@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Produk;
 use App\Persyaratan_dalam_negeri;
 use App\Pesan;
+use App\LaporanAudit;
 
 class ProdukController extends Controller
 {

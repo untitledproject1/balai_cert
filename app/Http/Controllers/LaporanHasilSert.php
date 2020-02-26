@@ -12,6 +12,7 @@ use App\Role;
 use App\Sert;
 use Illuminate\Support\Arr;
 use \Carbon\Carbon;
+use App\PushSubscriptions;
 
 class LaporanHasilSert extends Controller
 {
@@ -59,7 +60,7 @@ class LaporanHasilSert extends Controller
     	// $dok->bapc = $dok2;
     	// $dok->closed_ncr = $dok3;
         $dok->kelengkapan_dok = 1;
-    	$dok->save();
+        $dok->save();
 
     	return redirect()->back();
     }
@@ -140,69 +141,92 @@ class LaporanHasilSert extends Controller
         $dok->tim_audit = $request->tim_audit;
 		$dok->save();
 
-		return redirect()->back();
-    }
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'ketua_tim_teknis')->select('users.id', 'users.name', 'role.role_name')->first();
 
-    public function getRekomendasi($id, $idProduk) {
-        $user = User::find($id);
-        $produk = Produk::where('id', $idProduk)->first();
-        if (is_null($user) || is_null($produk)) {
-            return redirect()->back();
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
         }
-        $kode_tahap = $produk->kode_tahap;
-        $dok = LaporanSert::where('produk_id', $idProduk)->first();
-        $cr_user = \Auth::user();
-        $tim_teknis = \DB::table('users')->select('id', 'name')->where('role_id', $cr_user->role_id)->get();
-        $cek = function($id, $dok) {
-        	if (!is_null($dok) && !is_null($dok->input_tt)) {
-        		foreach (json_decode($dok->input_tt, true) as $key => $value) {
-	                if ($value['id'] == $id) {
-	                    return true;
-	                }
-	            }
-        	}
-            return false;
-        };
-        return view('lapSert.rekomendasiRapat', ['user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'dok' => $dok, 'kode_tahap' => $kode_tahap, 'tim_teknis' => $tim_teknis, 'cek' => $cek, 'cr_user' => $cr_user]);
-    }
 
-    public function rekomendasi(Request $request, $idProduk, $user_id) {
-        $tTeknis = \Auth::user();
-        $user = User::find($user_id);
-        $produk = Produk::find($idProduk);
-        $date = Carbon::now();
-    	$dok = LaporanSert::where('produk_id', $idProduk)->first();
-
-    	if (!is_null($dok->input_tt)) {
-    		$rek = json_decode($dok->input_tt, true);
-    		array_push($rek, ["id"=>$tTeknis->id,"nama"=>$tTeknis->name,"rekomendasi"=>$request->rek]);
-            $rekDB = json_encode($rek);
-    	} else {
-    		$rek = [["id"=>$tTeknis->id,"nama"=>$tTeknis->name,"rekomendasi"=>$request->rek]];
-    		$rekDB = json_encode($rek);
-    	}
-    	$dok->input_tt = $rekDB;
-        $dataLapSert = [
-            'hasilA' => $dok->hasil_assesmen,
-            'verif' => $dok->verifikasi,
-            'bapc' => $dok->bapc_lap,
-            'hasilP' => $dok->hasil_pengujian
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Laporan Hasil Sertifikasi',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Sertifikasi telah membuat Laporan Hasil Sertifikasi',
+            'toast_msg' => 'Seksi Sertifikasi telah membuat Laporan Hasil Sertifikasi',
+            'time' => date('Y-m-d H:i:s')
         ];
 
-    	$pdf = \PDF::loadView('dok.lapSertDok', ['user' => $user, 'produk' => $produk, 'date' => $date, 'rekomendasi' => $rek, 'data' => $dataLapSert, 'tgl_audit' => $dok->tanggal_audit, 'tim_audit' => $dok->tim_audit]);
-    	$output = $pdf->output();
-    	$fileName = 'Laporan_Hasil_Sertifikasi-'.uniqid().''.date('YmdHis').'.pdf';
-
-    	if (\Storage::exists('dok/lapSert/'.$dok->laporan_hasil_sert)) {
-            \Storage::delete('dok/lapSert/'.$dok->laporan_hasil_sert);
-        }
-        \Storage::put('dok/lapSert/'.$fileName, $output);
-
-		$dok->laporan_hasil_sert = $fileName;
-		$dok->save();
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
 		return redirect()->back();
     }
+
+    // public function getRekomendasi($id, $idProduk) {
+    //     $user = User::find($id);
+    //     $produk = Produk::where('id', $idProduk)->first();
+    //     if (is_null($user) || is_null($produk)) {
+    //         return redirect()->back();
+    //     }
+    //     $kode_tahap = $produk->kode_tahap;
+    //     $dok = LaporanSert::where('produk_id', $idProduk)->first();
+    //     $cr_user = \Auth::user();
+    //     $tim_teknis = \DB::table('users')->select('id', 'name')->where('role_id', $cr_user->role_id)->get();
+    //     $cek = function($id, $dok) {
+    //     	if (!is_null($dok) && !is_null($dok->input_tt)) {
+    //     		foreach (json_decode($dok->input_tt, true) as $key => $value) {
+	//                 if ($value['id'] == $id) {
+	//                     return true;
+	//                 }
+	//             }
+    //     	}
+    //         return false;
+    //     };
+    //     return view('lapSert.rekomendasiRapat', ['user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'dok' => $dok, 'kode_tahap' => $kode_tahap, 'tim_teknis' => $tim_teknis, 'cek' => $cek, 'cr_user' => $cr_user]);
+    // }
+
+    // public function rekomendasi(Request $request, $idProduk, $user_id) {
+    //     $tTeknis = \Auth::user();
+    //     $user = User::find($user_id);
+    //     $produk = Produk::find($idProduk);
+    //     $date = Carbon::now();
+    // 	$dok = LaporanSert::where('produk_id', $idProduk)->first();
+
+    // 	if (!is_null($dok->input_tt)) {
+    // 		$rek = json_decode($dok->input_tt, true);
+    // 		array_push($rek, ["id"=>$tTeknis->id,"nama"=>$tTeknis->name,"rekomendasi"=>$request->rek]);
+    //         $rekDB = json_encode($rek);
+    // 	} else {
+    // 		$rek = [["id"=>$tTeknis->id,"nama"=>$tTeknis->name,"rekomendasi"=>$request->rek]];
+    // 		$rekDB = json_encode($rek);
+    // 	}
+    // 	$dok->input_tt = $rekDB;
+    //     $dataLapSert = [
+    //         'hasilA' => $dok->hasil_assesmen,
+    //         'verif' => $dok->verifikasi,
+    //         'bapc' => $dok->bapc_lap,
+    //         'hasilP' => $dok->hasil_pengujian
+    //     ];
+
+    // 	$pdf = \PDF::loadView('dok.lapSertDok', ['user' => $user, 'produk' => $produk, 'date' => $date, 'rekomendasi' => $rek, 'data' => $dataLapSert, 'tgl_audit' => $dok->tanggal_audit, 'tim_audit' => $dok->tim_audit]);
+    // 	$output = $pdf->output();
+    // 	$fileName = 'Laporan_Hasil_Sertifikasi-'.uniqid().''.date('YmdHis').'.pdf';
+
+    // 	if (\Storage::exists('dok/lapSert/'.$dok->laporan_hasil_sert)) {
+    //         \Storage::delete('dok/lapSert/'.$dok->laporan_hasil_sert);
+    //     }
+    //     \Storage::put('dok/lapSert/'.$fileName, $output);
+
+	// 	$dok->laporan_hasil_sert = $fileName;
+    //     $dok->save();
+
+	// 	return redirect()->back();
+    // }
 
     public function getKeputusan($id, $idProduk) {
         $user = User::find($id);
@@ -278,9 +302,9 @@ class LaporanHasilSert extends Controller
 		$dok->laporan_hasil_sert = $fileName;
         $dok->input_evaluasi_tt = $request->kep;
         $dok->signed_lapSert = 2;
-		$dok->save();
+        $dok->save();
 
-        $dbTim_teknis = \DB::table('users')->select('id')->where('role_id', $user->role_id)->get();
+        // $dbTim_teknis = \DB::table('users')->select('id')->where('role_id', $user->role_id)->get();
 
 		return redirect()->back();
     }
@@ -363,6 +387,30 @@ class LaporanHasilSert extends Controller
         $lapSert->status_timTeknis = 1;
         $lapSert->save();
 
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'komite_timTeknis')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::select('id', 'produk')->find($idProduk);  // get produk client data
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Input Rekomendasi Evaluasi Rapat Teknis',
+            'subtitle' => $produk->produk,
+            'data' => 'Ketua Tim Teknis telah mengisi Rekomendasi Evaluasi Rapat Teknis',
+            'toast_msg' => 'Ketua Tim Teknis telah mengisi Rekomendasi Evaluasi Rapat Teknis',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
@@ -381,6 +429,30 @@ class LaporanHasilSert extends Controller
         $produk = Produk::find($idProduk);
         $produk->kode_tahap = 20;
         $produk->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::select('id', 'produk')->find($idProduk);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Input Keputusan Komite Evaluasi Rapat Teknis',
+            'subtitle' => $produk->produk,
+            'data' => 'Komite Evaluasi Tim Teknis telah mengisi Keputusan Komite Evaluasi Rapat Teknis',
+            'toast_msg' => 'Komite Evaluasi Tim Teknis telah mengisi Keputusan Komite Evaluasi Rapat Teknis',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }

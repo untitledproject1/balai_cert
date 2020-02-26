@@ -88,7 +88,7 @@
                     <h1 class="error-shadow">404</h1>
                     <p>Halaman yang anda tuju tidak ditemukan</p>
                     <br>
-                    <a href="{{ route('login') }}"><button class="btn-back">Login</button></a>
+                    <a href="{{ route('login') }}"><button class="btn-back">Kembali</button></a>
                 </div>
             </div>
             <div class="col-lg-5">

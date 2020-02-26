@@ -73,9 +73,7 @@
                 @endif
                 
                 @if(
-                    ( (!is_null($dok) && !is_null($dok->sni) && $dok->sni == 3) && (!is_null($infoDB) && !is_null($infoDB->lengkap) && $infoDB->lengkap == 3) ) ||
-                    ( (is_null($infoDB) || !is_null($infoDB)) && !is_null($dok) ) ||
-                    $kode_tahap >= 11
+                    ( (!is_null($dok) && !is_null($dok->sni) && $dok->sni == 3) || (!is_null($infoDB) && !is_null($infoDB->lengkap) && $infoDB->lengkap == 3) ) || $kode_tahap >= 11
                 )
                 <div class="mb-2">
                     <button class="toggle_btn mr-3" type="button" data-toggle="collapse" data-target="#dok_sa" aria-expanded="false" aria-controls="dok_sa">
@@ -85,7 +83,7 @@
                 </div>
                 <br>
                 <div class="collapse" id="dok_sa">
-                    @if(!is_null($dok) && $dok->sni !== 1 && $infoDB->lengkap !== 1)
+                    @if(!is_null($dok) && $dok->sni !== 1 || (!is_null($infoDB) && $infoDB->lengkap !== 1))
                     <div id="save">
                         <a href="#send_file">
                             <div class="save_file_link">

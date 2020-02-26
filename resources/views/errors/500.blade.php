@@ -88,7 +88,7 @@
                     <h1 class="error-shadow">500</h1>
                     <p>Mohon maaf server kami mengalami gangguan. <br> Silahkan coba lagi beberap saat</p>
                     <br>
-                    <a href="{{ route('login') }}"><button class="btn-back">Login</button></a>
+                    <a href="{{ route('login') }}"><button class="btn-back">Kembali</button></a>
                 </div>
             </div>
             <div class="col-lg-5">

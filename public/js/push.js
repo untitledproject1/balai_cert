@@ -30,8 +30,16 @@ messaging.requestPermission()
   return messaging.getToken();
 })
 .then(function(token) {
+  var url = ''+window.location;
+  var produk_id = url.split('/')[6];
+  // var produk_id = '';
+  // if (urlArr[3] == 'client') {
+  //   produk_id = urlArr[4];
+  // } else if(urlArr[3] == 'admin') {
+  //   produk_id = urlArr[6];
+  // }
+  // subscribe(token, produk_id);
   subscribe(token);
-  // console.log(token);
 })
 .catch(function(err) {
   console.log(err);
@@ -44,26 +52,13 @@ messaging.onMessage(function(payload) {
   toast_notif.show();
   toast_notif.toast('show');
   toast_notif.find('.toast-notif-title').html(payload.data.title);
-  toast_notif.find('.toast-notif-text').html(payload.data.toast_msg);
+  toast_notif.find('.toast-notif-text').html(payload.data.toast_msg.substr(0, 60)+'...');
   toast_notif.toast({'animation': true});
   setTimeout(function() {
     toast_notif.fadeOut(function() {
         toast_notif.remove();
     });
   }, 5000);
-
-  // navigator.serviceWorker.getRegistration().then(function(reg) {
-  //   var options = {
-  //     body: 'Here is a notification body!',
-  //     vibrate: [100, 50, 100],
-  //     data: {
-  //       dateOfArrival: Date.now(),
-  //       primaryKey: 1,
-  //       link: 'sa'
-  //     }
-  //   };
-  //   reg.showNotification('Hello world!', options);
-  // });
 
   var notif_amount = $('#notif-count').html();
   var notif_container = $('#notif-container');
@@ -73,7 +68,7 @@ messaging.onMessage(function(payload) {
   // set data notif
   notif.find('.notif-title').html(payload.data.title);
   notif.find('.notif-subtitle').html(payload.data.subtitle);
-  notif.find('.notif-content').html(payload.data.data.substr(0, 50));
+  notif.find('.notif-content').html(payload.data.data.substr(0, 60)+'...');
   notif.find('.notif-time').html(payload.data.time);
 
   if (notif_amount == '') {
@@ -87,20 +82,13 @@ messaging.onMessage(function(payload) {
 })
 
     
-function subscribe(token) {
+function subscribe(token, produk_id) {
   $.post('/subscriptions', {
-    user_fcm_token: token
+    user_fcm_token: token,
+    produk_id: produk_id
   }).done(function(data) {
-    console.log('Token updated!');
+    console.log(data);
   }).fail(function(err) {
     console.log(err.responseJSON);
   });
 }
-  
-
-$(document).ready(function () {
-  // $('#notif').on('click',function () {
-  //   // displayNotification();
-  //   sendNotification();
-  // })
-})

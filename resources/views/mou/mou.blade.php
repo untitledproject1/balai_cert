@@ -88,7 +88,7 @@
         @elseif(!is_null($mou) && $mou->status === 1 && strtotime(date('Y-m-d')) <= strtotime($mou->tgl_exp))
             <center>
                 <p class="alert alert-success">MOU telah dibuat!.<br> 
-                    Client harus upload MOU sebelum tanggal <b>{{ date('d-m-Y', strtotime($mou->tgl_exp)) }}</b>.
+                    Client harus upload MOU sebelum tanggal <b>{{ date('Y-m-d', strtotime($mou->tgl_exp)) }}</b>.
                     
                 </p>
             </center><br>

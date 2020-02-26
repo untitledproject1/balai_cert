@@ -328,7 +328,7 @@
             }, 600);
         });
     }
-
+    
     // ---- set prop message ------
     function set_prop_msg() {
         $('.message_show').on('click', function() {

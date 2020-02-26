@@ -375,13 +375,14 @@
 	        <center>
 	        	<p class="alert alert-success">
 	        		Laporan Hasil Sertifikasi telah dibuat. <br>
-	        		@if(is_null($dok->signed_lapSert))
-	        		Untuk melanjutkan ke tahap selanjutnya tunggu kelengkapan dokumen Laporan Hasil Sertifikasi dari Ketua Tim Teknis.
-	        		@else
+	        		@if(!is_null($dok->signed_lapSert) && $dok->signed_lapSert == 1)
 	        		Pengisian Laporan Hasil Sertifikasi telah selesai.
+	        		@else
+	        		Untuk melanjutkan ke tahap selanjutnya tunggu kelengkapan dokumen Laporan Hasil Sertifikasi dari Ketua Tim Teknis.
 	        		@endif
 	        	</p>
 	        </center>
+            @if(!is_null($dok->signed_lapSert) && $dok->signed_lapSert == 1)
 	        <div class="text-center">
 	            <a href="{{ url('/doc/download/lapSert/'.$dok->laporan_hasil_sert) }}" target="_blank">
 	                <div class="view_file">
@@ -390,6 +391,7 @@
 	                </div>
 	            </a>
 	        </div>
+            @endif
         @endif
         
         <div class="row mt-4 mb-4">

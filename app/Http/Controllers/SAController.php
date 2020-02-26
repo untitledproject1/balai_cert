@@ -22,6 +22,7 @@ use App\SpekPembelian;
 use App\Peralatan;
 use App\ReviewDokImportir;
 use App\FormatFile;
+use App\PushSubscriptions;
 
 class SAController extends Controller
 {
@@ -29,6 +30,7 @@ class SAController extends Controller
         $model = \Auth::user()->negeri == '1' ? new Persyaratan_dalam_negeri : new Persyaratan_luar_negeri;
         return $model->where('produk_id', $idProduk)->first();
     }
+
     public function list_produk() {
         $produk = \Auth::user()->produk_client();
         return view('list_produk.list_produk', ['produk' => $produk]);
@@ -116,6 +118,7 @@ class SAController extends Controller
 
         return view('applySA.applySA', compact('dok', 'dokImportir', 'dokManufaktur', 'infoDB', 'isi', 'cekOpsi', 'pesan', 'kuesioner', 'bahanHasil' , 'spekP', 'alat', 'idProduk', 'infoIsi', 'user', 'cekDok'), ['url' => '/sa/'.$idProduk, 'kode_tahap' => $produk->kode_tahap, 'produk' => $produk, 'formatFile' => $formatFile]);
     }
+
     public function applySA(Request $request, $data) {
         // validasi extensi file upload
         // $d = \Validator::make($request->file(), [
@@ -174,15 +177,7 @@ class SAController extends Controller
 
             // }
             
-            if ($request->form_action == 'true') {
-                $msg = 'Form Apply SA telah di-simpan';
-            } elseif ($request->form_action == 'false') {
-                $msg = 'Form Apply SA telah di-submit';
-                $dok->sni = 3;
-            }
-            
-            if ( (!is_null($infoDB) && $infoDB->lengkap !== 1) || is_null($infoDB)) {
-                // dd();
+            if ((!is_null($infoDB) && $infoDB->lengkap !== 1) || is_null($infoDB)) {
                 $formKuesioner = Arr::except($request->all(), ['_token', 'fileName', 'dok']);
                 $model = new Persyaratan_dalam_negeri;
                 $model->info_tambahan($formKuesioner, $idProduk, new InfoTambahan, $request->form_action);
@@ -190,11 +185,41 @@ class SAController extends Controller
                 $model->bahan_hasil($formKuesioner, $idProduk, new BahanHasil, $request->form_action);
             }
 
+            if ($request->form_action == 'true') {
+                $msg = 'Form Apply SA telah di-simpan';
+            } elseif ($request->form_action == 'false') {
+                $msg = 'Form Apply SA telah di-submit';
+                $dok->sni = 3;
+
+                // ---- Push notif -----
+                $receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->select('users.id', 'users.name', 'role.role_name')->first();
+
+                // get user_fcm_token
+                $user_token = [];
+                $id_penerima = $receiver->id;
+                $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+                foreach ($tokens as $key => $value) {
+                    array_push($user_token, $value->user_fcm_token);
+                }
+
+                // send notification to receiver
+                $datas = [
+                    'title' => 'Apply SA',
+                    'subtitle' => $produk->produk,
+                    'data' => $user->nama_perusahaan.' telah mengisi form Apply SA',
+                    'toast_msg' => $user->nama_perusahaan.' telah mengisi form Apply SA',
+                    'time' => date('Y-m-d H:i:s')
+                ];
+
+                \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+            }
+
             $dok->save();
         }
 
     	return redirect('/sa/'.$idProduk)->with('msg', $msg);
     }
+    
     public function applySAluar(Request $request, Persyaratan_luar_negeri $model) {
         $d = \Validator::make($request->file(), [
             'dok.*' => 'required|max:2000|mimes:png,jpeg,jpg,pdf,docx,doc',

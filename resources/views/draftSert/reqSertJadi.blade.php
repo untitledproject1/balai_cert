@@ -29,13 +29,13 @@
             <div class="row mt-3">
                 <div class="col-lg-3">
                     <label class="container_radio">
-                        <input type="radio" onclick="slideOpt('.reqSert', 'tidak', false)" name="req" value="1">Ambil
+                        <input type="radio" class="inpt" onclick="slideOpt('.reqSert', 'tidak', false)" name="req" value="1">Ambil
                         <span class="checkmark"></span>
                     </label>
                 </div>
                 <div class="col-lg-3">
                     <label class="container_radio">
-                        <input type="radio" onclick="slideOpt('.reqSert', 'ya', false)" name="req" value="2">Kirim
+                        <input type="radio" class="inpt" onclick="slideOpt('.reqSert', 'ya', false)" name="req" value="2">Kirim
                         <span class="checkmark"></span>
                     </label>
                 </div>
@@ -46,6 +46,7 @@
                 <small class="form-text text-muted">Alamat bisa diubah jika diperlukan</small>
                 <br>
             </div>
+            <p class="validMsg"></p>
             <button class="submit_btn mt-3" type="button" onclick="ValidateSize('', '.alamat', '#reqSertJadiForm', '.validMsg')">Kirim</button>
         </form>
 

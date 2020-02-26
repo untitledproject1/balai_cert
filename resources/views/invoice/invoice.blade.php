@@ -215,7 +215,7 @@
         @elseif(!is_null($model) && !is_null($model->invoice_id) && !is_null($waktuKodeBiling) && strtotime($waktuKodeBiling) <= strtotime(date('YmdHis'))) <center>
             <p class="alert alert-warning">Tidak ada tindakan lebih dari 7 hari sejak pembuatan invoice, Kode Biling hangus.<br>Harap Upload Kode Biling yang baru</center>
             <div class="validMsg"></div>
-            <form id="kodeBiling_upload" method="POST" action="{{ url('/uploadKB/'.$invoice->id) }}" enctype="multipart/form-data">
+            <form id="kodeBiling_upload" method="POST" action="{{ url('/uploadKB/'.$invoice->id.'/'.$produk->id) }}" enctype="multipart/form-data">
                 @csrf
                 <label>Waktu Pembuatan Kode Biling</label><br>
                 <div class="input-group">

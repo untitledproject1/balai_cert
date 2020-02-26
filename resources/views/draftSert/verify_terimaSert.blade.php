@@ -19,7 +19,7 @@
             </center>
             @else
             <center>
-                <p class="alert alert-success">Request pengambilan/pengiriman sertifikat: <b>{{ $produk->request_sert }}</b></p>
+                <p class="alert alert-success">Request pengambilan/pengiriman sertifikat: <b>{{ ucfirst($produk->request_sert) }}</b></p>
             </center>
             @endif
 

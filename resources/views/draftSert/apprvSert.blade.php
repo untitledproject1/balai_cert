@@ -25,18 +25,18 @@
 
         <div class="mt-3">
             <p><b>Approval Draft Sertifikat</b></p>
-            <form id="apprvSertForm" method="POSt" action="{{ url('/apprv_draftSert_action/'.$idProduk) }}">
+            <form id="apprvSertForm" method="POST" action="{{ url('/apprv_draftSert_action/'.$idProduk) }}">
                 @csrf
                 <div class="row mt-3">
                     <div class="col-lg-3">
                         <label class="container_radio">
-                            <input type="radio" name="apprv" value="1" onclick="slideOpt('.pesanT', 'tidak', false)" required="">Terima
+                            <input type="radio" name="apprv" value="1" class="apprvSert_choice" onclick="slideOpt('.pesanT', 'tidak', false)" required="">Terima
                             <span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
                         <label class="container_radio">
-                            <input type="radio" name="apprv" value="0" onclick="slideOpt('.pesanT', 'ya', false)" required="">Tolak
+                            <input type="radio" name="apprv" value="0" class="apprvSert_choice" onclick="slideOpt('.pesanT', 'ya', false)" required="">Tolak
                             <span class="checkmark"></span>
                         </label>
                     </div>
@@ -45,9 +45,11 @@
                 <div class="pesanT hid">
                     <b>Pesan: </b><br>
                     <textarea class="form-control inpt" class="inpt" name="pesanT" disabled="" placeholder="Pesan di sini.."></textarea>
+                    <small class="form-text text-muted">Wajib diisi</small>
                 </div>
+                <p class="validMsg"></p>
                 <br>
-                <button class="submit_btn" type="button" onclick="apprvSert()">Kirim</button>
+                <button class="submit_btn" type="button" onclick="ValidateSize('', '.apprvSert_choice', '#apprvSertForm', '.validMsg', true)">Kirim</button>
             </form>
         </div>
 

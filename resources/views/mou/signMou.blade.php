@@ -19,7 +19,7 @@
             <h4>Download File MOU</h4>
             <center>
                 <p class="alert alert-info">MOU telah dibuat oleh Seksi Kerjama<br>
-                    Harap untuk upload MOU sebelum tanggal <b>{{ date('d-m-Y', strtotime($mou->tgl_exp)) }}</b>.</p>
+                    Harap untuk upload MOU sebelum tanggal <b>{{ date('Y-m-d', strtotime($mou->tgl_exp)) }}</b>.</p>
             </center>
             <p class="alert alert-info">Download file terlebih dahulu sebelum upload MOU yang sudah ditanda tangan</p>
 
@@ -42,7 +42,8 @@
                 <p><b>Upload MOU yang sudah ditanda tangan</b></p>
                 <br>
                 <div class="alert alert-info" role="alert">
-                    <p>Batas upload file <b>3 hari kerja</b> <br>
+                    <p>
+                        <!-- Batas upload file <b>3 hari kerja</b> <br> -->
                         Format file yang diizinkan <b>.pdf, .doc, .jpg, .png</b></p>
                 </div>
                 <br>

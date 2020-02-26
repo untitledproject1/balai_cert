@@ -11,6 +11,7 @@ use App\Produk;
 use App\TahapSert;
 use Illuminate\Support\Arr;
 use App\NoSurat;
+use App\PushSubscriptions;
 
 class BPController extends Controller
 {
@@ -140,7 +141,7 @@ class BPController extends Controller
 		$no_surat->jenis = 'penawaran_harga';
 		$no_surat->dok = $dok->bid_price;
 		$no_surat->no = $request->no_bp;
-		$no_surat->save();
+        $no_surat->save();
 
 		return redirect()->back();
     }
@@ -208,6 +209,28 @@ class BPController extends Controller
         $bidPrice->status = 2;
         $bidPrice->save();
 
+        // ---- Push notif -----
+        // get client data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'kabidpjt')->select('users.id', 'users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Penawaran Harga',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Pemasaran telah membuat penawaran harga',
+            'toast_msg' => 'Seksi Pemasaran telah membuat penawaran harga'
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
@@ -217,18 +240,50 @@ class BPController extends Controller
 
     public function approve(Request $request, $idProduk) {
     	$dok = BidPrice::where('produk_id', $idProduk)->first();
+        $produk = Produk::find($idProduk);
+        $choice = '';
     	if ($request->choice == 'terima') {
 	    	$dok->status = 1;
         	$dok->save();
-            $produk = Produk::find($idProduk);
             $produk->kode_tahap = 14;
             $produk->save();
+            $choice = 'Kabid PJT telah men-approve penawaran harga';
     	} else {
             if (\Storage::exists('dok/bidPrice/'.$dok->bid_price)) {
                 \Storage::delete('dok/bidPrice/'.$dok->bid_price);
             }
             $dok->delete();
+            $choice = 'Penawaran harga telah ditolak oleh Kabid PJT';
     	}
+
+        // ---- Push notif -----
+        // get client data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->select('users.id', 'users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+        if ($request->choice == 'terima') {
+            $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+            $gettokens = $gettokens->orWhere('user_id', $client->id);
+        }
+        $tokens = $gettokens->get();
+
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Approval Penawaran Harga',
+            'subtitle' => $produk->produk,
+            'data' => $choice,
+            'toast_msg' => $choice,
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
     	return redirect()->back();
     }
@@ -259,6 +314,31 @@ class BPController extends Controller
         $dok->verifikasi_bayar = 1;
         $dok->tanggal_bayar = date('Y-m-d', strtotime($request->tgl));
         $dok->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'keuangan')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::find($idProduk);  // get produk
+        $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Form Waktu Pembayaran',
+            'subtitle' => $produk->produk,
+            'data' => $client->nama_perusahaan.' telah megisi form waktu pembayaran',
+            'toast_msg' => $client->nama_perusahaan.' telah megisi form waktu pembayaran',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }
@@ -369,6 +449,29 @@ class BPController extends Controller
         $produk->kode_tahap = 15;
         $produk->save();
 
+        // ---- Push notif -----
+        // get client data
+        $receiver = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Invoice dan Kode Biling',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Keuangan telah membuat Invoice dan Kode Biling',
+            'toast_msg' => 'Seksi Keuangan telah membuat Invoice dan Kode Biling',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
@@ -403,10 +506,35 @@ class BPController extends Controller
         $bidPrice->bukti_bayar = $fileName;
         $bidPrice->save();
 
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'keuangan')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::find($id);  // get produk
+        $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Upload Bukti Pembayaran',
+            'subtitle' => $produk->produk,
+            'data' => $client->nama_perusahaan.' telah men-upload Bukti Pembayaran',
+            'toast_msg' => $client->nama_perusahaan.' telah men-upload Bukti Pembayaran',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
-    public function kbiling_upload(Request $request, $idInvoice) {
+    public function kbiling_upload(Request $request, $idInvoice, $produk_id) {
         // validasi extensi file upload
         $d = \Validator::make($request->file(), [
             'kb' => 'required|max:2000|mimes:pdf',
@@ -427,6 +555,30 @@ class BPController extends Controller
         $invoice->masa_kode_biling = date('Y-m-d H:i:s', strtotime('+7 day', strtotime(date('Y-m-d H:i:s'))));
         
         $invoice->save();
+
+        // ---- Push notif -----
+        // get client data
+        $produk = Produk::find($produk_id)->first();
+        $receiver = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Kode Biling',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Keuangan telah membuat Kode Biling baru',
+            'toast_msg' => 'Seksi Keuangan telah membuat Kode Biling baru',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }
@@ -467,6 +619,31 @@ class BPController extends Controller
         $produk = Produk::find($idProduk);
         $produk->kode_tahap = 16;
         $produk->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::find($idProduk);  // get produk
+        $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Bukti Pembayaran Client',
+            'subtitle' => $produk->produk,
+            'data' => 'Bukti Pembayaran '.$client->nama_perusahaan.' telah selesai',
+            'toast_msg' => 'Bukti Pembayaran '.$client->nama_perusahaan.' telah selesai',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }

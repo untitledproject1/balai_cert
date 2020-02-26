@@ -138,6 +138,8 @@
             </form>
             <br>
             <hr>
+        @else
+            <p class="alert alert-info">Dokumen Laporan Hasil Sertifikasi belum dibuat</p>
         @endif
 
         @if(!is_null($lapSert) && !is_null($lapSert->laporan_hasil_sert) && $lapSert->status_timTeknis !== 1)

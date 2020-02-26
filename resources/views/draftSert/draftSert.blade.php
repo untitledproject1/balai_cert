@@ -120,6 +120,7 @@
 	            @endforeach
 	        </ul>
 	        @endif
+            <p class="alert alert-info">Harap upload Dokumen Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI yang sudah diisi</p>
             <form id="konfirmasiSert" method="POST" action="{{ url('/konfirmasiSert_dok/'.$idProduk.'/'.$user_id) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="custom-file mt-2">
@@ -241,6 +242,7 @@
                     </div>
                 </a>
             </div>
+            <p class="alert alert-info">Harap untuk men-upload Draft Sertifikat dari format dokumen</p>
             <form id="CreateSert" method="POST" action="{{ url('/draftSert_create/'.$idProduk.'/'.$user->id) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="custom-file">

@@ -55,6 +55,7 @@
             <div class="isiPesan hid">
                 <label>Pesan</label><br>
                 <textarea class="form-control inpt" name="isiPesan" disabled=""></textarea>
+                <small class="form-text text-muted">Pesan tidak wajib diisi</small>
             </div><br>
             <div class="validMsg"></div><br>
             <button type="reset" class="reset_btn">Reset</button>

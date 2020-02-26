@@ -55,7 +55,7 @@
             @endif
         </div>
         @else
-        <center><p class="alert alert-primary">Sertifikat belum dicetak</p></center>
+        <center><p class="alert alert-primary">Belum ada aksi</p></center>
         @endif
         <br>
         @if(!is_null($produk) && $produk->request_sert == 'kirim' && is_null($produk->resi_pengiriman))

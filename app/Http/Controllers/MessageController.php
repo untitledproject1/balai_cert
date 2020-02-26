@@ -122,7 +122,7 @@ class MessageController extends Controller
         $pesan->ket_pesan = 'client';
 
         // set users_id for push target
-        $users_id = $admin_id;
+        $id_penerima = $admin_id;
 
         // jika pengirim pesan adalah admin
         if (!is_null($client_id)) {
@@ -130,7 +130,7 @@ class MessageController extends Controller
             $pesan->ket_pesan = 'admin';
 
             // set users_id for push target
-            $users_id = $client_id;
+            $id_penerima = $client_id;
         }
         $pesan->admin = $admin_id;
         $pesan->produk_id = $produk->id;
@@ -140,17 +140,16 @@ class MessageController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $tokens = PushSubscriptions::where('user_id', $users_id)->get();
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
 
         // send notification to receiver
-        $id_penerima = $users_id;
         $datas = [
             'title' => 'Pesan baru',
             'subtitle' => $produk->produk,
-            'data' => $pesan->pesan,
+            'data' => substr($pesan->pesan, 0, 75).'...',
             'toast_msg' => 'Anda telah menerima pesan baru!'
         ];
 
@@ -231,13 +230,37 @@ class MessageController extends Controller
         $pesan->admin = intval($id_pengirim);
         $pesan->admin2 = intval($id_penerima);
         $pesan->pesan = $request->message;
-        // $pesan->created_at = '2019-09-09 15:40:00';
-        $pesan->save();
+        // $pesan->save();
 
         $getPesan = User::where('users.id', intval($id_pengirim))
             ->leftJoin('role as role_admin', 'role_admin.id', '=', 'users.role_id')
             ->select('users.id as id_pengirim', 'users.name as pengirim', 'role_admin.role_name as role_pengirim')->first();
 
-        return response()->json(['msg_prop' => $getPesan, 'msg' => $pesan]);
+        // ----- Push notif -----
+        $user = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $id_penerima)->select('users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $pesan->admin2;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pesan baru',
+            'subtitle' => $user->role_name,
+            'data' => substr($pesan->pesan, 0, 75).'...',
+            'toast_msg' => 'Anda telah menerima pesan baru!'
+        ];
+
+        return response()->json([
+            'data' => $pesan,
+            'msg_prop' => $getPesan,
+            'msg' => $pesan,
+            // data yang dibutuhkan untuk push notif
+            'notif_data' => ['user_token' => $user_token, 'datas' => $datas, 'id_penerima' => $id_penerima]  
+        ]);
     }
 }

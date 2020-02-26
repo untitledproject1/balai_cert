@@ -15,6 +15,7 @@ use App\InfoTambahan;
 use Illuminate\Support\Arr;
 use App\Kuesioner;
 use App\BahanHasil;
+use App\PushSubscriptions;
 
 class CompanyController extends Controller
 {
@@ -83,6 +84,7 @@ class CompanyController extends Controller
             $roleDB = \Auth::user()->role()->first();
             $role = $roleDB->id;
             $group_tahap = \DB::table('group_tahapan')->get();
+            // dd($group_tahap);
 
         	// filter data sesuai kode_tahap
 	        $result = collect([]);
@@ -99,6 +101,9 @@ class CompanyController extends Controller
                                 if ($value->kode_tahap == $value3) {
                                     $result->push($value);
                                 }
+                                // if ($key == count($unique)-1 && $key3 == count($tahap)-1) {
+                                //     dd($result, $value3);
+                                // }
                             }
                         }
                     }
@@ -106,6 +111,7 @@ class CompanyController extends Controller
 	        }
         }
         $result = $result->sortBy('created_at');
+        // dd($result, $role, $group_tahap, $tahap);
 
         $page = function($role, $kode_tahap) {
             $name = 'company';
@@ -149,59 +155,6 @@ class CompanyController extends Controller
         return view('company.cert_list', ['client' => $result, 'page' => $page, 'link' => $getlink, 'status' => $status, 'card_header' => $card_header]);
     }
 
-    // public function single($id) {
-    //     $user = User::find($id);
-    //     if (is_null($user)) {
-    //         return redirect()->back();
-    //     }
-    //     $page = function($role, $kode_tahap) {
-    //         $name = 'company';
-    //         if ($role == 'pemasaran') {
-    //             if ($kode_tahap < 13) {
-    //                 $name = 'company';
-    //             } elseif ($kode_tahap <= 21) {
-    //                 $name = 'bidPrice';
-    //             } elseif ($kode_tahap <= 24) {
-    //                 $name = 'jadwalSert';
-    //             }
-    //         }
-    //         elseif ($role == 'sertifikasi') {
-    //             if ($kode_tahap <= 17) {
-    //                 $name = 'company';
-    //             } elseif ($kode_tahap <= 19) {
-    //                 $name = 'auditPlan';
-    //             } elseif ($kode_tahap <= 24) {
-    //                 $name = 'draftSert';
-    //             }
-    //         }
-    //         return $name;
-    //     };
-    //     $getlink = function($role) {
-    //         $link = '';
-    //         if ($role == 'pemasaran') {$link = 'sert';}
-    //         elseif ($role == 'kerjasama') {$link = 'cmou';}
-    //         elseif ($role == 'kabidpjt') {$link = 'approval';}
-    //         elseif ($role == 'keuangan') {$link = 'invoice';}
-    //         elseif ($role == 'sertifikasi') {$link = 'audit';}
-    //         elseif ($role == 'auditor') {$link = 'dokSert';}
-    //         elseif ($role == 'kabidpaskal') {$link = 'apprv_jadwalAudit';}
-    //         elseif ($role == 'tim_teknis') {$link = 'rekomendasiRapatTeknis';}
-    //         elseif ($role == 'komite_timTeknis') {$link = 'keputusanTeknis';}
-    //         elseif ($role == 'subag_umum') {$link = 'pengirimanSert';}
-    //         elseif ($role == 'ketua_tim_teknis') {$link = 'isi_dataLapSert';}
-    //         elseif ($role == 'ketua_sertifikasi') {$link = 'verify_lembarKonSert';}
-    //         return $link;
-    //     };
-
-    //     // $produk = $user->produk_client();
-    //     $produk = \DB::table('produk')
-    //         ->leftJoin('master_tahap', 'master_tahap.kode_tahap', '=', 'produk.kode_tahap')
-    //         ->select('produk.*', 'master_tahap.tahapan')
-    //         ->where('produk.user_id', $user->id)->get();
-    //     // dd($produk);
-    //     return view('company.company_product', ['user_id' => $id, 'user' => $user, 'link' => $getlink, 'page' => $page, 'produk' => $produk]);
-    // }
-
     public function verifySA($id, $idProduk) {
     	$user = User::find($id);
         $produk = Produk::where('id', $idProduk)->first();
@@ -243,10 +196,13 @@ class CompanyController extends Controller
     public function verSA(Request $request, $id) {
         $model = new Persyaratan_dalam_negeri;
         $infoT = Arr::except($request->all(), ['_token', 'fileName', 'dok', 'pesan']);
-        $dok = !is_null(Persyaratan_dalam_negeri::where('produk_id', $id)->first()) ? Persyaratan_dalam_negeri::where('produk_id', $id)->first() : new Persyaratan_dalam_negeri;
+        $getDok = Persyaratan_dalam_negeri::where('produk_id', $id)->first();
+        $dok = !is_null($getDok) ? $getDok : $model;
         $infoDB = InfoTambahan::where('produk_id', $id)->first();
         $kuesioner = Kuesioner::where('produk_id', $id)->first();
         $bahanHasil = BahanHasil::where('produk_id', $id)->first();
+        $produk = Produk::find($id);
+
 		$jml = count($request->dok);
         $dok_tidak_lengkap = [];
         
@@ -284,59 +240,85 @@ class CompanyController extends Controller
     		$infoTStatus[1]->sni = 1;
         }
     	if ($jml == 0 && $infoTStatus[0] == 1) {
-            $produk = Produk::find($id);
             $produk->kode_tahap = 11;
             $produk->save();
     	}
     	$infoTStatus[1]->save();
 
+        // ---- Push notif -----
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $produk->user_id;
+        $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+        if ($infoTStatus[1]->sni == 1) {
+            // get kerjasama user data
+            $receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'kerjasama')->select('users.id', 'users.name', 'role.role_name')->first();
+            $gettokens = $gettokens->orWhere('user_id', $receiver->id);
+        }
+        $tokens = $gettokens->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Apply SA',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Pemasaran telah mem-verifikasi form Apply SA',
+            'toast_msg' => 'Seksi Pemasaran telah mem-verifikasi form Apply SA',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back();
     }
-    public function verSALuar(Request $request, $id) {
-        // filter dok sesuai tabel DB
-        $dok = Persyaratan_luar_negeri::where('produk_id', $id)->first();
-        $arr = [[$dok->dok_importir()->first()->more_doc()->first(), 'sa'], [$dok->dok_importir()->first(), 'dokImportir'],[$dok->dok_manufaktur()->first(), 'dokManufaktur']];
-        foreach ($request->fileName as $key => $value) {
-            if (explode(',', $value)[1] == 'sa') {$index = 0;}
-            elseif (explode(',', $value)[1] == 'dokImportir') {$index = 1;}
-            else {$index = 2;}
-            array_push($arr[$index], [explode(',', $value)[0], $request->dok[$key]]);
-        }
-        $sni = [];
-        foreach ($arr as $key => $value) {
-            for($i=2;$i<count($value);$i++) {
-                $field = $value[$i][0];
-                // hapus dok jika tidak lengkap
-                if ($value[$i][1] == 'null' && !is_null($value[0]->$field)) {
-                    \Storage::delete('dok/'.$value[1].'/'.$value[0]->$field);
-                    $value[0]->$field = null;
-                }
-            }
-            // cek kelengkapan dok - 1
-            $jmlDok = count($arr)-2;
-            $lengkap = $value[1] == 'sa' ? 'sni' : 'lengkap';
-            for ($j=2; $j < count($arr); $j++) { 
-                if ($value[$j][1] == 'null') {
-                    $value[0]->$lengkap = 2;
-                    break;
-                }
-                $jmlDok-=1;
-            }
-            if ($jmlDok == 0) {$value[0]->$lengkap = 1;}
-            array_push($sni, $value[0]->$lengkap);
-            $value[0]->save();
-        }
-        // cek kelengkapan dok - 2
-        foreach ($sni as $key => $value) {
-            if ($value == 2) {$dok->sni = 2;break;}
-            if ($key == 2 && $value == 1) {
-                $dok->sni = 1;
-                $tahap = TahapSert::where('produk_id', $id)->first();
-                $tahap->apply_sa = 1;
-                $tahap->save();
-            }
-        }
-        $dok->save();
-        return redirect()->back();
-    }
+
+    // public function verSALuar(Request $request, $id) {
+    //     // filter dok sesuai tabel DB
+    //     $dok = Persyaratan_luar_negeri::where('produk_id', $id)->first();
+    //     $arr = [[$dok->dok_importir()->first()->more_doc()->first(), 'sa'], [$dok->dok_importir()->first(), 'dokImportir'],[$dok->dok_manufaktur()->first(), 'dokManufaktur']];
+    //     foreach ($request->fileName as $key => $value) {
+    //         if (explode(',', $value)[1] == 'sa') {$index = 0;}
+    //         elseif (explode(',', $value)[1] == 'dokImportir') {$index = 1;}
+    //         else {$index = 2;}
+    //         array_push($arr[$index], [explode(',', $value)[0], $request->dok[$key]]);
+    //     }
+    //     $sni = [];
+    //     foreach ($arr as $key => $value) {
+    //         for($i=2;$i<count($value);$i++) {
+    //             $field = $value[$i][0];
+    //             // hapus dok jika tidak lengkap
+    //             if ($value[$i][1] == 'null' && !is_null($value[0]->$field)) {
+    //                 \Storage::delete('dok/'.$value[1].'/'.$value[0]->$field);
+    //                 $value[0]->$field = null;
+    //             }
+    //         }
+    //         // cek kelengkapan dok - 1
+    //         $jmlDok = count($arr)-2;
+    //         $lengkap = $value[1] == 'sa' ? 'sni' : 'lengkap';
+    //         for ($j=2; $j < count($arr); $j++) { 
+    //             if ($value[$j][1] == 'null') {
+    //                 $value[0]->$lengkap = 2;
+    //                 break;
+    //             }
+    //             $jmlDok-=1;
+    //         }
+    //         if ($jmlDok == 0) {$value[0]->$lengkap = 1;}
+    //         array_push($sni, $value[0]->$lengkap);
+    //         $value[0]->save();
+    //     }
+    //     // cek kelengkapan dok - 2
+    //     foreach ($sni as $key => $value) {
+    //         if ($value == 2) {$dok->sni = 2;break;}
+    //         if ($key == 2 && $value == 1) {
+    //             $dok->sni = 1;
+    //             $tahap = TahapSert::where('produk_id', $id)->first();
+    //             $tahap->apply_sa = 1;
+    //             $tahap->save();
+    //         }
+    //     }
+    //     $dok->save();
+    //     return redirect()->back();
+    // }
 }

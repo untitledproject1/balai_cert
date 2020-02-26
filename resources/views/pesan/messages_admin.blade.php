@@ -125,6 +125,18 @@
 <script type="text/javascript">
     var userAuth_id = '{{ $userAuth->id }}';
 
+    function sendNotification(user_token, datas, id_penerima) {
+      $.post('/notifications', {
+        'user_token': user_token,
+        'datas': datas,
+        'id_penerima': id_penerima
+      }).done(function(dt) {
+        console.log('Notification Pushed');
+      }).fail(function(err) {
+        return ;
+      })
+    }
+
     // ajax send message
     function send_msg_ajax(url, message) {
         $.post(url, {
@@ -161,6 +173,8 @@
             }
             $('#addMessages').modal('hide');
 
+            // send notification
+            sendNotification(data.notif_data.user_token, data.notif_data.datas, data.notif_data.id_penerima);
 
         }).fail(function(err) {
             console.log(err);

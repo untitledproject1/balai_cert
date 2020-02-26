@@ -1,0 +1,5 @@
+# Verifikasi Email
+   - view => 'auth/verify.blade.php'
+   - template email => 'emails/verify-email.blade.php'
+
+# 

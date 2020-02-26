@@ -8,6 +8,7 @@ use App\TahapSert;
 use Illuminate\Support\Arr;
 use App\Sert;
 use \Carbon\Carbon;
+use App\PushSubscriptions;
 
 class SertController extends Controller
 {
@@ -23,6 +24,7 @@ class SertController extends Controller
 
     	return view('draftSert.draftSert', ['user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'dok' => $dok, 'kode_tahap' => $kode_tahap, 'data_sert' => $data_sert]);
     }
+
     public function create(Request $request, $idProduk, $user_id) {
         // validasi extensi file upload
         $d = \Validator::make($request->file(), [
@@ -57,8 +59,29 @@ class SertController extends Controller
             \Storage::delete('dok/draftSert/'.$draft);
         }
 
+        // ---- Push notif -----
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Draft Sertifikat',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Sertifikasi telah membuat Draft Sertifikat',
+            'toast_msg' => 'Seksi Sertifikasi telah membuat Draft Sertifikat',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
 		return redirect()->back();
     }
+
     public function getApprv($idProduk) {
     	$produk = Produk::find($idProduk);
         $kode_tahap = $produk->kode_tahap;
@@ -66,17 +89,44 @@ class SertController extends Controller
     }
 
     public function postApprv(Request $request, $idProduk) {
-    	$produk = Produk::find($idProduk);
+        $produk = Produk::find($idProduk);
+        $choice = '';
+        // get sertifikasi and client data
+        $userData = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'role.role_name')->first();
+        $client = $userData[1];
     	if ($request->apprv == '1') {
 	    	$produk->status_sert_jadi = 1;
             $produk->kode_tahap = 21;
             $msg = 'Draft Sertifikat telah disetujui!';
+            $choice = $userData.' telah menyetujui Draft Sertifikat';
     	} else {
             $produk->status_sert_jadi = 4;
     		$produk->pesan_sert = $request->pesanT;
             $msg = 'Permintaan pembuatan ulang draft sertifikat telah dikirim';
+            $choice = 'Draft Sertifikat telah ditolak oleh '.$userData;
     	}
-    	$produk->save();
+        $produk->save();
+        
+        // // ---- Push notif -----
+        // // get user_fcm_token
+        // $user_token = [];
+        // $id_penerima = $userData[0]->id;
+        // $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        // foreach ($tokens as $key => $value) {
+        //     array_push($user_token, $value->user_fcm_token);
+        // }
+
+        // // send notification to receiver
+        // $datas = [
+        //     'title' => 'Pembuatan Draft Sertifikat',
+        //     'subtitle' => $produk->produk,
+        //     'data' => $choice,
+        //     'toast_msg' => $choice,
+        //     'time' => date('Y-m-d H:i:s')
+        // ];
+
+        // \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back()->with('msg', $msg);
     }
     
@@ -85,28 +135,89 @@ class SertController extends Controller
         $kode_tahap = $produk->kode_tahap;
         return view('draftSert.reqSertJadi', ['produk' => $produk, 'idProduk' => $idProduk, 'kode_tahap' => $kode_tahap]);
     }
+
     public function postReq_sert(Request $request, $idProduk) {
     	$produk = Produk::find($idProduk);
     	$produk->request_sert = $request->req == '1' ? 'ambil' : 'kirim';
         $produk->alamat_kirim = !is_null($request->alm) ? $request->alm : null;
-    	$produk->save();
+        $produk->save();
+        
+        // ---- Push notif -----
+        // get receiver data
+        $user_receiver = '';
+        if ($request->req == '1') {
+            $choice = 'Ambil';
+            $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->select('users.id', 'users.name', 'role.role_name')->first();
+        } else {
+            $choice = 'Kirim';
+            $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'subag_umum')->select('users.id', 'users.name', 'role.role_name')->first();
+        }
+
+        // get client data
+        $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Ambil/Kirim Sertifikat Produk Client',
+            'subtitle' => $produk->produk,
+            'data' => $client->nama_perusahaan.' memilih request '.$choice.' Sertifikat Produk',
+            'toast_msg' => $client->nama_perusahaan.' memilih request '.$choice.' Sertifikat Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back();
     }
+
     public function cetak_sert(Request $request, $idProduk) {
-    	$dok = Produk::where('id', $idProduk)->first();
-    	$dok->status_sert_jadi = 2;
-    	$dok->save();
         $produk = Produk::find($idProduk);
+    	$produk->status_sert_jadi = 2;
         $produk->kode_tahap = 22;
         $produk->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::select('id', 'name')->find($produk->user_id);
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Cetak Draft Sertifikat',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Sertifikasi telah mencetak sertifikat',
+            'toast_msg' => 'Seksi Sertifikasi telah mencetak sertifikat',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back();
     }
+
     public function postSert_jadi(Request $request, $idProduk) {
     	$dok = Produk::where('id', $idProduk)->first();
     	$dok->status_sert_jadi = 3;
-    	$dok->save();
+        $dok->save();
+
     	return redirect()->back();
     }
+
     public function jadwalSert($id, $idProduk) {
         $user = User::find($id);
         $produk = Produk::where('id', $idProduk)->first();
@@ -115,19 +226,44 @@ class SertController extends Controller
         }
         $kode_tahap = $produk->kode_tahap;
         $produk = Produk::where('id', $idProduk)->first();
+
         return view('draftSert.jadwalSert', ['produk' => $produk, 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'kode_tahap' => $kode_tahap]);
     }
-    public function postJadwalSert(Request $request, $idProduk) {
-    	$dok = Produk::where('id', $idProduk)->first();
-    	$dok->tgl_request_sert = $request->tgl;
 
-        if ($dok->request_sert == 'ambil') {
-            $dok->kode_tahap = 23;
+    public function postJadwalSert(Request $request, $idProduk) {
+    	$produk = Produk::where('id', $idProduk)->first();
+    	$produk->tgl_request_sert = $request->tgl;
+
+        if ($produk->request_sert == 'ambil') {
+            $produk->kode_tahap = 23;
         }
-    	$dok->save();
+        $produk->save();
+        
+        // ---- Push notif -----
+        // get user_fcm_token
+        $user_token = [];
+        // get client data
+        $user_receiver = User::select('id', 'name')->find($produk->user_id);
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Penjadwalan Ambil Sertifikat Client',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Pemasaran telah mengisi Jadwal Ambil Sertifikat',
+            'toast_msg' => 'Seksi Pemasaran telah mengisi Jadwal ambil Sertifikat',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
     	return redirect()->back();
     }
+
     public function pengirimanSert($id, $idProduk) {
         $user = User::find($id);
         $produk = Produk::where('id', $idProduk)->first();
@@ -135,6 +271,7 @@ class SertController extends Controller
             return redirect()->back();
         }
         $kode_tahap = $produk->kode_tahap;
+
         return view('draftSert.pengirimanSert', ['produk' => $produk, 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'kode_tahap' => $kode_tahap]);
     }
 
@@ -170,13 +307,36 @@ class SertController extends Controller
         // $lapSert = LaporanSert::where('produk_id', $idProduk)->first();
 
         // $fileName = 'Lembar_Konfirmasi_Penerbitan_Sertifikat_SPPT_SNI-'.uniqid().''.date('Ymd').'.pdf';
-        // $pdf = \PDF::loadView('dok.dok_konfirmasi_sert', ['user' => $user, 'produk' => $produk, 'lapSert' => $lapSert, 'data' => $data]);
+        // $pdf = \PDF::loadView('dok.dok_konfirmasi_sert', ['user' => $user, 'produkirimk' => $produk, 'lapSert' => $lapSert, 'data' => $data]);
         // return $pdf->stream();
         // $output = $pdf->output();
         // \Storage::put('dok/konfirmasiSert/'.$fileName, $output);
 
         $produk->lembar_konSert = $fileName;
         $produk->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'ketua_sertifikasi')->select('users.id', 'users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Sertifikasi telah membuat Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI',
+            'toast_msg' => 'Seksi Sertifikasi telah membuat Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }
@@ -194,9 +354,11 @@ class SertController extends Controller
 
     public function post_verify_lembarKonSert(Request $request, $idProduk, $user_id) {
         $produk = Produk::find($idProduk);
+        $choice = '';
         if ($request->pilih == '1') {
             $produk->verify_konSert = 1;
             $msg = 'Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI Client telah disetujui';
+            $choice = 'Ketua Seksi Sertifikasi telah menyetujui Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI';
         } else {
             $msg = 'Permintaan untuk buat ulang Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI Client sudah dikirim ke Staff Sertifikasi';
             if (\Storage::exists('dok/konfirmasiSert/'.$produk->lembar_konSert)) {
@@ -204,8 +366,32 @@ class SertController extends Controller
             }
             $produk->lembar_konSert = null;
             $produk->verify_msg = $request->isiPesan;
+            $choice = 'Ketua Seksi Sertifikasi telah menolak Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI';
         }
         $produk->save();
+
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->select('users.id', 'users.name', 'role.role_name')->first();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Lembar Konfirmasi Penerbitan Sertifikat SPPT SNI',
+            'subtitle' => $produk->produk,
+            'data' => $choice,
+            'toast_msg' => $choice,
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back()->with('msg', $msg);
     }
@@ -220,15 +406,38 @@ class SertController extends Controller
         ]);
         if ($d->fails()) {return redirect()->back()->withErrors($d);}
 
-        $dok = Produk::where('id', $idProduk)->first();
+        $produk = Produk::where('id', $idProduk)->first();
         $tgl = \AppHelper::instance()->parseDate($request->tgl);
-        $dok->tgl_request_sert = date('Y-m-d', strtotime($tgl));
+        $produk->tgl_request_sert = date('Y-m-d', strtotime($tgl));
         if (!is_null($request->file('resi'))) {
-            $fileName = 'Resi_Pengiriman_'.$dok->produk.'('.$request->user.')'.uniqid().'.'.$request->resi->extension();
+            $fileName = 'Resi_Pengiriman_'.$produk->produk.'('.$request->user.')'.uniqid().'.'.$request->resi->extension();
             $request->resi->storeAs('dok/resi', $fileName);
-            $dok->resi_pengiriman = $fileName; 
+            $produk->resi_pengiriman = $fileName; 
         }
-        $dok->save();
+        $produk->save();
+        
+        // ---- Push notif -----
+        // get pemasaran data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'role.role_name')->get();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver[0]->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->orWhere('user_id', $user_receiver[1]->id)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Upload Resi Pengiriman Sertifikat Produk',
+            'subtitle' => $produk->produk,
+            'data' => 'Subag Umum telah men-upload Resi Pengiriman Sertifikat Produk',
+            'toast_msg' => 'Subag Umum telah men-upload Resi Pengiriman Sertifikat Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back()->with('successMsg', 'Resi Pengiriman berhasil diupload!');
     }
@@ -246,6 +455,37 @@ class SertController extends Controller
         $produk->kode_tahap = 24;
         $produk->save();
 
+        // ---- Push notif -----
+        // get pemasaran data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->select('users.id', 'users.name', 'role.role_name')->where('role', 'subag_umum');
+        if ($produk->request_sert == 'kirim') {
+            $user_receiver = $user_receiver->orWhere('role', 'pemasaran');
+        }
+        $user_receiver = $user_receiver->get();
+        
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver[0]->id;
+        $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+        if ($produk->request_sert == 'kirim') {
+            $gettokens = $gettokens->orWhere('user_id', $user_receiver[1]->id);
+        }
+        $tokens = $gettokens->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Konfirmasi Resi Pengiriman Sertifikat Produk',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
+            'toast_msg' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back()->with('msg', 'Verifikasi Penerimaan Sertifikat telah dilakukan');
     }
 
@@ -254,6 +494,29 @@ class SertController extends Controller
         $produk->kode_tahap = 23;
         $produk->kon_resi = 1;
         $produk->save();
+
+        // ---- Push notif -----
+        // get pemasaran data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'subag_umum')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'role.role_name')->get();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver[0]->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->orWhere('user_id', $user_receiver[1]->id)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Konfirmasi Resi Pengiriman Sertifikat Produk',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
+            'toast_msg' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
         return redirect()->back();
     }

@@ -22,6 +22,7 @@ use App\Kuesioner;
 use App\BahanHasil;
 use App\Sert;
 use App\FormatFile;
+use App\PushSubscriptions;
 
 class JAController extends Controller
 {
@@ -38,6 +39,7 @@ class JAController extends Controller
         $dok = BidPrice::where('produk_id', $idProduk)->first();
         return view('audit.audit', [ 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'jadwalAudit' => $jadwalAudit, 'dok' => $dok, 'kode_tahap' => $kode_tahap, 'formatFile' => $formatFile]);
     }
+
     public function upload(Request $request, $idProduk) {
         // validasi extensi file upload
         // php.ini
@@ -62,7 +64,32 @@ class JAController extends Controller
     	$la = new LaporanAudit;
         $la->produk_id = $idProduk;
     	$la->jadwal_audit_id = $dok->id;
-    	$la->save();
+        $la->save();
+        
+        // ---- Push notif -----
+        // get keuangan data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'kabidpaskal')->select('users.id', 'users.name', 'role.role_name')->first();
+        $produk = Produk::find($idProduk);  // get produk
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Surat Pemberitahuan Jadwal dan Tim Audit',
+            'subtitle' => $produk->produk,
+            'data' => 'Seksi Sertifikasi telah membuat Surat Pemberitahuan Jadwal dan Tim Audit',
+            'toast_msg' => 'Seksi Sertifikasi telah membuat Surat Pemberitahuan Jadwal dan Tim Audit',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back();
     }
 
@@ -129,6 +156,7 @@ class JAController extends Controller
 
         return view('audit.dokSert', ['laporanAudit' => $laporanAudit, 'dokImportir' => $dbImportir, 'tinjauanPP' => $dbTinjauan, 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'kode_tahap' => $kode_tahap], compact('infoDB', 'isi', 'cekOpsi', 'pesan', 'kuesioner', 'bahanHasil' , 'spekP', 'alat', 'infoIsi', 'getVal', 'cekDok'));
     }
+
     public function dok_sert_produk(Request $request) {
         $laModel = new LaporanAudit;
         $laDB = $laModel->where('produk_id', $request->idProduk)->first();
@@ -201,18 +229,48 @@ class JAController extends Controller
                 $dok_tidak_lengkap = [];
             }
 		}
-        // dd();
 
         $laDB->ringkasan = $request->ringkasan;
         $laDB->save();
         // jika semua dok sudah lengkap
+        $lengkap = false;
+        $produk = Produk::find($request->idProduk);
         if ($tabelSNI == count($arr)) {
-            $produk = Produk::find($request->idProduk);
             $produk->kode_tahap = 18;
             $produk->save();
+            $lengkap = true;
         }
+
+        // ---- Push notif -----
+        // get client data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('users.id', $produk->user_id)->orWhere('role', 'sertifikasi')->select('users.id', 'users.name', 'role.role_name')->get();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $user_receiver[0]->id;
+        $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+        if ($lengkap) {
+            $gettokens = $gettokens->orWhere('user_id', $user_receiver[1]->id);
+        }
+        $tokens = $gettokens->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Laporan Audit Kecukupan Sertifikasi Produk',
+            'subtitle' => $produk->produk,
+            'data' => 'Auditor telah men-verifikasi Form Laporan Audit Kecukupan Sertifikasi Produk',
+            'toast_msg' => 'Auditor telah men-verifikasi Form Laporan Audit Kecukupan Sertifikasi Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
     	return redirect()->back()->with('successMsg', 'Form berhasil diisi, tunggu kelengkapan dokumen dari client');
     }
+
     public function verify_dokSert($idProduk) {
         $produk = \DB::table('produk')->select('kode_tahap', 'produk', 'jenis_produk', 'request_sert')->where('id', $idProduk)->first();
         $lpModel = new LaporanAudit;
@@ -307,6 +365,32 @@ class JAController extends Controller
         // $laDB->dok_manufaktur_id = $idTable[1];
         // $laDB->tinjauan_pp_id = $idTable[1];
         // $laDB->save();
+
+        // ---- Push notif -----
+        $produk = Produk::select('id', 'produk', 'user_id')->find($idProduk); // get client product data
+        // get auditor and client data
+        $userData = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'auditor')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'users.nama_perusahaan', 'role.role_name')->get();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = $userData[0]->id;
+        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+
+        // send notification to receiver
+        $client = $userData[1];
+        $datas = [
+            'title' => 'Laporan Audit Kecukupan Sertifikasi Produk',
+            'subtitle' => $produk->produk,
+            'data' => $client->nama_perusahaan.' telah mengisi Form Laporan Audit Kecukupan Sertifikasi Produk',
+            'toast_msg' => $client->nama_perusahaan.' telah mengisi Form Laporan Audit Kecukupan Sertifikasi Produk',
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 
@@ -379,6 +463,7 @@ class JAController extends Controller
 
         return view('audit.audit_samplingPlan', ['user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'dokImportir' => $dokImportir, 'tinjauanPP' => $tinjauanPP, 'dok' => $dok, 'samplingPlan' => $samplingPlan, 'kode_tahap' => $kode_tahap, 'data_sert' => $data_sert, 'formatFileAp' => $formatFileAp, 'formatFileSp' => $formatFileSp]);
     }
+
     public function auditPlan_upload(Request $request, $idProduk) {
         // $d = \Validator::make($request->file(), [
         //     'auditPlan' => 'required|max:2000|mimes:pdf',
@@ -398,12 +483,38 @@ class JAController extends Controller
         $asPlan->doc_maker = \Auth::user()->id;
         $asPlan->save();
 
-        $produk = Produk::find($idProduk);
-        $produk->kode_tahap = 19;
-        $produk->save();
+        if (!is_null($asPlan) && !is_null($asPlan->audit_plan) && !is_null($asPlan->sampling_plan) ) {
+            $produk = Produk::find($idProduk);
+            $produk->kode_tahap = 19;
+            $produk->save();
+            
+            // ---- Push notif -----
+            // get client data
+            $userData = User::select('id', 'name', 'nama_perusahaan')->find($produk->user_id);
+            
+            // get user_fcm_token
+            $user_token = [];
+            $id_penerima = $userData->id;
+            $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+            foreach ($tokens as $key => $value) {
+                array_push($user_token, $value->user_fcm_token);
+            }
+            
+            // send notification to receiver
+            $datas = [
+                'title' => 'Upload Audit Plan dan Sampling Plan',
+                'subtitle' => $produk->produk,
+                'data' => 'Seksi Sertifikasi telah membuat Audit Plan dan Sampling Plan',
+                'toast_msg' => 'Seksi Sertifikasi telah membuat Audit Plan dan Sampling Plan',
+                'time' => date('Y-m-d H:i:s')
+            ];
+
+            \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+        }
 
         return redirect()->back();
     }
+
     public function apprv_jadwalAudit($id, $idProduk) {
         $user = User::find($id);
         $produk = Produk::where('id', $idProduk)->first();
@@ -415,21 +526,58 @@ class JAController extends Controller
         $jadwalAudit = !is_null($laporanAudit) ? $laporanAudit->jadwal_audit()->first() : null;
         return view('audit.apprv_jadwal', [ 'user' => $user, 'produk' => $produk, 'idProduk' => $idProduk, 'user_id' => $id, 'jadwalAudit' => $jadwalAudit, 'kode_tahap' => $kode_tahap]);
     }
+
     public function apprvPost(Request $request) {
         $laporanAudit = LaporanAudit::where('produk_id', $request->produkId)->first();
         $la = $laporanAudit->jadwal_audit()->first();
+        $choice = '';
+        $produk = Produk::find($request->produkId);
+
         if ($request->choice == '1') {
             $la->apprv = 1;
             $la->save();
-            $produk = Produk::find($request->produkId);
             $produk->kode_tahap = 17;
             $produk->save();
+            $choice = 'Kabid Paskal telah men-approve Surat Pemberitahuan Jadwal dan Tim Audit';
         } else {
             if (\Storage::exists('dok/jadwalAudit/'.$la->jadwal_audit)) {
                 \Storage::delete('dok/jadwalAudit/'.$la->jadwal_audit);
             }
             $la->delete();
+            $choice = 'Surat Pemberitahuan Jadwal dan Tim Audit telah ditolak oleh Kabid Paskal';
         }
+
+        // ---- Push notif -----
+        // get sertifikasi dan auditor data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->select('users.id', 'users.name', 'role.role_name')->where('role', 'sertifikasi')->orWhere('role', 'auditor')->get();
+
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = [$user_receiver[0]->id];
+        $gettokens = PushSubscriptions::where('user_id', $id_penerima[0]);
+        if ($request->choice == '1') {
+            $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
+            array_push($id_penerima, $client->id, $user_receiver[1]->id);
+            $gettokens = $gettokens->orWhere('user_id', $client->id)->orWhere('user_id', $id_penerima[2]);
+        }
+        $tokens = $gettokens->get();
+
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
+        // dd($id_penerima, $tokens);
+
+        // send notification to receiver
+        $datas = [
+            'title' => 'Approval Surat Pemberitahuan Jadwal dan Tim Audit',
+            'subtitle' => $produk->produk,
+            'data' => $choice,
+            'toast_msg' => $choice,
+            'time' => date('Y-m-d H:i:s')
+        ];
+
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+
         return redirect()->back();
     }
 

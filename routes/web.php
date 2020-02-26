@@ -141,7 +141,7 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 			});
 		    
 			// verify SA
-			Route::get('company/{id}/sert/{idProduk}', 'CompanyController@verifySA');
+			Route::get('/company/{id}/sert/{idProduk}', 'CompanyController@verifySA');
 			Route::post('/verifySA/{id}', 'CompanyController@verSA');
 			Route::post('/verifySALuar/{id}', 'CompanyController@verSALuar');
 			// penawaran harga
@@ -189,7 +189,7 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 		// invoice
 		Route::get('/company/{id}/invoice/{idProduk}', 'BPController@getInvoice_create');
 		Route::post('/invoice_create/{id}/{user_id}', 'BPController@invoice_create');
-		Route::post('/uploadKB/{id}', 'BPController@kbiling_upload');
+		Route::post('/uploadKB/{id}/{produk_id}', 'BPController@kbiling_upload');
 		Route::post('/apprv_buktiB/{id}', 'BPController@apprv_buktiB');
 		Route::post('/kode_biling_upload/{idProduk}/{user_id}', 'BPController@kode_biling_upload');
 		Route::post('/upload_bpn/{idProduk}', 'BPController@upload_bpn');
@@ -223,9 +223,9 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 		Route::post('/draftSert_create/{id}/{user_id}', 'SertController@create');
 		// cetak sert
 		Route::post('/cetak_sert/{id}', 'SertController@cetak_sert');
+		Route::post('/kelengDatSert/{idProduk}', 'LaporanHasilSert@kelengDatSert');
 
 		Route::post('/konfirmasiSert_dok/{idProduk}/{user_id}', 'SertController@konfirmasiSert_dok');
-		Route::post('/kelengDatSert/{idProduk}', 'LaporanHasilSert@kelengDatSert');
 	});
 
 	// ketua seksi sertifikasi
@@ -247,12 +247,12 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 		Route::post('/dok_sert_produk', 'JAController@dok_sert_produk');
 	});
 
-	// route tim_teknis
-	Route::group(['middleware'=>'roles','roles'=>'tim_teknis'], function() {
-		// input rekomendasi evaluasi rapat teknis
-		Route::get('/company/{id}/rekomendasiRapatTeknis/{idProduk}', 'LaporanHasilSert@getRekomendasi');
-		Route::post('/rekomendasiRapatTeknis/{idProduk}/{user_id}', 'LaporanHasilSert@rekomendasi');
-	});
+	// // route tim_teknis
+	// Route::group(['middleware'=>'roles','roles'=>'tim_teknis'], function() {
+	// 	// input rekomendasi evaluasi rapat teknis
+	// 	Route::get('/company/{id}/rekomendasiRapatTeknis/{idProduk}', 'LaporanHasilSert@getRekomendasi');
+	// 	Route::post('/rekomendasiRapatTeknis/{idProduk}/{user_id}', 'LaporanHasilSert@rekomendasi');
+	// });
 
 	// route ketua tim teknis
 	Route::group(['middleware'=>'roles','roles'=>'ketua_tim_teknis'], function() {
