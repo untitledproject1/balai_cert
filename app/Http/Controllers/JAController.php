@@ -247,15 +247,17 @@ class JAController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver[0]->id;
-        $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+        $id_penerima = [$user_receiver[0]->id];
+        $gettokens = PushSubscriptions::where('user_id', $user_receiver[0]->id);
         if ($lengkap) {
+            array_push($id_penerima, $user_receiver[1]->id);
             $gettokens = $gettokens->orWhere('user_id', $user_receiver[1]->id);
         }
         $tokens = $gettokens->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
+        // dd($id_penerima, $tokens);
 
         // send notification to receiver
         $datas = [
@@ -494,8 +496,8 @@ class JAController extends Controller
             
             // get user_fcm_token
             $user_token = [];
-            $id_penerima = $userData->id;
-            $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+            $id_penerima = [$userData->id];
+            $tokens = PushSubscriptions::where('user_id', $userData->id)->get();
             foreach ($tokens as $key => $value) {
                 array_push($user_token, $value->user_fcm_token);
             }
@@ -554,11 +556,11 @@ class JAController extends Controller
         // get user_fcm_token
         $user_token = [];
         $id_penerima = [$user_receiver[0]->id];
-        $gettokens = PushSubscriptions::where('user_id', $id_penerima[0]);
+        $gettokens = PushSubscriptions::where('user_id', $user_receiver[0]->id);
         if ($request->choice == '1') {
             $client = User::select('id', 'nama_perusahaan')->find($produk->user_id);
             array_push($id_penerima, $client->id, $user_receiver[1]->id);
-            $gettokens = $gettokens->orWhere('user_id', $client->id)->orWhere('user_id', $id_penerima[2]);
+            $gettokens = $gettokens->orWhere('user_id', $client->id)->orWhere('user_id', $user_receiver[1]->id);
         }
         $tokens = $gettokens->get();
 
