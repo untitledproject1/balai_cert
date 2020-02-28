@@ -155,7 +155,7 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 			Route::get('/jadwalSert/{id}/sert/{idProduk}', 'SertController@jadwalSert');
 			Route::post('/jadwalSert_action/{id}', 'SertController@postJadwalSert');
 
-			Route::post('/konfirmasi_resi/{idProduk}', 'SertController@konfirmasiSert');
+			Route::post('/konfirmasi_resi/{idProduk}', 'SertController@konfirmasiResi');
 			Route::post('/uploadBP_BBK/{idProduk}', 'BPController@uploadBP_BBK');
 		});
 

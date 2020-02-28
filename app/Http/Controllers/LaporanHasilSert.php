@@ -394,8 +394,8 @@ class LaporanHasilSert extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -437,8 +437,8 @@ class LaporanHasilSert extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }

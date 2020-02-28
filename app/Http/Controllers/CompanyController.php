@@ -244,16 +244,25 @@ class CompanyController extends Controller
             $produk->save();
     	}
     	$infoTStatus[1]->save();
-
+        $infoTStatus[1]->sni = 1;
         // ---- Push notif -----
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $produk->user_id;
+        $id_penerima = [$produk->user_id];
         $gettokens = PushSubscriptions::where('user_id', $id_penerima);
+
+        // pesan notif (belum lengkap)
+        $message = 'Seksi Pemasaran telah mem-verifikasi form Apply SA';
+
         if ($infoTStatus[1]->sni == 1) {
             // get kerjasama user data
             $receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'kerjasama')->select('users.id', 'users.name', 'role.role_name')->first();
+            array_push($id_penerima, $receiver->id);
             $gettokens = $gettokens->orWhere('user_id', $receiver->id);
+
+            // pesan notif (sudah lengkap)
+            $client = User::select('id', 'name', 'nama_perusahaan')->find($produk->user_id);
+            $message = 'Form Apply SA '.$client->nama_perusahaan.' sudah lengkap';
         }
         $tokens = $gettokens->get();
         foreach ($tokens as $key => $value) {
@@ -264,8 +273,8 @@ class CompanyController extends Controller
         $datas = [
             'title' => 'Apply SA',
             'subtitle' => $produk->produk,
-            'data' => 'Seksi Pemasaran telah mem-verifikasi form Apply SA',
-            'toast_msg' => 'Seksi Pemasaran telah mem-verifikasi form Apply SA',
+            'data' => $message,
+            'toast_msg' => $message,
             'time' => date('Y-m-d H:i:s')
         ];
 

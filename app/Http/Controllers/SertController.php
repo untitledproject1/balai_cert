@@ -62,7 +62,7 @@ class SertController extends Controller
         // ---- Push notif -----
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user->id;
+        $id_penerima = [$user->id];
         $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
@@ -92,40 +92,41 @@ class SertController extends Controller
         $produk = Produk::find($idProduk);
         $choice = '';
         // get sertifikasi and client data
-        $userData = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'role.role_name')->first();
+        $userData = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'sertifikasi')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'users.nama_perusahaan', 'role.role_name')->get();
+        // dd($produk, $userData);
         $client = $userData[1];
     	if ($request->apprv == '1') {
 	    	$produk->status_sert_jadi = 1;
             $produk->kode_tahap = 21;
             $msg = 'Draft Sertifikat telah disetujui!';
-            $choice = $userData.' telah menyetujui Draft Sertifikat';
+            $choice = $client->nama_perusahaan.' telah menyetujui Draft Sertifikat';
     	} else {
             $produk->status_sert_jadi = 4;
     		$produk->pesan_sert = $request->pesanT;
             $msg = 'Permintaan pembuatan ulang draft sertifikat telah dikirim';
-            $choice = 'Draft Sertifikat telah ditolak oleh '.$userData;
+            $choice = 'Draft Sertifikat telah ditolak oleh '.$client->nama_perusahaan;
     	}
         $produk->save();
         
-        // // ---- Push notif -----
-        // // get user_fcm_token
-        // $user_token = [];
-        // $id_penerima = $userData[0]->id;
-        // $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
-        // foreach ($tokens as $key => $value) {
-        //     array_push($user_token, $value->user_fcm_token);
-        // }
+        // ---- Push notif -----
+        // get user_fcm_token
+        $user_token = [];
+        $id_penerima = [$userData[0]->id];
+        $tokens = PushSubscriptions::where('user_id', $userData[0]->id)->get();
+        foreach ($tokens as $key => $value) {
+            array_push($user_token, $value->user_fcm_token);
+        }
 
-        // // send notification to receiver
-        // $datas = [
-        //     'title' => 'Pembuatan Draft Sertifikat',
-        //     'subtitle' => $produk->produk,
-        //     'data' => $choice,
-        //     'toast_msg' => $choice,
-        //     'time' => date('Y-m-d H:i:s')
-        // ];
+        // send notification to receiver
+        $datas = [
+            'title' => 'Pembuatan Draft Sertifikat',
+            'subtitle' => $produk->produk,
+            'data' => $choice,
+            'toast_msg' => $choice,
+            'time' => date('Y-m-d H:i:s')
+        ];
 
-        // \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
+        \AppHelper::instance()->push_notif($user_token, $datas, $id_penerima);
 
     	return redirect()->back()->with('msg', $msg);
     }
@@ -144,13 +145,13 @@ class SertController extends Controller
         
         // ---- Push notif -----
         // get receiver data
-        $user_receiver = '';
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->select('users.id', 'users.name', 'role.role_name');
         if ($request->req == '1') {
             $choice = 'Ambil';
-            $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->select('users.id', 'users.name', 'role.role_name')->first();
+            $user_receiver = $user_receiver->where('role', 'pemasaran')->first();
         } else {
             $choice = 'Kirim';
-            $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'subag_umum')->select('users.id', 'users.name', 'role.role_name')->first();
+            $user_receiver = $user_receiver->where('role', 'subag_umum')->first();
         }
 
         // get client data
@@ -158,8 +159,8 @@ class SertController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -185,13 +186,13 @@ class SertController extends Controller
         $produk->save();
 
         // ---- Push notif -----
-        // get keuangan data
-        $user_receiver = User::select('id', 'name')->find($produk->user_id);
+        // get client and pemasaran data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'pemasaran')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'users.nama_perusahaan', 'role.role_name')->get();
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver[0]->id, $user_receiver[1]->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver[0]->id)->orWhere('user_id', $user_receiver[1]->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -240,12 +241,13 @@ class SertController extends Controller
         $produk->save();
         
         // ---- Push notif -----
+        // get client data
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->where('role', 'subag_umum')->orWhere('users.id', $produk->user_id)->select('users.id', 'users.name', 'role.role_name')->get();
+
         // get user_fcm_token
         $user_token = [];
-        // get client data
-        $user_receiver = User::select('id', 'name')->find($produk->user_id);
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
+        $id_penerima = [$user_receiver[0]->id, $user_receiver[1]->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver[0]->id)->orWhere('user_id', $user_receiver[1]->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -321,8 +323,8 @@ class SertController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -376,8 +378,8 @@ class SertController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->get();
+        $id_penerima = [$user_receiver->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -422,8 +424,8 @@ class SertController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver[0]->id;
-        $tokens = PushSubscriptions::where('user_id', $id_penerima)->orWhere('user_id', $user_receiver[1]->id)->get();
+        $id_penerima = [$user_receiver[0]->id, $user_receiver[1]->id];
+        $tokens = PushSubscriptions::where('user_id', $user_receiver[0]->id)->orWhere('user_id', $user_receiver[1]->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
         }
@@ -457,17 +459,18 @@ class SertController extends Controller
 
         // ---- Push notif -----
         // get pemasaran data
-        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->select('users.id', 'users.name', 'role.role_name')->where('role', 'subag_umum');
+        $user_receiver = User::leftJoin('role', 'role.id', '=', 'users.role_id')->select('users.id', 'users.name', 'role.role_name')->where('role', 'pemasaran');
         if ($produk->request_sert == 'kirim') {
-            $user_receiver = $user_receiver->orWhere('role', 'pemasaran');
+            $user_receiver = $user_receiver->orWhere('role', 'subag_umum');
         }
         $user_receiver = $user_receiver->get();
         
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver[0]->id;
+        $id_penerima = [$user_receiver[0]->id];
         $gettokens = PushSubscriptions::where('user_id', $id_penerima);
         if ($produk->request_sert == 'kirim') {
+            array_push($id_penerima, $user_receiver[1]->id);
             $gettokens = $gettokens->orWhere('user_id', $user_receiver[1]->id);
         }
         $tokens = $gettokens->get();
@@ -476,11 +479,12 @@ class SertController extends Controller
         }
 
         // send notification to receiver
+        $client = User::select('id', 'name', 'nama_perusahaan')->find($produk->user_id);
         $datas = [
-            'title' => 'Konfirmasi Resi Pengiriman Sertifikat Produk',
+            'title' => 'Penerimaan Sertifikat Produk',
             'subtitle' => $produk->produk,
-            'data' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
-            'toast_msg' => 'Seksi Pemasaran telah men-konfirmasi Resi Pengiriman Sertifikat Produk',
+            'data' => $client->nama_perusahaan.' telah menerima Sertifikat',
+            'toast_msg' => $client->nama_perusahaan.' telah menerima Sertifikat',
             'time' => date('Y-m-d H:i:s')
         ];
 
@@ -489,7 +493,7 @@ class SertController extends Controller
         return redirect()->back()->with('msg', 'Verifikasi Penerimaan Sertifikat telah dilakukan');
     }
 
-    public function konfirmasiSert(Request $request_sert, $idProduk) {
+    public function konfirmasiResi(Request $request_sert, $idProduk) {
         $produk = Produk::find($idProduk);
         $produk->kode_tahap = 23;
         $produk->kon_resi = 1;
@@ -501,7 +505,7 @@ class SertController extends Controller
 
         // get user_fcm_token
         $user_token = [];
-        $id_penerima = $user_receiver[0]->id;
+        $id_penerima = [$user_receiver[0]->id];
         $tokens = PushSubscriptions::where('user_id', $id_penerima)->orWhere('user_id', $user_receiver[1]->id)->get();
         foreach ($tokens as $key => $value) {
             array_push($user_token, $value->user_fcm_token);
