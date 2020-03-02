@@ -71,7 +71,7 @@ class ProdukController extends Controller
 
     public function history() {
     	$user = \Auth::user();
-        $produk = $user->produk_client()->where('kode_tahap', 24);
+        $produk = $user->produk_client()->where('kode_tahap', 24)->get();
 
     	return view('dashboard.history', ['produk' => $produk]);
     }

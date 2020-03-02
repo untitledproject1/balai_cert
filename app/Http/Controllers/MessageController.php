@@ -263,4 +263,11 @@ class MessageController extends Controller
             'notif_data' => ['user_token' => $user_token, 'datas' => $datas, 'id_penerima' => $id_penerima]  
         ]);
     }
+
+    public function testing() {
+        $user = \Auth::user();
+		$produk = Produk::where('user_id', $user->id)->get();
+
+        return view('pesan/messages_test', ['produk' => $produk]);
+    }
 }

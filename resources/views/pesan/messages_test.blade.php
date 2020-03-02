@@ -38,20 +38,7 @@
 -->
                     <input id="search_produk_msg" class="form-control mb-3" type="text" name="" placeholder="Search..">
 
-                    {{-- <a href="#message" class="tablinks" onclick="openMessage(event, 'message')"> --}}
-                    
-<!--
-                    <div class="btn-group dropright">
-                      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Keramik
-                      </button>
-                      <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Apply SA</a>
-                      </div>
-                    </div>
--->
-
-                    <ul id="list_produk_msg" class="list-group tablinks dropright">
+                    <!-- <ul id="list_produk_msg" class="list-group tablinks dropright">
                         @foreach($produk as $data)
                         <li class="list-group-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ $data->produk }} <i class="fas fa-angle-right float-right"></i>
@@ -74,12 +61,21 @@
                             </div>
                         </li>
                         @endforeach
-                        
-                        {{-- <li id="message2" class="list-group-item" onclick="listActive(this)">Ubin</li>
-                        <li id="message3" class="list-group-item" onclick="listActive(this)">Kloset</li> --}}
-                    </ul>
+                    </ul> -->
 
-                    {{-- </a> --}}
+                     <div class="list-group" id="list-tab" role="tablist">
+                     @foreach($produk as $data)
+                        <a class="list-group-item list-group-item-action message_show" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">{{ $data->produk }}</a>
+                     @endforeach
+                     </div>
+                     
+                     <!-- <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
+                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                     </div> -->
+
                 </div>
 
                <!-- Modal -->
@@ -131,9 +127,14 @@
                     <div class="messages_main tabcontent lengit">
                         <div class="row">
                             <div class="col-lg-7 text-left">
-                                <nav class="header sticky-top">
+                                <!-- <nav class="header sticky-top">
                                     <h6 id="msg_title"></h6>
-                                </nav>
+                                </nav> -->
+                                <select name="tahap_pesan" id="" class="form-control">
+                                 @foreach($tahap_sert as $key => $tahap)
+                                    <option value="">{{ $tahap->tahapan }}</option>
+                                 @endforeach
+                                </select>
                             </div>
                             <div class="col-lg-4 text-right msg_modal">
                                 <div class="mr-2" style="float: right;">
@@ -188,6 +189,8 @@
     $(window).scroll(function() {
         $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
     });
+
+
 
     function sendNotification(user_token, datas, id_penerima) {
       $.post('/notifications', {
@@ -321,28 +324,32 @@
     
     // ---- set prop message ------
     function set_prop_msg() {
-        $('.message_show').on('click', function() {
-            // $(this).parent().parent().addClass('list-group-active');
-            $('.messages_main').show();
-            $('.hilang').hide();
+      //   $('.message_show').on('click', function() {
+      //       // $(this).parent().parent().addClass('list-group-active');
+      //       $('.messages_main').show();
+      //       $('.hilang').hide();
 
-            // change message title
-            $('.messages_main').find('#msg_title').html($(this).data('title'));
-            $('.messages_main').find('.btn_reload').html("<button id='btn_reload' class='btn btn-secondary' style='font-size:14px;'><i class='fas fa-redo'></i> &nbsp;&nbsp;Muat ulang</button>");
+      //       // change message title
+      //       $('.messages_main').find('#msg_title').html($(this).data('title'));
+      //       $('.messages_main').find('.btn_reload').html("<button id='btn_reload' class='btn btn-secondary' style='font-size:14px;'><i class='fas fa-redo'></i> &nbsp;&nbsp;Muat ulang</button>");
 
-            // ---- get message ajax ----
-            var kode_tahap = $(this).data('kode_tahap');
-            var produk_id = $(this).data('produk_id');
-            var request_sert = $(this).data('request_sert');
-            var role_name = $(this).data('role_name');
-            var produk_kode_tahap = $(this).data('produk_kode_tahap');
+      //       // ---- get message ajax ----
+      //       var kode_tahap = $(this).data('kode_tahap');
+      //       var produk_id = $(this).data('produk_id');
+      //       var request_sert = $(this).data('request_sert');
+      //       var role_name = $(this).data('role_name');
+      //       var produk_kode_tahap = $(this).data('produk_kode_tahap');
 
-            // call get message func
-            get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
+      //       // call get message func
+      //       get_msg_ajax(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
 
-            // call btn_reload func
-            btn_reload(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
-        });
+      //       // call btn_reload func
+      //       btn_reload(kode_tahap, produk_id, request_sert, role_name, produk_kode_tahap);
+      //   });
+      $('.message_show').on('click', function() {
+         $('.messages_main').show();
+         $('.hilang').hide();
+      });
     }
 
     var submit_msg_btn = $('#submit_msg');

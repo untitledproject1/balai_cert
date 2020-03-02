@@ -70,7 +70,7 @@
 
     {{-- <div class="wrap_content mt-5"> --}}
     <div class="wrap_content">
-        @if(!is_null($produk->get()))
+        @if(!is_null($produk))
         <h3>List Sertifikasi Produk Yang Sudah Selesai</h3>
         <br>
         

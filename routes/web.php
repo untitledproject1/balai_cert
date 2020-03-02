@@ -54,6 +54,7 @@ Route::group(['middleware'=>['verified', 'getAddData']], function() {
 		
 		// route halaman pesan client
 		Route::get('/messages', 'MessageController@index');
+		Route::get('/messages_test', 'MessageController@testing');
 
 		Route::get('/history', 'ProdukController@history');
 		// dashboard

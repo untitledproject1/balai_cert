@@ -16,6 +16,10 @@ use App\PushSubscriptions;
 
 class MOUController extends Controller
 {
+    public function __construct() {
+        dd();
+    }
+
     public function terbilang($nilai) {
         // $nilai = abs($nilai);
         // $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");

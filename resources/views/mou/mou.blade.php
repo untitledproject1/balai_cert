@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label>Nomor Surat</label><br>
-                    <input type="text" class="form-control textI" name="no_mou" required="">
+                    <input type="text" class="form-control textI" name="no_mou" required="" autocomplete="off">
                     <small class="form-text text-muted">Nomor surat wajib diisi</small>
                     @if(!is_null($no_surat_mou))
                     <b><i>Nomor Surat Terakhir:</i> &nbsp;{{ $no_surat_mou->no }}</b>
@@ -29,7 +29,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </div>
-                        <input type="text" name="d_kontrak" class="minDate form-control textI" data-language="en" data-date-format="dd-mm-yyyy" onkeydown="return false;" placeholder="dd-mm-yyyy" />
+                        <input type="text" name="d_kontrak" class="minDate form-control textI" data-language="en" data-date-format="dd-mm-yyyy" onkeydown="return false;" placeholder="dd-mm-yyyy" autocomplete="off" />
                     </div>
 
                     <small class="form-text text-muted">Tanggal pembuatan kontrak wajib diisi</small>
@@ -41,7 +41,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Rp</span>
                 </div>
-                <input class="form-control bpText" type="text" name="b_sert" min="0" placeholder="0" aria-label="Amount (to the nearest rupiah)">
+                <input class="form-control bpText" type="text" name="b_sert" min="0" placeholder="0" aria-label="Amount (to the nearest rupiah)" autocomplete="off">
             </div>
             <i><b>Default Harga : </b> Rp.{{ number_format($defaultHarga->harga, '0', ',', '.') }}</i>
             <br>
